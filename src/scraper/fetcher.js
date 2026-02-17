@@ -63,14 +63,29 @@ async function fetchPage(httpClient, params, page, retries = config.scraper.maxR
   } catch (error) {
     const status = error.response?.status;
 
-    // 404 = Build ID expired → auto-heal
+    // 404 handling: could be expired Build ID OR invalid type×category combo.
+    // Strategy: refresh Build ID once. If 404 persists with the new ID,
+    // it's an invalid combo — return null instead of looping forever.
     if (status === 404 && retries > 0) {
-      logger.warn(
-        { retries, oldBuildId: currentBuildId },
-        'Build ID expired (404), refreshing...'
+      const oldBuildId = currentBuildId;
+      const freshBuildId = await fetchBuildId(httpClient);
+
+      if (freshBuildId !== oldBuildId) {
+        // Build ID actually changed — retry with the new one
+        logger.warn(
+          { retries, oldBuildId, newBuildId: freshBuildId },
+          'Build ID expired (404), refreshed'
+        );
+        currentBuildId = freshBuildId;
+        return fetchPage(httpClient, params, page, retries - 1);
+      }
+
+      // Build ID is the same — this is an invalid combo, not an expired ID
+      logger.info(
+        { page, params },
+        '404 with valid Build ID — invalid parameter combination, skipping'
       );
-      currentBuildId = await fetchBuildId(httpClient);
-      return fetchPage(httpClient, params, page, retries - 1);
+      return null;
     }
 
     // 403 = possible IP ban or WAF block

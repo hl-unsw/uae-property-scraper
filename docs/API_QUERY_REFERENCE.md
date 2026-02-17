@@ -116,19 +116,49 @@ This is the external API the scraper calls to fetch raw data from propertyfinder
 
 #### `t` — Property Type
 
-| Value | Type | Notes |
-|-------|------|-------|
-| `1` | Apartment | Most common |
-| `2` | Villa compound | |
-| `3` | Duplex | |
-| `4` | Short term / daily | |
-| `14` | Land / plot | |
-| `18` | Full floor | |
-| `20` | Penthouse | |
-| `21` | Whole building | |
-| `22` | Townhouse | |
-| `35` | Villa | Standalone |
-| `45` | Hotel apartment | |
+**IMPORTANT:** Not all property types are valid with all categories (`c`). Invalid combinations return HTTP 404. See compatibility matrix below.
+
+| Value | Type | Valid Categories | Notes |
+|-------|------|-----------------|-------|
+| `1` | Apartment | `c=1,2` only | Residential only. 404 on commercial |
+| `2` | Villa compound | `c=1,2,3,4` | Universal |
+| `3` | Duplex | `c=1,2,3,4` | Universal |
+| `4` | Short term / daily | `c=3,4` only | Commercial only. 404 on residential |
+| `14` | Land / plot | `c=1,2,3,4` | Universal |
+| `18` | Full floor | `c=1,2,3,4` | Universal, but limited city availability |
+| `20` | Penthouse | `c=1,2` only | Residential only. 404 on commercial |
+| `21` | Whole building | `c=3,4` only | Commercial only. 404 on residential |
+| `22` | Townhouse | `c=1,2` only | Residential only. 404 on commercial |
+| `35` | Villa | `c=1,2,3,4` | Universal |
+| `45` | Hotel apartment | `c=1,2,3` | 404 on `c=4` (commercial rent) |
+
+#### Property Type × Category Compatibility Matrix
+
+```
+Type               Buy(c=1)  Rent(c=2)  CommBuy(c=3)  CommRent(c=4)
+─────────────────────────────────────────────────────────────────────
+Apartment (1)        OK        OK         404           404
+Villa compound (2)   OK        OK         OK            OK
+Duplex (3)           OK        OK         OK            OK
+Short term (4)       404       404        OK            OK
+Land (14)            OK        OK         OK            OK
+Full floor (18)      OK        OK         OK            OK
+Penthouse (20)       OK        OK         404           404
+Whole building (21)  404       404        OK            OK
+Townhouse (22)       OK        OK         404           404
+Villa (35)           OK        OK         OK            OK
+Hotel apartment (45) OK        OK         OK            404
+```
+
+#### City Availability (for `c=2` Rent)
+
+Some types are unavailable in smaller emirates:
+
+| Type | Dubai | Abu Dhabi | Sharjah | RAK | Ajman | UAQ | Fujairah |
+|------|-------|-----------|---------|-----|-------|-----|----------|
+| Full floor (18) | OK | 404 | OK | OK | 404 | OK | 404 |
+| Townhouse (22) | OK | OK | OK | OK | 404 | OK | OK |
+| Hotel apt (45) | OK | OK | OK | OK | 404 | 404 | 404 |
 
 ### Bedroom & Bathroom Filters
 
