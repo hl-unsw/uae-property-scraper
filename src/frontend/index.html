@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAE Property Scraper Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>UAE Property Dashboard</h1>
+    <p class="subtitle">Abu Dhabi Rental Market Data</p>
+  </header>
+
+  <!-- Stats Cards -->
+  <section id="stats" class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-label">Total Listings</span>
+      <span class="stat-value" id="stat-total">--</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Avg Price (AED/yr)</span>
+      <span class="stat-value" id="stat-avg-price">--</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Price Range (AED)</span>
+      <span class="stat-value" id="stat-price-range">--</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Avg Size (sqft)</span>
+      <span class="stat-value" id="stat-avg-size">--</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Last Crawled</span>
+      <span class="stat-value" id="stat-last-crawled">--</span>
+    </div>
+  </section>
+
+  <!-- Bedroom Distribution Chart -->
+  <section class="chart-section">
+    <h2>Bedroom Distribution</h2>
+    <div id="bedroom-chart" class="bar-chart"></div>
+  </section>
+
+  <!-- Filters -->
+  <section class="filters">
+    <h2>Search Listings</h2>
+    <form id="filter-form">
+      <div class="filter-row">
+        <div class="filter-group">
+          <label for="search">Keyword</label>
+          <input type="text" id="search" placeholder="e.g. Corniche, Marina...">
+        </div>
+        <div class="filter-group">
+          <label for="bedrooms">Bedrooms</label>
+          <select id="bedrooms">
+            <option value="">All</option>
+            <option value="0">Studio</option>
+            <option value="1">1 Bed</option>
+            <option value="2">2 Beds</option>
+            <option value="3">3 Beds</option>
+            <option value="4">4 Beds</option>
+            <option value="5">5+ Beds</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="minPrice">Min Price (AED)</label>
+          <input type="number" id="minPrice" placeholder="0">
+        </div>
+        <div class="filter-group">
+          <label for="maxPrice">Max Price (AED)</label>
+          <input type="number" id="maxPrice" placeholder="999999">
+        </div>
+        <div class="filter-group">
+          <label for="furnished">Furnished</label>
+          <select id="furnished">
+            <option value="">All</option>
+            <option value="YES">Furnished</option>
+            <option value="NO">Unfurnished</option>
+            <option value="PARTLY">Partly</option>
+          </select>
+        </div>
+        <button type="submit" class="btn">Search</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Listing Results -->
+  <section class="results">
+    <div class="results-header">
+      <span id="results-count">0 results</span>
+      <div class="pagination" id="pagination"></div>
+    </div>
+    <div id="listings" class="listings-grid"></div>
+  </section>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
