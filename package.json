@@ -9,7 +9,13 @@
     "server": "node src/api/server.js",
     "dev": "concurrently \"npm run server\" \"npm run scrape:incremental\"",
     "db:setup": "docker compose up -d",
-    "db:stop": "docker compose down"
+    "db:stop": "docker compose down",
+    "db:migrate": "node scripts/migrations/runner.js",
+    "db:migrate:status": "node scripts/migrations/runner.js --status",
+    "db:migrate:rollback": "node scripts/migrations/runner.js --rollback",
+    "db:backup": "bash scripts/migrations/backup.sh dump",
+    "db:restore": "bash scripts/migrations/backup.sh restore",
+    "db:backup:list": "bash scripts/migrations/backup.sh list"
   },
   "keywords": [
     "uae",
