@@ -205,10 +205,10 @@ Note: Price values correspond to the selected rent period. A `pf=5000` with `rp=
 |------|---------|
 | `AC` | Central A/C |
 | `BA` | Balcony |
-| `BB` | BBQ area |
+| `BR` | Barbecue area |
 | `BW` | Built-in wardrobes |
 | `CP` | Covered parking |
-| `GY` | Private gym |
+| `PY` | Private gym |
 | `JA` | Private jacuzzi |
 | `MR` | Maid's room |
 | `PA` | Pets allowed |
@@ -220,10 +220,10 @@ Note: Price values correspond to the selected rent period. A `pf=5000` with `rp=
 | `VL` | View of landmark |
 | `VW` | View of water |
 | `ST` | Study |
-| `SR` | Shared spa |
+| `SS` | Shared spa |
 | `WC` | Walk-in closet |
 | `KA` | Kitchen appliances |
-| `CF` | Concierge |
+| `CS` | Concierge service |
 | `DS` | Driver's room |
 | `BC` | Beach access |
 | `CW` | Co-working space |
@@ -240,8 +240,14 @@ Multiple values: `am[]=BA&am[]=SP&am[]=PA` means "has balcony AND pool AND pets 
 | `nd` | Newest (most recently listed first) |
 | `pa` | Price: low to high |
 | `pd` | Price: high to low |
-| `sa` | Size: small to large |
-| `sd` | Size: large to small |
+| `ba` | Beds: least first |
+| `bd` | Beds: most first |
+
+### Keyword Search
+
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `k` | string | Keyword search (building name, community, area) | `k=Corniche` |
 
 ### Pagination
 
@@ -352,7 +358,7 @@ This section helps AI agents translate human queries to parameters.
 | User might say | Parameter |
 |----------------|-----------|
 | "has pool", "swimming pool", "游泳池" | `am[]=SP` (shared) or `am[]=PP` (private) |
-| "gym", "fitness", "健身房" | `am[]=SY` (shared) or `am[]=GY` (private) |
+| "gym", "fitness", "健身房" | `am[]=SY` (shared) or `am[]=PY` (private) |
 | "parking", "停车位", "车位" | `am[]=CP` |
 | "balcony", "阳台" | `am[]=BA` |
 | "pet friendly", "can have pets", "可养宠物" | `am[]=PA` |
@@ -370,8 +376,8 @@ This section helps AI agents translate human queries to parameters.
 | "newest", "latest", "最新" | `ob=nd` |
 | "cheapest first", "lowest price", "最便宜" | `ob=pa` |
 | "most expensive first", "highest price", "最贵" | `ob=pd` |
-| "smallest first" | `ob=sa` |
-| "largest first", "biggest" | `ob=sd` |
+| "fewest bedrooms first" | `ob=ba` |
+| "most bedrooms first" | `ob=bd` |
 
 ### Commute / Location Examples
 
@@ -417,5 +423,5 @@ l=6&c=2&t=1&bdr[]=0&fu=1&pt=5000&rp=m&ob=pa
 
 **Upstream:**
 ```
-l=6&c=2&t=1&bdr[]=1&bdr[]=2&am[]=PA&am[]=VW&ob=nd
+l=6&c=2&t=1&bdr[]=1&bdr[]=2&am[]=PA&am[]=VW&k=Corniche&ob=nd
 ```
