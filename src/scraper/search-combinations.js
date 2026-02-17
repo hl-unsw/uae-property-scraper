@@ -1,34 +1,65 @@
 /**
  * Search combination generator.
  *
- * Generates all filter combinations to crawl. The Cartesian product of
- * locations x property types x bedroom counts gives us fine-grained
- * search slices, each returning a manageable number of pages.
- *
- * This avoids hitting the Property Finder hard limit of ~1000 results
- * per search query by slicing queries narrowly.
- *
- * IMPORTANT: Not all property types are valid for all categories.
- * Invalid combos return 404. See CATEGORY_TYPE_COMPAT below.
+ * Generates all filter combinations to crawl. Validates every combo
+ * against the full compatibility matrix (308-combo API probe, Feb 2026)
+ * to skip known-404 routes before making requests.
  */
 
-// ─── Property Type × Category Compatibility ─────────────────────
-// Validated against real API (100-combo test, Feb 2026).
-// true = valid, absent = 404.
-const CATEGORY_TYPE_COMPAT = {
-  '1': ['1', '2', '3', '14', '18', '20', '22', '35', '45'],     // Buy
-  '2': ['1', '2', '3', '14', '18', '20', '22', '35', '45'],     // Rent
-  '3': ['2', '3', '4', '14', '18', '21', '35', '45'],            // Commercial buy
-  '4': ['2', '3', '4', '14', '18', '21', '35'],                  // Commercial rent (no hotel apt)
-};
+// ─── Full Compatibility Matrix ───────────────────────────────────
+// Probed all 7 cities × 4 categories × 11 types (308 combos).
+// This map lists type IDs that return 404 for each city+category.
+//
+// City IDs: 1=Dubai, 2=Ajman, 3=Ras Al Khaimah, 4=Sharjah,
+//           5=Umm Al Quwain, 6=Abu Dhabi, 7=Fujairah
+// Category IDs: 1=Buy, 2=Rent, 3=Commercial Buy, 4=Commercial Rent
+// Type IDs: 1=Apartment, 2=Villa Compound, 3=Duplex, 4=Short Term,
+//           14=Land, 18=Full Floor, 20=Penthouse, 21=Whole Building,
+//           22=Townhouse, 35=Villa, 45=Hotel Apartment
 
-// ─── City × Type availability for Rent (c=2) ────────────────────
-// Some types are unavailable in smaller emirates.
-const CITY_TYPE_UNAVAILABLE_RENT = {
-  '2': ['18', '22', '45'],  // Ajman: no full floor, townhouse, hotel apt
-  '5': ['45'],               // UAQ: no hotel apt
-  '6': ['18'],               // Abu Dhabi: no full floor for rent
-  '7': ['18', '45'],         // Fujairah: no full floor, hotel apt
+const CITY_CATEGORY_TYPE_UNAVAILABLE = {
+  '1': { // Dubai
+    '1': ['4', '21'],
+    '2': ['4', '21'],
+    '3': ['1', '20', '22'],
+    '4': ['1', '20', '22', '45'],
+  },
+  '2': { // Ajman
+    '1': ['4', '18', '21', '22', '45'],
+    '2': ['4', '18', '21', '22', '45'],
+    '3': ['1', '4', '18', '20', '21', '22', '45'],
+    '4': ['1', '18', '20', '22', '45'],
+  },
+  '3': { // Ras Al Khaimah
+    '1': ['4', '21'],
+    '2': ['4', '21'],
+    '3': ['1', '20', '22', '45'],
+    '4': ['1', '20', '22', '45'],
+  },
+  '4': { // Sharjah
+    '1': ['4', '18', '21'],
+    '2': ['4', '21'],
+    '3': ['1', '20', '22', '45'],
+    '4': ['1', '20', '22', '45'],
+  },
+  '5': { // Umm Al Quwain
+    '1': ['4', '21'],
+    '2': ['4', '21', '45'],
+    '3': ['1', '20', '22', '45'],
+    '4': ['1', '20', '22', '45'],
+  },
+  '6': { // Abu Dhabi
+    '1': ['4', '18', '21', '45'],
+    '2': ['4', '18', '21'],
+    '3': ['1', '20', '22', '45'],
+    '4': ['1', '20', '22', '45'],
+  },
+  '7': { // Fujairah
+    '1': ['4', '18', '21', '45'],
+    '2': ['4', '18', '21', '45'],
+    '3': ['1', '4', '18', '20', '21', '22', '45'],
+    '4': ['1', '18', '20', '21', '22', '45'],
+  },
 };
 
 // ─── Dimensions ──────────────────────────────────────────────────
@@ -43,11 +74,12 @@ const CATEGORIES = [
   { c: '2', name: 'Rent' },
 ];
 
-// All residential property types valid for rent in Abu Dhabi
+// All property types — isValidCombo() will filter out invalid ones
 const PROPERTY_TYPES = [
   { t: '1', name: 'Apartment' },
   { t: '2', name: 'Villa Compound' },
   { t: '3', name: 'Duplex' },
+  { t: '14', name: 'Land' },
   { t: '20', name: 'Penthouse' },
   { t: '22', name: 'Townhouse' },
   { t: '35', name: 'Villa' },
@@ -65,30 +97,22 @@ const BEDROOMS = [
 ];
 
 /**
- * Check if a property type is valid for a given category and city.
+ * Check if a property type is valid for a given city + category.
+ * Based on 308-combo API probe (Feb 2026).
  */
 function isValidCombo(cityId, categoryId, typeId) {
-  // Check category × type compatibility
-  const validTypes = CATEGORY_TYPE_COMPAT[categoryId];
-  if (!validTypes || !validTypes.includes(typeId)) {
-    return false;
-  }
+  const cityMap = CITY_CATEGORY_TYPE_UNAVAILABLE[cityId];
+  if (!cityMap) return true; // Unknown city, assume valid
 
-  // Check city-specific restrictions (only for rent)
-  if (categoryId === '2') {
-    const unavailable = CITY_TYPE_UNAVAILABLE_RENT[cityId] || [];
-    if (unavailable.includes(typeId)) {
-      return false;
-    }
-  }
+  const unavailable = cityMap[categoryId];
+  if (!unavailable) return true; // Unknown category, assume valid
 
-  return true;
+  return !unavailable.includes(typeId);
 }
 
 /**
  * Generate all VALID search parameter combinations.
  * Skips combos known to return 404.
- * Returns an array of { params, label } objects.
  */
 function generateCombinations() {
   const combos = [];
@@ -96,7 +120,6 @@ function generateCombinations() {
   for (const loc of LOCATIONS) {
     for (const cat of CATEGORIES) {
       for (const pt of PROPERTY_TYPES) {
-        // Skip invalid type × category × city combos
         if (!isValidCombo(loc.l, cat.c, pt.t)) continue;
 
         for (const bdr of BEDROOMS) {
@@ -105,7 +128,7 @@ function generateCombinations() {
             c: cat.c,
             t: pt.t,
             'bdr[]': bdr['bdr[]'],
-            rp: 'y', // yearly rent
+            rp: 'y',
           };
           const label = `${loc.name} | ${cat.name} | ${pt.name} | ${bdr.name}`;
           combos.push({ params, label });
@@ -120,6 +143,5 @@ function generateCombinations() {
 module.exports = {
   generateCombinations,
   isValidCombo,
-  CATEGORY_TYPE_COMPAT,
-  CITY_TYPE_UNAVAILABLE_RENT,
+  CITY_CATEGORY_TYPE_UNAVAILABLE,
 };

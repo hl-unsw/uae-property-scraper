@@ -116,49 +116,72 @@ This is the external API the scraper calls to fetch raw data from propertyfinder
 
 #### `t` — Property Type
 
-**IMPORTANT:** Not all property types are valid with all categories (`c`). Invalid combinations return HTTP 404. See compatibility matrix below.
+**IMPORTANT:** Not all property types are valid with all categories (`c`) and cities (`l`). Invalid combinations return HTTP 404. Two layers of restrictions apply:
+1. **Category restriction** — Some types are residential-only or commercial-only
+2. **City restriction** — Some types don't exist in smaller emirates
 
-| Value | Type | Valid Categories | Notes |
-|-------|------|-----------------|-------|
-| `1` | Apartment | `c=1,2` only | Residential only. 404 on commercial |
-| `2` | Villa compound | `c=1,2,3,4` | Universal |
-| `3` | Duplex | `c=1,2,3,4` | Universal |
-| `4` | Short term / daily | `c=3,4` only | Commercial only. 404 on residential |
-| `14` | Land / plot | `c=1,2,3,4` | Universal |
-| `18` | Full floor | `c=1,2,3,4` | Universal, but limited city availability |
-| `20` | Penthouse | `c=1,2` only | Residential only. 404 on commercial |
-| `21` | Whole building | `c=3,4` only | Commercial only. 404 on residential |
-| `22` | Townhouse | `c=1,2` only | Residential only. 404 on commercial |
-| `35` | Villa | `c=1,2,3,4` | Universal |
-| `45` | Hotel apartment | `c=1,2,3` | 404 on `c=4` (commercial rent) |
+| Value | Type | Category Rule | Notes |
+|-------|------|--------------|-------|
+| `1` | Apartment | Residential only (`c=1,2`) | 404 on all commercial |
+| `2` | Villa compound | Universal | Works everywhere |
+| `3` | Duplex | Universal | Works everywhere |
+| `4` | Short term / daily | Commercial only (`c=3,4`) | 404 on all residential |
+| `14` | Land / plot | Universal | Works everywhere |
+| `18` | Full floor | Universal | But 404 in many cities |
+| `20` | Penthouse | Residential only (`c=1,2`) | 404 on all commercial |
+| `21` | Whole building | Commercial only (`c=3,4`) | 404 on all residential |
+| `22` | Townhouse | Residential only (`c=1,2`) | 404 on all commercial |
+| `35` | Villa | Universal | Works everywhere |
+| `45` | Hotel apartment | Mostly universal | 404 on several city+category combos |
 
-#### Property Type × Category Compatibility Matrix
+#### Full 308-Combo Compatibility Matrix
+
+Tested every combination of 7 cities × 4 categories × 11 types against the live API (Feb 2026). OK = HTTP 200, 404 = route does not exist.
 
 ```
-Type               Buy(c=1)  Rent(c=2)  CommBuy(c=3)  CommRent(c=4)
-─────────────────────────────────────────────────────────────────────
-Apartment (1)        OK        OK         404           404
-Villa compound (2)   OK        OK         OK            OK
-Duplex (3)           OK        OK         OK            OK
-Short term (4)       404       404        OK            OK
-Land (14)            OK        OK         OK            OK
-Full floor (18)      OK        OK         OK            OK
-Penthouse (20)       OK        OK         404           404
-Whole building (21)  404       404        OK            OK
-Townhouse (22)       OK        OK         404           404
-Villa (35)           OK        OK         OK            OK
-Hotel apartment (45) OK        OK         OK            404
+City            | Category        | t=1 | t=2 | t=3 | t=4 | t=14| t=18| t=20| t=21| t=22| t=35| t=45
+                |                 | Apt | VlCp| Dplx| Shrt| Land| FlFl| Pnth| Bldg| Town| Vila| HtAp
+────────────────┼─────────────────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────
+Abu Dhabi       | Buy             | OK  | OK  | OK  | 404 | OK  | OK  | OK  | 404 | OK  | OK  | OK
+Abu Dhabi       | Rent            | OK  | OK  | OK  | 404 | OK  | OK  | OK  | 404 | OK  | OK  | OK
+Abu Dhabi       | Commercial Buy  | 404 | OK  | OK  | OK  | OK  | OK  | 404 | OK  | 404 | OK  | OK
+Abu Dhabi       | Commercial Rent | 404 | OK  | OK  | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404
+────────────────┼─────────────────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────
+Dubai           | Buy             | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404 | 404 | OK  | 404
+Dubai           | Rent            | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404 | 404 | OK  | 404
+Dubai           | Commercial Buy  | 404 | OK  | OK  | 404 | OK  | 404 | 404 | 404 | 404 | OK  | 404
+Dubai           | Commercial Rent | 404 | OK  | OK  | OK  | OK  | 404 | 404 | OK  | 404 | OK  | 404
+────────────────┼─────────────────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────
+Sharjah         | Buy             | OK  | OK  | OK  | 404 | OK  | OK  | OK  | 404 | OK  | OK  | OK
+Sharjah         | Rent            | OK  | OK  | OK  | 404 | OK  | OK  | OK  | 404 | OK  | OK  | OK
+Sharjah         | Commercial Buy  | 404 | OK  | OK  | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404
+Sharjah         | Commercial Rent | 404 | OK  | OK  | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404
+────────────────┼─────────────────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────
+Ajman           | Buy             | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404 | OK  | OK  | OK
+Ajman           | Rent            | OK  | OK  | OK  | 404 | OK  | OK  | OK  | 404 | OK  | OK  | OK
+Ajman           | Commercial Buy  | 404 | OK  | OK  | 404 | OK  | OK  | 404 | 404 | 404 | OK  | 404
+Ajman           | Commercial Rent | 404 | OK  | OK  | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404
+────────────────┼─────────────────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────
+Umm Al Quwain   | Buy             | OK  | OK  | OK  | 404 | OK  | OK  | OK  | 404 | OK  | OK  | OK
+Umm Al Quwain   | Rent            | OK  | OK  | OK  | 404 | OK  | OK  | OK  | 404 | OK  | OK  | 404
+Umm Al Quwain   | Commercial Buy  | 404 | OK  | OK  | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404
+Umm Al Quwain   | Commercial Rent | 404 | OK  | OK  | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404
+────────────────┼─────────────────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────
+Ras Al Khaimah  | Buy             | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404 | OK  | OK  | 404
+Ras Al Khaimah  | Rent            | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404 | OK  | OK  | OK
+Ras Al Khaimah  | Commercial Buy  | 404 | OK  | OK  | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404
+Ras Al Khaimah  | Commercial Rent | 404 | OK  | OK  | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404
+────────────────┼─────────────────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────
+Fujairah        | Buy             | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404 | OK  | OK  | 404
+Fujairah        | Rent            | OK  | OK  | OK  | 404 | OK  | 404 | OK  | 404 | OK  | OK  | 404
+Fujairah        | Commercial Buy  | 404 | OK  | OK  | 404 | OK  | 404 | 404 | 404 | 404 | OK  | 404
+Fujairah        | Commercial Rent | 404 | OK  | OK  | OK  | OK  | 404 | 404 | 404 | 404 | OK  | 404
 ```
 
-#### City Availability (for `c=2` Rent)
-
-Some types are unavailable in smaller emirates:
-
-| Type | Dubai | Abu Dhabi | Sharjah | RAK | Ajman | UAQ | Fujairah |
-|------|-------|-----------|---------|-----|-------|-----|----------|
-| Full floor (18) | OK | 404 | OK | OK | 404 | OK | 404 |
-| Townhouse (22) | OK | OK | OK | OK | 404 | OK | OK |
-| Hotel apt (45) | OK | OK | OK | OK | 404 | 404 | 404 |
+**Why some combos return 404:**
+- **Category mismatch**: Apartment/Penthouse/Townhouse are residential-only; Short term/Whole building are commercial-only
+- **City market gap**: Smaller emirates (Ajman, Fujairah, UAQ) lack certain property types entirely
+- Dubai lacks Full floor, Townhouse, and Hotel apartment across ALL categories
 
 ### Bedroom & Bathroom Filters
 
