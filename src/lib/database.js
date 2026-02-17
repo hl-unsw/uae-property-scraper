@@ -25,17 +25,21 @@ async function connect() {
   await client.connect();
   db = client.db(config.mongo.dbName);
 
-  // Create unique indexes on all collections
+  // Ensure indexes exist (use named indexes to avoid conflicts with migrations)
   for (const col of Object.values(COLLECTIONS)) {
-    await db.collection(col).createIndex({ listing_id: 1 }, { unique: true });
+    await db.collection(col).createIndex(
+      { listing_id: 1 },
+      { unique: true, name: 'idx_listing_id_unique' }
+    );
   }
-  // Compound index for querying by location + price
-  await db.collection(COLLECTIONS.pf).createIndex({
-    'property.location.full_name': 1,
-    'property.price.value': 1,
-  });
-  // Index for incremental lookups
-  await db.collection(COLLECTIONS.pf).createIndex({ crawled_at: -1 });
+  await db.collection(COLLECTIONS.pf).createIndex(
+    { 'property.location.full_name': 1, 'property.price.value': 1 },
+    { name: 'idx_location_price' }
+  );
+  await db.collection(COLLECTIONS.pf).createIndex(
+    { crawled_at: -1 },
+    { name: 'idx_crawled_at_desc' }
+  );
 
   logger.info('MongoDB connected & indexes ensured');
   return db;

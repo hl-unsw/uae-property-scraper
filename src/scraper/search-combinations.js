@@ -62,39 +62,38 @@ const CITY_CATEGORY_TYPE_UNAVAILABLE = {
   },
 };
 
-// ─── Dimensions ──────────────────────────────────────────────────
+// ─── Current Task: Abu Dhabi Rent — Studio & 1-Bed Apartments ───
+// Filters: annual rent 50k-80k AED, area 35-80 sqm (~377-861 sqft),
+//          1 bathroom, published since 2026-01-25
 
-// Abu Dhabi only (l=6). Add more cities as needed.
 const LOCATIONS = [
   { l: '6', name: 'Abu Dhabi' },
 ];
 
-// Rent only (c=2)
 const CATEGORIES = [
   { c: '2', name: 'Rent' },
 ];
 
-// All property types — isValidCombo() will filter out invalid ones
+// Apartment only for this task
 const PROPERTY_TYPES = [
   { t: '1', name: 'Apartment' },
-  { t: '2', name: 'Villa Compound' },
-  { t: '3', name: 'Duplex' },
-  { t: '14', name: 'Land' },
-  { t: '20', name: 'Penthouse' },
-  { t: '22', name: 'Townhouse' },
-  { t: '35', name: 'Villa' },
-  { t: '45', name: 'Hotel Apartment' },
 ];
 
-// Bedroom filters — Studio through 7+
+// Studio and 1 Bedroom only
 const BEDROOMS = [
   { 'bdr[]': '0', name: 'Studio' },
   { 'bdr[]': '1', name: '1 Bed' },
-  { 'bdr[]': '2', name: '2 Beds' },
-  { 'bdr[]': '3', name: '3 Beds' },
-  { 'bdr[]': '4', name: '4 Beds' },
-  { 'bdr[]': '5', name: '5+ Beds' },
 ];
+
+// Shared filters applied to every combination
+const SHARED_FILTERS = {
+  rp: 'y',           // Annual rent
+  pf: '50000',       // Min price 50,000 AED
+  pt: '80000',       // Max price 80,000 AED
+  af: '377',         // Min area ~35 sqm (377 sqft)
+  at: '861',         // Max area ~80 sqm (861 sqft)
+  'btr[]': '1',      // 1 bathroom
+};
 
 /**
  * Check if a property type is valid for a given city + category.
@@ -128,7 +127,7 @@ function generateCombinations() {
             c: cat.c,
             t: pt.t,
             'bdr[]': bdr['bdr[]'],
-            rp: 'y',
+            ...SHARED_FILTERS,
           };
           const label = `${loc.name} | ${cat.name} | ${pt.name} | ${bdr.name}`;
           combos.push({ params, label });
