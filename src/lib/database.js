@@ -58,6 +58,10 @@ const SOURCE_ADAPTERS = {
     filter: (item) => item.id && item.purpose,
     getId: (item) => String(item.id),
   },
+  dubizzle: {
+    filter: (item) => item.id && item.price !== undefined,
+    getId: (item) => String(item.id),
+  },
 };
 
 /**
@@ -181,6 +185,7 @@ async function queryListings(source, filters = {}, page = 1, limit = 20) {
 const STATS_FIELDS = {
   pf: { price: '$property.price.value', size: '$property.size.value' },
   bayut: { price: '$price', size: '$area' },
+  dubizzle: { price: '$price', size: '$size' },
 };
 
 async function getStats(source) {
