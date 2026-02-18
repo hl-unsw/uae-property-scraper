@@ -16,6 +16,11 @@ module.exports = {
     // API base — {BUILD_ID} is a placeholder
     apiBase: 'https://www.propertyfinder.ae/search/_next/data/{BUILD_ID}/en/search.json',
   },
+  dubizzle: {
+    pageDelayMs: parseInt(process.env.DUBIZZLE_PAGE_DELAY_MS, 10) || 1000,
+    circuitBreakThreshold: parseInt(process.env.DUBIZZLE_CIRCUIT_BREAK_THRESHOLD, 10) || 50,
+    mode: process.env.DUBIZZLE_MODE || 'incremental',
+  },
   bayut: {
     seedUrl: process.env.BAYUT_SEED_URL || 'https://www.bayut.com/to-rent/apartments/abu-dhabi/',
     headless: process.env.BAYUT_HEADLESS !== 'false',
