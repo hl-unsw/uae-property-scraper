@@ -46,8 +46,23 @@ async function connect() {
 }
 
 /**
+ * Source-specific adapters for validating and transforming raw items.
+ * Each adapter defines how to filter valid items and extract listing_id.
+ */
+const SOURCE_ADAPTERS = {
+  pf: {
+    filter: (item) => item.listing_type === 'property' && item.property?.id,
+    getId: (item) => item.property.id,
+  },
+  bayut: {
+    filter: (item) => item.id && item.purpose,
+    getId: (item) => String(item.id),
+  },
+};
+
+/**
  * Bulk upsert listings into the appropriate collection.
- * Filters out non-property items (e.g. listing_type: "project").
+ * Uses SOURCE_ADAPTERS to handle source-specific filtering and ID extraction.
  */
 async function bulkUpsertListings(source, rawItems) {
   if (!rawItems || rawItems.length === 0) return { inserted: 0, updated: 0 };
@@ -55,21 +70,21 @@ async function bulkUpsertListings(source, rawItems) {
   const collectionName = COLLECTIONS[source];
   if (!collectionName) throw new Error(`Unknown source: ${source}`);
 
-  // Filter: only keep listing_type === 'property' with a valid id
-  const valid = rawItems.filter(
-    (item) => item.listing_type === 'property' && item.property?.id
-  );
+  const adapter = SOURCE_ADAPTERS[source];
+  if (!adapter) throw new Error(`No adapter for source: ${source}`);
+
+  const valid = rawItems.filter(adapter.filter);
 
   if (valid.length === 0) return { inserted: 0, updated: 0 };
 
   const now = new Date();
   const bulkOps = valid.map((item) => ({
     updateOne: {
-      filter: { listing_id: item.property.id },
+      filter: { listing_id: adapter.getId(item) },
       update: {
         $set: {
           ...item,
-          listing_id: item.property.id,
+          listing_id: adapter.getId(item),
           spider_source: source,
           crawled_at: now,
         },
@@ -163,9 +178,15 @@ async function queryListings(source, filters = {}, page = 1, limit = 20) {
 /**
  * Get aggregation stats for dashboard.
  */
+const STATS_FIELDS = {
+  pf: { price: '$property.price.value', size: '$property.size.value' },
+  bayut: { price: '$price', size: '$area' },
+};
+
 async function getStats(source) {
   const collectionName = COLLECTIONS[source];
   const collection = db.collection(collectionName);
+  const fields = STATS_FIELDS[source] || STATS_FIELDS.pf;
 
   const [total, pipeline] = await Promise.all([
     collection.countDocuments(),
@@ -174,10 +195,10 @@ async function getStats(source) {
         {
           $group: {
             _id: null,
-            avgPrice: { $avg: '$property.price.value' },
-            minPrice: { $min: '$property.price.value' },
-            maxPrice: { $max: '$property.price.value' },
-            avgSize: { $avg: '$property.size.value' },
+            avgPrice: { $avg: fields.price },
+            minPrice: { $min: fields.price },
+            maxPrice: { $max: fields.price },
+            avgSize: { $avg: fields.size },
             lastCrawled: { $max: '$crawled_at' },
           },
         },
