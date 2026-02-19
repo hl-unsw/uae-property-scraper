@@ -3,7 +3,6 @@ const path = require('path');
 const config = require('../config');
 const logger = require('../lib/logger');
 const db = require('../lib/database');
-const listingsRouter = require('./routes/listings');
 const targetedRouter = require('./routes/targeted');
 const exchangeRouter = require('./routes/exchange');
 
@@ -13,13 +12,12 @@ const app = express();
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // API routes
-app.use('/api', listingsRouter);
 app.use('/api', targetedRouter);
 app.use('/api/exchange', exchangeRouter);
 
 // SPA fallback
 app.get('{*path}', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+  res.sendFile(path.join(__dirname, '../frontend/targeted.html'));
 });
 
 async function start() {
