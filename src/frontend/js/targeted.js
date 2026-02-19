@@ -95,13 +95,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     resetAndLoad();
   });
 
-  // Score Sliders Listener
+  // Select dropdowns — auto-search on change
+  ['neighborhood', 'source', 'sort'].forEach(id => {
+    document.getElementById(id).addEventListener('change', resetAndLoad);
+  });
+
+  // Score Sliders — update display + debounced auto-search
+  let sliderTimer = null;
   const sliders = ['minScore', 'minVal', 'minSize'];
   sliders.forEach(id => {
     const el = document.getElementById(id);
     if (el) {
       el.addEventListener('input', () => {
         document.getElementById(`${id}-display`).textContent = el.value;
+        clearTimeout(sliderTimer);
+        sliderTimer = setTimeout(resetAndLoad, 400);
       });
     }
   });
@@ -356,7 +364,7 @@ function renderCard(doc) {
         </div>
       </div>
       <div class="listing-price">
-        <span class="currency">${t.currency}</span> ${priceStr} <span class="period">${t.per_year}</span>
+        <span class="currency">${t.currency}</span> <span class="price-num">${priceStr}</span> <span class="period">${t.per_year}</span>
       </div>
       <div class="listing-meta">
         <span>${beds}</span>
