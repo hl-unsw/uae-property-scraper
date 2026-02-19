@@ -63,8 +63,7 @@ const CITY_CATEGORY_TYPE_UNAVAILABLE = {
 };
 
 // ─── Current Task: Abu Dhabi Rent — Studio & 1-Bed Apartments ───
-// Filters: annual rent 50k-80k AED, area 35-80 sqm (~377-861 sqft),
-//          1 bathroom, published since 2026-01-25
+// Filters: annual rent 50k-80k AED, min area 30 sqm (~323 sqft)
 
 const LOCATIONS = [
   { l: '6', name: 'Abu Dhabi' },
@@ -90,9 +89,7 @@ const SHARED_FILTERS = {
   rp: 'y',           // Annual rent
   pf: '50000',       // Min price 50,000 AED
   pt: '80000',       // Max price 80,000 AED
-  af: '377',         // Min area ~35 sqm (377 sqft)
-  at: '861',         // Max area ~80 sqm (861 sqft)
-  'btr[]': '1',      // 1 bathroom
+  af: '323',         // Min area ~30 sqm (323 sqft)
 };
 
 /**

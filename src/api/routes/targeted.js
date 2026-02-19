@@ -1,0 +1,113 @@
+const { Router } = require('express');
+const { MongoClient } = require('mongodb');
+const config = require('../../config');
+
+const router = Router();
+
+let _db = null;
+
+async function getDb() {
+  if (_db) return _db;
+  const client = new MongoClient(config.mongo.uri, { maxPoolSize: 5 });
+  await client.connect();
+  _db = client.db(config.mongo.dbName);
+  return _db;
+}
+
+/**
+ * GET /api/targeted-results?page=1&limit=20&sort=score&neighborhood=&minScore=
+ */
+router.get('/targeted-results', async (req, res) => {
+  try {
+    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit, 10) || 20));
+    const sort = req.query.sort || 'score';
+    const neighborhood = req.query.neighborhood || '';
+    const minScore = parseInt(req.query.minScore, 10) || 0;
+    const source = req.query.source || '';
+
+    // New breakdown filters
+    const minVal = parseInt(req.query.minVal, 10) || 0;
+    const minPark = parseInt(req.query.minPark, 10) || 0;
+    const minUtil = parseInt(req.query.minUtil, 10) || 0;
+    const minSize = parseInt(req.query.minSize, 10) || 0;
+    const minFee = parseInt(req.query.minFee, 10) || 0;
+    const minPay = parseInt(req.query.minPay, 10) || 0;
+
+    const db = await getDb();
+    const col = db.collection('targeted_results');
+
+    // Build filter
+    const filter = {};
+    if (neighborhood) filter.neighborhood_en = neighborhood;
+    if (minScore > 0) filter.score = { $gte: minScore };
+    if (source) filter.source = source;
+
+    // Breakdown filters mapping to score_breakdown fields
+    if (minVal > 0) filter['score_breakdown.value'] = { $gte: minVal };
+    if (minPark > 0) filter['score_breakdown.parking'] = { $gte: minPark };
+    if (minUtil > 0) filter['score_breakdown.utilities'] = { $gte: minUtil };
+    if (minSize > 0) filter['score_breakdown.size_bonus'] = { $gte: minSize };
+    if (minFee > 0) filter['score_breakdown.fees'] = { $gte: minFee };
+    if (minPay > 0) filter['score_breakdown.payment'] = { $gte: minPay };
+
+    // Build sort
+    const sortMap = {
+      score: { score: -1 },
+      price: { price: 1 },
+      price_desc: { price: -1 },
+      size: { size_sqm: -1 },
+      newest: { crawled_at: -1 },
+    };
+    const sortObj = sortMap[sort] || sortMap.score;
+
+    const skip = (page - 1) * limit;
+    const [docs, total, neighborhoods, stats, allPrices] = await Promise.all([
+      col.find(filter).sort(sortObj).skip(skip).limit(limit).toArray(),
+      col.countDocuments(filter),
+      col.distinct('neighborhood_en'),
+      col.aggregate([
+        { $match: filter },
+        {
+          $group: {
+            _id: null,
+            avgScore: { $avg: '$score' },
+            maxScore: { $max: '$score' },
+            minScore: { $min: '$score' },
+          },
+        },
+      ]).toArray(),
+      col.find(filter, { projection: { price: 1 } }).sort({ price: 1 }).toArray(),
+    ]);
+
+    // Calculate median price
+    let medianPrice = 0;
+    if (allPrices.length > 0) {
+      const mid = Math.floor(allPrices.length / 2);
+      medianPrice = allPrices.length % 2 !== 0
+        ? allPrices[mid].price
+        : (allPrices[mid - 1].price + allPrices[mid].price) / 2;
+    }
+
+    const s = stats[0] || { avgScore: 0, maxScore: 0, minScore: 0 };
+
+    res.json({
+      docs,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+      neighborhoods: neighborhoods.sort(),
+      stats: {
+        avgScore: Math.round(s.avgScore || 0),
+        medianPrice: Math.round(medianPrice),
+        maxScore: s.maxScore || 0,
+        minScore: s.minScore || 0,
+        neighborhoodCount: neighborhoods.length,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+module.exports = router;

@@ -349,6 +349,126 @@ h2 {
   color: #aaa;
 }
 
+/* ─── Score Badges & Targeted Page ────────────── */
+
+.score-badge {
+  font-size: 13px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.score-high { background: #1a4d2e; color: #4ecd6a; }
+.score-mid  { background: #4d4a1a; color: #cdc44e; }
+.score-low  { background: #4d1a1a; color: #cd4e4e; }
+
+.header-badges {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.feature-icons {
+  display: flex;
+  gap: 4px;
+}
+
+.feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: #252836;
+  color: #4ecdc4;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: help;
+}
+
+.location-zh {
+  color: #4ecdc4;
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.location-en {
+  color: #888;
+  font-size: 12px;
+}
+
+.score-detail {
+  margin: 10px 0;
+  padding: 10px;
+  background: #151720;
+  border-radius: 8px;
+}
+
+.score-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+
+.score-bar-row:last-child { margin-bottom: 0; }
+
+.score-bar-label {
+  width: 45px;
+  color: #888;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.score-bar-track {
+  flex: 1;
+  height: 6px;
+  background: #252836;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.score-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2a9d8f, #4ecdc4);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.score-bar-pts {
+  width: 36px;
+  color: #666;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.nav-link {
+  color: #4ecdc4;
+  text-decoration: none;
+  font-size: 13px;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+.nav-link:hover { text-decoration: underline; }
+
+.range-display {
+  color: #4ecdc4;
+  font-weight: 600;
+  font-size: 14px;
+  margin-left: 8px;
+}
+
+.filter-group input[type="range"] {
+  width: 100%;
+  accent-color: #4ecdc4;
+}
+
 /* ─── Empty / Loading States ───────────────────── */
 
 .empty-state {
