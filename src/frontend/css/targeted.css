@@ -1,0 +1,663 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap');
+
+/* ═══════════════════════════════════════════════
+   RESET & DESIGN TOKENS
+   Gucci: geometric precision, zero-decoration
+   JLC:   warm dark palette, Gotham numerals
+   BBC:   tight serif headlines, clear hierarchy
+   ═══════════════════════════════════════════════ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #f7f4f0;
+  --bg-card: #ffffff;
+  --bg-warm: #f3f1ed;              /* JLC button cream */
+  --bg-dark: #1a1a1a;
+  --border: #e8e2d9;
+  --border-light: #f0ebe3;
+  --text: #3a3935;                 /* JLC warm dark */
+  --text-strong: #1a1a1a;
+  --text-secondary: #5a5753;
+  --text-muted: #8a8884;
+  --text-inverse: #f7f4f0;
+  --gold: #9b7e4b;
+  --gold-light: #c5a66e;
+  --score-high: #4a6a4a;
+  --score-high-bg: #ecf2ec;
+  --score-mid: #7a6a3a;
+  --score-mid-bg: #f2eee2;
+  --score-low: #8a5a4a;
+  --score-low-bg: #f2e6e0;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --num: 'Outfit', 'Source Sans 3', sans-serif;  /* Gotham-like geometric for numbers */
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+body {
+  font-family: var(--sans);
+  font-size: 15px;                 /* JLC 15px base */
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.667;             /* JLC 25/15 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════════════
+   TOP BAR — Dark nav (Gucci/LV), tall (JLC 116px feel)
+   ═══════════════════════════════════════════════ */
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 48px;
+  background: var(--bg-dark);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.back-link {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 16px;
+  transition: color 0.4s var(--ease);
+}
+
+.back-link:hover { color: var(--text-inverse); }
+
+.brand h1 {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 400;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--text-inverse);
+}
+
+.stats-inline {
+  display: flex;
+  gap: 44px;
+  align-items: center;
+}
+
+.stat-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.stat-item .v {
+  font-family: var(--num);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--gold-light);
+}
+
+.stat-item .l {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #8a8a8a;
+  font-weight: 400;
+}
+
+.top-meta-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.top-meta {
+  font-size: 10px;
+  color: #8a8a8a;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* ─── Language Switcher ──────────────────────── */
+
+.lang-switcher {
+  display: flex;
+  gap: 0;
+}
+
+.lang-btn {
+  padding: 4px 10px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  background: transparent;
+  color: #666;
+  border: 1px solid #444;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+}
+
+.lang-btn:first-child {
+  border-right: none;
+}
+
+.lang-btn.active {
+  background: var(--text-inverse);
+  color: var(--bg-dark);
+  border-color: var(--text-inverse);
+}
+
+.lang-btn:not(.active):hover {
+  color: #aaa;
+  border-color: #666;
+}
+
+/* ═══════════════════════════════════════════════
+   FILTERS — Clean white (JLC cream accents)
+   ═══════════════════════════════════════════════ */
+
+.filters {
+  padding: 36px 48px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.filter-row {
+  display: flex;
+  gap: 24px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.main-filters {
+  margin-bottom: 24px;
+}
+
+.score-filters {
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+  display: flex !important;
+  align-items: flex-end;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.filter-group label,
+.filter-group-sm label,
+.filter-group-toggle label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.filter-group select {
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-size: 13px;
+  font-family: var(--sans);
+  font-weight: 400;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%238a8884' fill='none' stroke-width='0.8'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  border-radius: 0;
+  cursor: pointer;
+  transition: border-color 0.4s var(--ease);
+}
+
+.filter-group select:focus {
+  outline: none;
+  border-bottom-color: var(--text);
+}
+
+/* ─── Range Sliders ──────────────────────────── */
+
+.filter-group-sm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 130px;
+}
+
+.filter-group-sm label {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.filter-group-sm label span:not(.label-hint) {
+  color: var(--gold);
+  font-weight: 500;
+  font-size: 13px;
+  font-family: var(--num);
+}
+
+.label-hint {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+}
+
+.filter-group input[type="range"],
+.filter-group-sm input[type="range"] {
+  width: 100%;
+  height: 1px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--border);
+  outline: none;
+  margin-top: 4px;
+}
+
+.filter-group input[type="range"]::-webkit-slider-thumb,
+.filter-group-sm input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 0 3px var(--bg-card), 0 0 0 4px var(--border);
+}
+
+/* ─── Toggle Pills — JLC warm cream inactive ── */
+
+.filter-group-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toggle-pills {
+  display: flex;
+  gap: 0;
+}
+
+.toggle-pills .pill {
+  padding: 7px 16px;
+  font-size: 12px;
+  font-family: var(--sans);
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  border: 1px solid var(--border);
+  background: var(--bg-warm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.35s var(--ease);
+  white-space: nowrap;
+}
+
+.toggle-pills .pill:first-child {
+  border-right: none;
+}
+
+.toggle-pills .pill.active {
+  background: var(--bg-dark);
+  color: var(--text-inverse);
+  border-color: var(--bg-dark);
+}
+
+.toggle-pills .pill:not(.active):hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════════
+   RESULTS GRID
+   ═══════════════════════════════════════════════ */
+
+.results {
+  padding: 48px 48px 120px;
+}
+
+.listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 24px;
+}
+
+/* ═══════════════════════════════════════════════
+   LISTING CARD — Gucci zero-decoration at rest
+   ═══════════════════════════════════════════════ */
+
+.listing-card {
+  background: var(--bg-card);
+  border: none;
+  padding: 28px 28px 24px;
+  transition: box-shadow 0.5s var(--ease), transform 0.5s var(--ease);
+}
+
+.listing-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.listing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+/* ─── Title — BBC tight serif ────────────────── */
+
+.listing-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.3px;          /* BBC negative tracking */
+  color: var(--text-strong);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.listing-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.35s var(--ease);
+}
+
+.listing-title a:hover {
+  color: var(--gold);
+}
+
+.header-badges {
+  flex-shrink: 0;
+}
+
+/* ─── Score Badge ────────────────────────────── */
+
+.score-badge {
+  font-family: var(--num);
+  font-size: 16px;
+  font-weight: 400;
+  padding: 2px 0;
+  white-space: nowrap;
+  min-width: 28px;
+  text-align: center;
+}
+
+.score-high {
+  color: var(--gold);
+  border-bottom: 2px solid var(--gold);
+}
+
+.score-mid {
+  color: var(--score-mid);
+  border-bottom: 2px solid var(--score-mid);
+}
+
+.score-low {
+  color: var(--text-muted);
+  border-bottom: 2px solid var(--border);
+}
+
+/* ─── Price — Outfit geometric numerals (JLC Gotham feel) */
+
+.listing-price {
+  margin-bottom: 14px;
+  line-height: 1;
+}
+
+.listing-price .currency {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  vertical-align: baseline;
+}
+
+.listing-price .price-num {
+  font-family: var(--num);
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--text-strong);
+  letter-spacing: -0.5px;          /* Gucci tight tracking on numbers */
+}
+
+.listing-price .period {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-left: 4px;
+}
+
+/* ─── Meta Row ────────────────────────────────── */
+
+.listing-meta {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: 0.3px;
+}
+
+.listing-meta .date {
+  color: var(--text-muted);
+}
+
+/* ─── Feature Icons ──────────────────────────── */
+
+.feature-icons {
+  display: flex;
+  gap: 5px;
+}
+
+.feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  color: var(--gold);
+  font-size: 9px;
+  font-weight: 600;
+  font-family: var(--sans);
+  cursor: help;
+  transition: border-color 0.3s var(--ease);
+}
+
+.listing-card:hover .feature-icon {
+  border-color: var(--gold);
+}
+
+/* ─── Location ────────────────────────────────── */
+
+.listing-location {
+  font-size: 12px;
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+.location-main {
+  color: var(--text);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.location-sub {
+  color: var(--text-muted);
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+/* ─── Score Detail ───────────────────────────── */
+
+.score-detail {
+  padding: 14px 0 0;
+  border-top: 1px solid var(--border-light);
+}
+
+.score-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.score-bar-row:last-child {
+  margin-bottom: 0;
+}
+
+.score-bar-label {
+  width: 52px;
+  color: var(--text-muted);
+  text-align: right;
+  flex-shrink: 0;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+}
+
+.score-bar-track {
+  flex: 1;
+  height: 2px;
+  background: var(--border-light);
+  overflow: hidden;
+}
+
+.score-bar-fill {
+  height: 100%;
+  background: var(--gold);
+  transition: width 0.6s var(--ease);
+}
+
+.score-bar-pts {
+  width: 36px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-family: var(--num);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   SCROLL / LOADING / STATES
+   ═══════════════════════════════════════════════ */
+
+.scroll-sentinel {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0 24px;
+  min-height: 40px;
+}
+
+.scroll-loading {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--border);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.scroll-loading.visible {
+  display: block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 120px 20px;
+  color: var(--text-muted);
+}
+
+.empty-state h3 {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;          /* BBC tight serif */
+}
+
+.empty-state p {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.loading {
+  text-align: center;
+  padding: 100px;
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.pagination-container {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .top-bar {
+    flex-direction: column;
+    padding: 16px 20px;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .brand h1 {
+    font-size: 16px;
+    letter-spacing: 3px;
+  }
+
+  .stats-inline { gap: 20px; }
+  .stat-item .v { font-size: 18px; }
+  .top-meta-group { display: none; }
+
+  .filters { padding: 24px 20px; }
+  .filter-row { flex-direction: column; gap: 16px; }
+  .score-filters { flex-direction: column; gap: 16px; }
+
+  .results { padding: 24px 20px 80px; }
+  .listings-grid { grid-template-columns: 1fr; gap: 16px; }
+  .listing-card { padding: 22px; }
+  .listing-price .price-num { font-size: 24px; }
+}

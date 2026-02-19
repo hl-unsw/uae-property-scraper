@@ -14,7 +14,7 @@ const BEDROOMS = [
 ];
 
 const PRICE_RANGE = {
-  price_min: '60000',
+  price_min: '50000',
   price_max: '80000',
 };
 
@@ -29,7 +29,7 @@ function generateCombinations() {
       ...PRICE_RANGE,
       beds_in: bdr.beds_in,
     },
-    label: `Abu Dhabi | Rent | Apartment | ${bdr.name} | 60k-80k AED`,
+    label: `Abu Dhabi | Rent | Apartment | ${bdr.name} | 50k-80k AED`,
   }));
 }
 

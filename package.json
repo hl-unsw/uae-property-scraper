@@ -20,7 +20,8 @@
     "scrape:dubizzle:incremental": "DUBIZZLE_MODE=incremental node src/scraper-dubizzle/index.js",
     "scrape:bayut:full": "BAYUT_MODE=full node src/scraper-bayut/index.js",
     "scrape:bayut:incremental": "BAYUT_MODE=incremental node src/scraper-bayut/index.js",
-    "scrape:bayut:debug": "BAYUT_MODE=full BAYUT_HEADLESS=false node src/scraper-bayut/index.js"
+    "scrape:bayut:debug": "BAYUT_MODE=full BAYUT_HEADLESS=false node src/scraper-bayut/index.js",
+    "search:targeted": "node src/scripts/targeted-search.js"
   },
   "keywords": [
     "uae",
