@@ -55,7 +55,7 @@ Paginated search over locally stored listings.
 |-----------|------|---------|-------------|---------|
 | `page` | integer | `1` | Page number (1-indexed) | `page=3` |
 | `limit` | integer | `20` | Results per page (max recommended: 100) | `limit=50` |
-| `source` | string | `pf` | Data source collection | `pf`, `dubizzle`, `bayut` |
+| `source` | string | `all` | Data source: `all` (mix all 3 platforms), `pf`, `bayut`, `dubizzle` | `source=all` |
 | `minPrice` | integer | — | Minimum price (AED, inclusive) | `minPrice=30000` |
 | `maxPrice` | integer | — | Maximum price (AED, inclusive) | `maxPrice=80000` |
 | `bedrooms` | string | — | Bedroom count. `0` = Studio | `bedrooms=2` |
@@ -63,52 +63,75 @@ Paginated search over locally stored listings.
 | `search` | string | — | Keyword search (regex on title, case-insensitive) | `search=Corniche` |
 
 **Response:**
+
+When `source=all` (default), listings from all 3 platforms are mixed and sorted by `crawled_at` descending. Each doc is **normalized** to a common shape regardless of source:
+
 ```json
 {
-  "docs": [ ...listing objects... ],
-  "total": 1139,
+  "docs": [
+    {
+      "_id": "...",
+      "listing_id": "10768666",
+      "source": "bayut",
+      "title": "A Premium Residence | Full Facilities",
+      "price": 80000,
+      "size": 6,
+      "bedrooms": "1",
+      "furnished": "unfurnished",
+      "location": "Al Reem Island, Shams Abu Dhabi",
+      "url": "https://www.bayut.com/property/details-10768666.html",
+      "crawled_at": "2026-02-19T09:37:38.480Z"
+    }
+  ],
+  "total": 567,
   "page": 1,
-  "totalPages": 57
+  "totalPages": 114
 }
 ```
 
+The `source` field on each doc indicates which platform it came from (`pf`, `bayut`, or `dubizzle`).
+
 ### GET /api/stats
 
-Aggregate statistics for a data source.
+Aggregate statistics. When `source=all`, aggregates across all 3 platforms using weighted averages.
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `source` | string | `pf` | Data source: `pf`, `dubizzle`, `bayut` |
+| `source` | string | `all` | Data source: `all`, `pf`, `bayut`, `dubizzle` |
 
 **Response:**
 ```json
 {
-  "totalListings": 341,
-  "avgPrice": 85000,
-  "minPrice": 18000,
-  "maxPrice": 950000,
-  "avgSize": 1200,
-  "lastCrawled": "2026-02-17T19:17:11.313Z"
+  "totalListings": 567,
+  "avgPrice": 71480,
+  "minPrice": 52000,
+  "maxPrice": 80000,
+  "avgSize": 35,
+  "lastCrawled": "2026-02-19T09:37:38.480Z",
+  "medianPrice": 72411,
+  "priceP25": 65000,
+  "priceP75": 75000,
+  "medianPricePerSqm": 6641,
+  "medianDaysOnMarket": 1
 }
 ```
 
 ### GET /api/bedrooms
 
-Bedroom count distribution for charts.
+Bedroom count distribution for charts. When `source=all`, merges counts across all platforms and normalizes "studio" → "0".
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `source` | string | `pf` | Data source: `pf`, `dubizzle`, `bayut` |
+| `source` | string | `all` | Data source: `all`, `pf`, `bayut`, `dubizzle` |
 
 **Response:**
 ```json
 [
-  { "_id": "0", "count": 45 },
-  { "_id": "1", "count": 120 },
-  { "_id": "2", "count": 89 }
+  { "_id": "0", "count": 272 },
+  { "_id": "1", "count": 295 }
 ]
 ```
-Note: `_id` is the bedroom count as string. `"0"` = Studio, `"studio"` may also appear.
+Note: `_id` is the bedroom count as string. `"0"` = Studio. PropertyFinder uses `"studio"` internally but it is normalized to `"0"` when merging across sources.
 
 ---
 

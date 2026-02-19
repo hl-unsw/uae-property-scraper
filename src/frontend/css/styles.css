@@ -220,6 +220,22 @@ h2 {
   gap: 16px;
 }
 
+/* ─── Source Badges ────────────────────────────── */
+
+.source-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.source-pf { background: #1e3a5f; color: #5b9bd5; }
+.source-bayut { background: #3a1e5f; color: #b55bd5; }
+.source-dubizzle { background: #1e5f3a; color: #5bd59b; }
+
 /* ─── Listing Card ─────────────────────────────── */
 
 .listing-card {
@@ -234,16 +250,28 @@ h2 {
   border-color: #4ecdc4;
 }
 
+.listing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.listing-header .listing-title {
+  margin-bottom: 0;
+}
+
 .listing-title {
   font-size: 15px;
   font-weight: 600;
   color: #fff;
-  margin-bottom: 8px;
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  min-width: 0;
 }
 
 .listing-title a {

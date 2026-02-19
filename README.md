@@ -38,7 +38,7 @@
 ┌─────────────────────────────┼───────────────────────────────────────┐
 │              Express API 服务器                                      │
 │  GET /api/listings    GET /api/stats    GET /api/bedrooms            │
-│  (支持 source=pf | bayut | dubizzle 切换数据源)                      │
+│  (默认混合三平台 source=all，可切换 pf | bayut | dubizzle)          │
 └─────────────────────────────┬───────────────────────────────────────┘
                               │
                    ┌──────────▼──────────┐
@@ -58,7 +58,7 @@
 - **优雅停机**：捕获 SIGINT/SIGTERM 信号，排空队列后再退出
 - **结构化日志**：通过 pino 输出 JSON 日志，包含请求统计
 - **MongoDB 批量 upsert**：按 listing ID 去重，`ordered: false` 容错
-- **仪表盘**：深色主题 Web 界面，支持切换三个数据源，包含统计卡片、卧室分布图、筛选器、分页
+- **统一仪表盘**：深色主题 Web 界面，默认混合显示三平台数据，每条房源标注来源徽章（PropertyFinder / Bayut / Dubizzle），支持按平台筛选、统计卡片、卧室分布图、价格/关键词/装修筛选、分页
 
 ## 前置条件
 
@@ -165,9 +165,9 @@ src/
 
 | 接口 | 说明 |
 |------|------|
-| `GET /api/listings?page=1&limit=20&source=pf&minPrice=&maxPrice=&bedrooms=&furnished=&search=` | 分页房源搜索（`source`: `pf`/`bayut`/`dubizzle`） |
-| `GET /api/stats?source=pf` | 聚合统计（总数、均价、价格区间、平均面积） |
-| `GET /api/bedrooms?source=pf` | 卧室数量分布 |
+| `GET /api/listings?page=1&limit=20&source=all&minPrice=&maxPrice=&bedrooms=&furnished=&search=` | 分页房源搜索（`source`: `all`/`pf`/`bayut`/`dubizzle`，默认 `all` 混合三平台） |
+| `GET /api/stats?source=all` | 聚合统计（总数、均价、中位数、单位价、IQR、在架天数、平均面积等；默认 `all`） |
+| `GET /api/bedrooms?source=all` | 卧室数量分布（默认 `all`，自动合并三平台的开间/1室等分类） |
 
 详细参数说明见 [docs/API_QUERY_REFERENCE.md](docs/API_QUERY_REFERENCE.md)。
 

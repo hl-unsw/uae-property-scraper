@@ -8,7 +8,7 @@ const router = Router();
  */
 router.get('/listings', async (req, res) => {
   try {
-    const { page = 1, limit = 20, source = 'pf', ...filters } = req.query;
+    const { page = 1, limit = 20, source = 'all', ...filters } = req.query;
     const result = await db.queryListings(
       source,
       filters,
@@ -26,7 +26,7 @@ router.get('/listings', async (req, res) => {
  */
 router.get('/stats', async (req, res) => {
   try {
-    const source = req.query.source || 'pf';
+    const source = req.query.source || 'all';
     const stats = await db.getStats(source);
     res.json(stats);
   } catch (err) {
@@ -39,7 +39,7 @@ router.get('/stats', async (req, res) => {
  */
 router.get('/bedrooms', async (req, res) => {
   try {
-    const source = req.query.source || 'pf';
+    const source = req.query.source || 'all';
     const data = await db.getBedroomDistribution(source);
     res.json(data);
   } catch (err) {
