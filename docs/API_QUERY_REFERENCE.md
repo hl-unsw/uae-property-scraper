@@ -1,6 +1,45 @@
 # API Query Parameter Reference
 
-This document is the single source of truth for all query parameters across both layers of the system. Designed for AI agents to translate natural language into correct API calls.
+This document is the single source of truth for all query parameters across all layers of the system — the local dashboard API and all three upstream scraper APIs (PropertyFinder, Bayut, Dubizzle). Designed for AI agents to translate natural language into correct API calls.
+
+---
+
+## Platform Comparison
+
+| | PropertyFinder | Bayut | Dubizzle |
+|--|----------------|-------|----------|
+| **Technique** | Next.js data API (HTTP) | Playwright + SSR extraction | Direct Algolia HTTP API |
+| **Anti-bot** | BuildID rotation | Humbucker WAF (`/captchaChallenge`) | Imperva Incapsula (website only; API is open) |
+| **Data source** | `_next/data/{BUILD_ID}/en/search.json` | `window.state.algolia.content` | `wd0ptz13zs-dsn.algolia.net` |
+| **Browser needed** | No | Yes (Playwright, headed recommended) | No |
+| **Speed** | ~1 min | ~2 min (incl. challenge) | ~7 sec |
+| **DB collection** | `propertyfinder_raw` | `bayut_raw` | `dubizzle_raw` |
+| **Listing ID** | `item.property.id` | `String(item.id)` | `String(item.id)` |
+| **Price field** | `property.price.value` | `price` | `price` |
+| **Size field** | `property.size.value` | `area` | `size` (sqft) |
+| **Pagination** | 1-indexed `?page=N` | 1-indexed `?page=N` | 0-indexed Algolia `page` param |
+
+---
+
+## Quick Start
+
+```bash
+# PropertyFinder
+npm run scrape:incremental       # incremental (daily)
+npm run scrape:full              # full crawl
+
+# Bayut (requires Playwright browser)
+npm run scrape:bayut:incremental # incremental
+npm run scrape:bayut:full        # full crawl
+npm run scrape:bayut:debug       # full crawl, headed mode (visible browser)
+
+# Dubizzle (fastest — pure HTTP)
+npm run scrape:dubizzle:incremental  # incremental
+npm run scrape:dubizzle:full         # full crawl
+
+# Dashboard
+npm run server                   # http://localhost:3000
+```
 
 ---
 
@@ -73,7 +112,7 @@ Note: `_id` is the bedroom count as string. `"0"` = Studio, `"studio"` may also 
 
 ---
 
-## Layer 2: Property Finder Upstream API (Scraper)
+## Layer 2: PropertyFinder Upstream API
 
 This is the external API the scraper calls to fetch raw data from propertyfinder.ae.
 
@@ -347,56 +386,263 @@ Meaning: "Within 45 minutes driving distance from coordinates 24.4962, 54.4085"
 
 ---
 
+## Layer 3: Bayut Upstream API (Scraper)
+
+Bayut uses a custom SSR framework (not Next.js or Nuxt). Search data is server-rendered into a `<script>` tag that populates `window.state.algolia.content`. The scraper uses Playwright to load pages and extract this embedded data. No direct Algolia API access is available — the API key is not exposed client-side.
+
+### Anti-Bot: Humbucker WAF
+
+Bayut is protected by the Humbucker WAF. On first visit (or when sessions expire), the browser is redirected to `/captchaChallenge`.
+
+| Behavior | Details |
+|----------|---------|
+| Challenge URL | `https://www.bayut.com/captchaChallenge?...` |
+| Auto-resolve | ~20 seconds in headed mode (JavaScript challenge) |
+| Manual fallback | If auto-resolve fails, 5-minute timeout (`CHALLENGE_WAIT_MS = 300,000`) for manual CAPTCHA |
+| Max re-challenges | Configurable via `BAYUT_MAX_RECHALLENGE` (default: `3`) |
+| Memory management | Browser context restarts every 50 pages to prevent leaks |
+
+### URL Construction
+
+**Base URL:** `https://www.bayut.com{path}?{query}`
+
+The search path encodes the property type and city:
+
+| Path | Meaning |
+|------|---------|
+| `/to-rent/apartments/abu-dhabi/` | Apartments for rent in Abu Dhabi |
+| `/to-rent/studio-apartments/abu-dhabi/` | Studio apartments (via `beds_in=0` URL rewrite) |
+| `/for-sale/villas/dubai/` | Villas for sale in Dubai |
+
+### Query Parameters
+
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `beds_in` | integer | Bedroom count. `0` = Studio | `beds_in=1` |
+| `price_min` | integer | Minimum price (AED, annual) | `price_min=60000` |
+| `price_max` | integer | Maximum price (AED, annual) | `price_max=80000` |
+| `page` | integer | Page number (1-indexed; omit for page 1) | `page=3` |
+
+**Note:** When `beds_in=0` (Studio), Bayut rewrites the URL path from `/apartments/` to `/studio-apartments/`. The scraper handles this automatically.
+
+### SSR Data Extraction
+
+After page load, the scraper extracts data from `window.state.algolia.content`:
+
+```javascript
+const content = await page.evaluate(() => {
+  const c = window.state?.algolia?.content;
+  return c ? { hits: c.hits, nbHits: c.nbHits, nbPages: c.nbPages } : null;
+});
+```
+
+**Response fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `hits` | array | Array of listing objects |
+| `nbHits` | integer | Total number of matching listings |
+| `nbPages` | integer | Total number of pages |
+
+**Key fields per listing hit:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | integer | Unique listing ID |
+| `price` | number | Annual rent price (AED) |
+| `area` | number | Size in sqft |
+| `bedrooms` | integer | Number of bedrooms (0 = Studio) |
+| `bathrooms` | integer | Number of bathrooms |
+| `title` | string | Listing title |
+| `location` | object | Location hierarchy |
+
+### Bayut Configuration (Environment Variables)
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `BAYUT_SEED_URL` | `https://www.bayut.com/to-rent/apartments/abu-dhabi/` | Initial URL to trigger Humbucker challenge |
+| `BAYUT_HEADLESS` | `true` | Run browser in headless mode (`false` for debugging) |
+| `BAYUT_PAGE_DELAY_MS` | `5000` | Delay between page fetches (ms) |
+| `BAYUT_MAX_RECHALLENGE` | `3` | Max captcha re-challenge attempts before aborting |
+| `BAYUT_CIRCUIT_BREAK_THRESHOLD` | `50` | Stop after N consecutive duplicate listings (incremental mode) |
+| `BAYUT_MODE` | `incremental` | Scrape mode: `full` or `incremental` |
+
+---
+
+## Layer 4: Dubizzle Upstream API (Scraper)
+
+Dubizzle's frontend is built on Next.js, but the underlying search data comes from Algolia. The scraper calls the Algolia API directly — no browser needed. The Algolia API key is index-restricted (only residential and flatmates indexes are accessible).
+
+### Algolia Endpoint
+
+**Method:** POST
+**URL:** `https://wd0ptz13zs-dsn.algolia.net/1/indexes/*/queries`
+
+**Authentication (query parameters):**
+
+| Parameter | Value |
+|-----------|-------|
+| `x-algolia-api-key` | `REDACTED_ALGOLIA_API_KEY` |
+| `x-algolia-application-id` | `REDACTED_ALGOLIA_APP_ID` |
+
+**Headers:**
+
+| Header | Value |
+|--------|-------|
+| `content-type` | `application/json` |
+
+### Request Body Structure
+
+```json
+{
+  "requests": [
+    {
+      "indexName": "by_verification_feature_asc_property-for-rent-residential.com",
+      "params": "page=0&hitsPerPage=50&filters=...&attributesToRetrieve=[...]&attributesToHighlight=[]"
+    }
+  ]
+}
+```
+
+The `params` field is a URL-encoded query string with the following keys:
+
+| Key | Type | Description | Example |
+|-----|------|-------------|---------|
+| `page` | integer | Page number (**0-indexed**) | `0` (first page) |
+| `hitsPerPage` | integer | Results per page (max 1000) | `50` |
+| `filters` | string | Algolia filter expression (see below) | See Filter Syntax |
+| `attributesToRetrieve` | JSON array | Fields to include in response | See Attributes List |
+| `attributesToHighlight` | JSON array | Fields to highlight (set to `[]`) | `[]` |
+
+### Filter Syntax
+
+Filters use Algolia's SQL-like syntax. All clauses are joined with `AND`:
+
+```
+(city.id=3) AND (categories.ids=24) AND (bedrooms=0) AND (price>=60000) AND (price<=80000)
+```
+
+| Filter | Values | Description |
+|--------|--------|-------------|
+| `city.id` | `2` = Dubai, `3` = Abu Dhabi | City identifier |
+| `categories.ids` | `24` = Apartment/Flat | Property category |
+| `bedrooms` | `0` = Studio, `1` = 1-Bed, etc. | Bedroom count |
+| `price` | integer | Price in AED (supports `>=` and `<=`) |
+
+### Attributes to Retrieve
+
+The full list of fields requested from the Algolia API:
+
+```
+id, external_id, uuid, objectID, name, price, payment_frequency,
+bedrooms, bathrooms, size, plot_area, furnished, completion_status,
+neighborhoods, city, _geoloc, categories,
+absolute_url, short_url, photos, photos_count,
+agent, agent_profile, listed_by,
+property_reference, property_info, building,
+is_verified, is_premium_ad, featured_listing,
+added, description_short,
+has_whatsapp_number, has_video_url, has_tour_url,
+amenities_v2
+```
+
+**Key fields per listing hit:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | integer | Unique listing ID |
+| `price` | number | Annual rent price (AED) |
+| `size` | number | Size in sqft |
+| `bedrooms` | integer | Number of bedrooms (0 = Studio) |
+| `bathrooms` | integer | Number of bathrooms |
+| `name` | string | Listing title |
+| `neighborhoods` | object | Location/area info |
+| `amenities_v2` | array | Amenities list (e.g. `covered_parking`) |
+| `furnished` | boolean | Furnished status |
+
+### Response Structure
+
+```json
+{
+  "results": [
+    {
+      "hits": [ ...listing objects... ],
+      "nbHits": 1234,
+      "nbPages": 25,
+      "page": 0,
+      "hitsPerPage": 50
+    }
+  ]
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `results[0].hits` | array | Array of listing objects |
+| `results[0].nbHits` | integer | Total matching listings |
+| `results[0].nbPages` | integer | Total pages available |
+| `results[0].page` | integer | Current page (0-indexed) |
+
+### Dubizzle Configuration (Environment Variables)
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DUBIZZLE_PAGE_DELAY_MS` | `1000` | Delay between page fetches (ms) |
+| `DUBIZZLE_CIRCUIT_BREAK_THRESHOLD` | `50` | Stop after N consecutive duplicate listings (incremental mode) |
+| `DUBIZZLE_MODE` | `incremental` | Scrape mode: `full` or `incremental` |
+
+---
+
 ## Natural Language Mapping Guide
 
 This section helps AI agents translate human queries to parameters.
 
 ### Location Synonyms
 
-| User might say | Parameter |
-|----------------|-----------|
-| "Abu Dhabi", "AD", "阿布达比" | `l=6` |
-| "Dubai", "迪拜" | `l=1` |
-| "Sharjah", "沙迦" | `l=4` |
-| "Ras Al Khaimah", "RAK" | `l=3` |
-| "Ajman", "阿治曼" | `l=2` |
-| "Fujairah", "富查伊拉" | `l=7` |
+| User might say | PropertyFinder `l` | Dubizzle `city.id` |
+|----------------|--------------------|--------------------|
+| "Abu Dhabi", "AD", "阿布达比" | `l=6` | `city.id=3` |
+| "Dubai", "迪拜" | `l=1` | `city.id=2` |
+| "Sharjah", "沙迦" | `l=4` | — |
+| "Ras Al Khaimah", "RAK" | `l=3` | — |
+| "Ajman", "阿治曼" | `l=2` | — |
+| "Fujairah", "富查伊拉" | `l=7` | — |
+
+Note: Bayut uses URL path segments for location (e.g. `/abu-dhabi/`, `/dubai/`).
 
 ### Property Type Synonyms
 
-| User might say | Parameter |
-|----------------|-----------|
-| "apartment", "flat", "公寓", "apt" | `t=1` |
-| "villa", "别墅", "独栋" | `t=35` |
-| "townhouse", "联排", "排屋" | `t=22` |
-| "penthouse", "顶层", "顶楼" | `t=20` |
-| "hotel apartment", "酒店式公寓" | `t=45` |
-| "studio", "单间", "开间" | `t=1` + `bdr[]=0` |
-| "duplex", "复式" | `t=3` |
+| User might say | PropertyFinder `t` | Dubizzle `categories.ids` |
+|----------------|--------------------|----|
+| "apartment", "flat", "公寓", "apt" | `t=1` | `24` |
+| "villa", "别墅", "独栋" | `t=35` | — |
+| "townhouse", "联排", "排屋" | `t=22` | — |
+| "penthouse", "顶层", "顶楼" | `t=20` | — |
+| "hotel apartment", "酒店式公寓" | `t=45` | — |
+| "studio", "单间", "开间" | `t=1` + `bdr[]=0` | `24` + `bedrooms=0` |
+| "duplex", "复式" | `t=3` | — |
+
+Note: Bayut uses URL path segments for property type (e.g. `/apartments/`, `/villas/`).
 
 ### Bedroom Synonyms
 
-| User might say | Parameter |
-|----------------|-----------|
-| "studio", "单间", "开间", "0 bedroom" | `bdr[]=0` |
-| "1 bed", "one bedroom", "一居", "一房" | `bdr[]=1` |
-| "2 bed", "two bedroom", "两居", "两房" | `bdr[]=2` |
-| "3 bed", "three bedroom", "三居", "三房" | `bdr[]=3` |
-| "1-2 bedrooms" | `bdr[]=1&bdr[]=2` |
-| "3 bedrooms or more", "3+" | `bdr[]=3&bdr[]=4&bdr[]=5&bdr[]=6&bdr[]=7&bdr[]=8` |
+| User might say | PropertyFinder | Bayut | Dubizzle |
+|----------------|----------------|-------|----------|
+| "studio", "单间", "0 bedroom" | `bdr[]=0` | `beds_in=0` | `bedrooms=0` |
+| "1 bed", "一居", "一房" | `bdr[]=1` | `beds_in=1` | `bedrooms=1` |
+| "2 bed", "两居", "两房" | `bdr[]=2` | `beds_in=2` | `bedrooms=2` |
+| "3 bed", "三居", "三房" | `bdr[]=3` | `beds_in=3` | `bedrooms=3` |
+| "1-2 bedrooms" | `bdr[]=1&bdr[]=2` | N/A (single value) | N/A (single value) |
 
 ### Price Synonyms
 
-| User might say | Parameters |
-|----------------|------------|
-| "under 50k", "50000以下", "below 50000" | `pt=50000` |
-| "above 80k", "80000以上", "at least 80000" | `pf=80000` |
-| "30k to 60k", "3万到6万" | `pf=30000&pt=60000` |
-| "budget", "cheap", "便宜" | `ob=pa` (sort low to high) |
-| "expensive", "luxury", "高端" | `ob=pd` (sort high to low) |
-| "monthly rent" | `rp=m` |
-| "yearly rent", "annual" | `rp=y` |
-| "daily rent", "short term" | `rp=d` |
+| User might say | PropertyFinder | Bayut | Dubizzle |
+|----------------|----------------|-------|----------|
+| "under 50k" | `pt=50000` | `price_max=50000` | `price<=50000` |
+| "above 80k" | `pf=80000` | `price_min=80000` | `price>=80000` |
+| "30k to 60k" | `pf=30000&pt=60000` | `price_min=30000&price_max=60000` | `price>=30000 AND price<=60000` |
+| "cheapest first" | `ob=pa` | N/A | N/A |
+| "monthly rent" | `rp=m` | N/A (annual only) | N/A (annual only) |
 
 ### Furnishing Synonyms
 
@@ -406,6 +652,8 @@ This section helps AI agents translate human queries to parameters.
 | "unfurnished", "毛坯", "空房" | `fu=2` |
 | "partly furnished", "半装修" | `fu=3` |
 
+Note: Furnishing filter is only available on the PropertyFinder upstream API.
+
 ### Amenity Synonyms
 
 | User might say | Parameter |
@@ -414,23 +662,26 @@ This section helps AI agents translate human queries to parameters.
 | "gym", "fitness", "健身房" | `am[]=SY` (shared) or `am[]=PY` (private) |
 | "parking", "停车位", "车位" | `am[]=CP` |
 | "balcony", "阳台" | `am[]=BA` |
-| "pet friendly", "can have pets", "可养宠物" | `am[]=PA` |
-| "sea view", "water view", "海景" | `am[]=VW` |
+| "pet friendly", "可养宠物" | `am[]=PA` |
+| "sea view", "海景" | `am[]=VW` |
 | "maid's room", "保姆房" | `am[]=MR` |
-| "security", "保安", "安保" | `am[]=SE` |
+| "security", "保安" | `am[]=SE` |
 | "garden", "花园" | `am[]=PG` |
 | "beach access", "海滩" | `am[]=BC` |
-| "built-in wardrobe", "衣柜" | `am[]=BW` |
+
+Note: Amenity filters are only available on the PropertyFinder upstream API. For Dubizzle, parking data is in the `amenities_v2` field (value: `covered_parking`) but cannot be used as a filter.
 
 ### Sort Synonyms
 
 | User might say | Parameter |
 |----------------|-----------|
 | "newest", "latest", "最新" | `ob=nd` |
-| "cheapest first", "lowest price", "最便宜" | `ob=pa` |
-| "most expensive first", "highest price", "最贵" | `ob=pd` |
+| "cheapest first", "最便宜" | `ob=pa` |
+| "most expensive first", "最贵" | `ob=pd` |
 | "fewest bedrooms first" | `ob=ba` |
 | "most bedrooms first" | `ob=bd` |
+
+Note: Sorting is only available on the PropertyFinder upstream API.
 
 ### Commute / Location Examples
 
@@ -440,7 +691,7 @@ This section helps AI agents translate human queries to parameters.
 | "walking distance to work (ADNOC HQ)" | `tt[]=POI_ID,24.4539,54.3773,walking,15,1` |
 | "close to both my office and school" | `tt[]=...,driving,30,1&tt[]=...,driving,20,2&tto=intersection` |
 
-Note: POI_ID and coordinates must be resolved from Property Finder's location autocomplete or geocoding.
+Note: POI_ID and coordinates must be resolved from Property Finder's location autocomplete or geocoding. Commute filters are only available on the PropertyFinder upstream API.
 
 ---
 
@@ -453,28 +704,45 @@ Note: POI_ID and coordinates must be resolved from Property Finder's location au
 GET /api/listings?bedrooms=2&furnished=YES&maxPrice=80000
 ```
 
-**Upstream (Property Finder):**
+**PropertyFinder upstream:**
 ```
 l=6&c=2&t=1&bdr[]=2&fu=1&pt=80000&rp=y&ob=nd
 ```
 
 ### "Find cheapest villas with pool and garden, 3+ bedrooms"
 
-**Upstream:**
+**PropertyFinder upstream:**
 ```
 l=6&c=2&t=35&bdr[]=3&bdr[]=4&bdr[]=5&bdr[]=6&bdr[]=7&bdr[]=8&am[]=SP&am[]=PG&ob=pa
 ```
 
+### "Abu Dhabi studio apartments, 60k-80k AED"
+
+**Bayut upstream:**
+```
+URL: https://www.bayut.com/to-rent/apartments/abu-dhabi/?beds_in=0&price_min=60000&price_max=80000
+```
+
+**Dubizzle upstream (Algolia POST body):**
+```json
+{
+  "requests": [{
+    "indexName": "by_verification_feature_asc_property-for-rent-residential.com",
+    "params": "page=0&hitsPerPage=50&filters=(city.id=3) AND (categories.ids=24) AND (bedrooms=0) AND (price>=60000) AND (price<=80000)&attributesToRetrieve=[\"id\",\"name\",\"price\",\"size\",\"bedrooms\"]&attributesToHighlight=[]"
+  }]
+}
+```
+
 ### "阿布达比月租单间，5000以下，带家具"
 
-**Upstream:**
+**PropertyFinder upstream:**
 ```
 l=6&c=2&t=1&bdr[]=0&fu=1&pt=5000&rp=m&ob=pa
 ```
 
 ### "Pet-friendly apartments near Corniche with sea view, 1-2 beds"
 
-**Upstream:**
+**PropertyFinder upstream:**
 ```
 l=6&c=2&t=1&bdr[]=1&bdr[]=2&am[]=PA&am[]=VW&k=Corniche&ob=nd
 ```
