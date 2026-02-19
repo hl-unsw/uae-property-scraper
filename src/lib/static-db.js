@@ -28,26 +28,42 @@ const staticDb = {
       docs = docs.filter(d => d.source === params.source);
     }
     
-    // 2. Breakdown Filters
-    const breakdownMap = {
-      minVal: 'value',
-      minPark: 'parking',
-      minUtil: 'utilities',
-      minSize: 'size_bonus',
-      minFee: 'fees',
-      minPay: 'payment'
-    };
-    
-    for (const [p, field] of Object.entries(breakdownMap)) {
-      if (params[p] && parseInt(params[p], 10) > 0) {
-        docs = docs.filter(d => (d.score_breakdown?.[field] || 0) >= parseInt(params[p], 10));
-      }
+    // 2. Boolean filters (parking/utilities/fees/oven → has_* fields)
+    if (params.minPark && parseInt(params.minPark, 10) > 0) {
+      docs = docs.filter(d => d.has_parking === true);
+    }
+    if (params.minUtil && parseInt(params.minUtil, 10) > 0) {
+      docs = docs.filter(d => d.has_utilities === true);
+    }
+    if (params.minFee && parseInt(params.minFee, 10) > 0) {
+      docs = docs.filter(d => d.has_no_commission === true);
+    }
+    if (params.minOven && parseInt(params.minOven, 10) > 0) {
+      docs = docs.filter(d => d.has_oven === true);
+    }
+    // Score-based filters
+    if (params.minVal && parseInt(params.minVal, 10) > 0) {
+      docs = docs.filter(d => (d.score_breakdown?.effective_cost || 0) >= parseInt(params.minVal, 10));
+    }
+    if (params.minSize && parseInt(params.minSize, 10) > 0) {
+      docs = docs.filter(d => (d.score_breakdown?.size_bonus || 0) >= parseInt(params.minSize, 10));
+    }
+    if (params.minPay && parseInt(params.minPay, 10) > 0) {
+      docs = docs.filter(d => (d.score_breakdown?.payment || 0) >= parseInt(params.minPay, 10));
+    }
+    if (params.minVerified && parseInt(params.minVerified, 10) > 0) {
+      docs = docs.filter(d => (d.score_breakdown?.verified || 0) >= parseInt(params.minVerified, 10));
+    }
+    if (params.maxCommute && parseInt(params.maxCommute, 10) > 0 && parseInt(params.maxCommute, 10) < 90) {
+      docs = docs.filter(d => (d.commute_min || 0) <= parseInt(params.maxCommute, 10));
     }
 
     // 3. Sorting
     const sort = params.sort || 'score';
     docs.sort((a, b) => {
       if (sort === 'score') return b.score - a.score;
+      if (sort === 'cost') return (a.effective_monthly_cost || 0) - (b.effective_monthly_cost || 0);
+      if (sort === 'commute') return (a.commute_min || 0) - (b.commute_min || 0);
       if (sort === 'price') return a.price - b.price;
       if (sort === 'price_desc') return b.price - a.price;
       if (sort === 'size') return (b.size_sqm || 0) - (a.size_sqm || 0);
