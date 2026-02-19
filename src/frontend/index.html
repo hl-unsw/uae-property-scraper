@@ -20,10 +20,10 @@
         <span class="v" id="stat-avg-score">—</span><span class="l" id="i18n-stat-avg-score">均分</span>
       </div>
       <div class="stat-item">
-        <span class="v" id="stat-avg-price">—</span><span class="l" id="i18n-stat-avg-price">中位价</span>
+        <span class="v" id="stat-avg-cost">—</span><span class="l" id="i18n-stat-avg-cost">月均成本</span>
       </div>
       <div class="stat-item">
-        <span class="v" id="stat-hoods">—</span><span class="l" id="i18n-stat-hoods">片区</span>
+        <span class="v" id="stat-avg-ratio">—</span><span class="l" id="i18n-stat-avg-ratio">占比</span>
       </div>
     </div>
 
@@ -41,24 +41,17 @@
     <form id="filter-form">
       <div class="filter-row main-filters">
         <div class="filter-group">
-          <label for="neighborhood">片区</label>
+          <label for="neighborhood" id="i18n-label-neighborhood">片区</label>
           <select id="neighborhood">
-            <option value="">全部片区</option>
+            <option value="" id="i18n-opt-neighborhood-all">全部片区</option>
           </select>
         </div>
         <div class="filter-group">
-          <label for="source">平台</label>
-          <select id="source">
-            <option value="">全部平台</option>
-            <option value="pf">PropertyFinder</option>
-            <option value="bayut">Bayut</option>
-            <option value="dubizzle">Dubizzle</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label for="sort">排序</label>
+          <label for="sort" id="i18n-label-sort">排序</label>
           <select id="sort">
             <option value="score">综合评分 ↓</option>
+            <option value="cost">月均成本 ↑</option>
+            <option value="commute">通勤 ↑</option>
             <option value="newest">最新发布 ↓</option>
             <option value="price">租金 ↑</option>
             <option value="price_desc">租金 ↓</option>
@@ -66,47 +59,65 @@
           </select>
         </div>
         <div class="filter-group">
-          <label for="minScore">总分 ≥ <span id="minScore-display">0</span> 分</label>
+          <label for="minScore" id="i18n-label-min-score">总分 ≥ <span id="minScore-display">0</span></label>
           <input type="range" id="minScore" min="0" max="100" value="0" step="5">
+        </div>
+        <div class="filter-group">
+          <label for="maxCommute" id="i18n-label-commute">通勤 ≤ <span id="maxCommute-display">90</span> <span class="label-hint" id="i18n-hint-commute">分钟</span></label>
+          <input type="range" id="maxCommute" min="0" max="90" value="90" step="5">
         </div>
       </div>
 
       <div class="filter-row score-filters">
         <div class="filter-group-toggle">
-          <label>停车位</label>
+          <label id="i18n-label-park">停车位</label>
           <div class="toggle-pills" data-filter="minPark" data-on="1">
             <button type="button" class="pill active" data-value="0">不限</button>
             <button type="button" class="pill" data-value="1">有停车</button>
           </div>
         </div>
         <div class="filter-group-toggle">
-          <label>水电费</label>
+          <label id="i18n-label-util">水电费</label>
           <div class="toggle-pills" data-filter="minUtil" data-on="1">
             <button type="button" class="pill active" data-value="0">不限</button>
             <button type="button" class="pill" data-value="1">包水电</button>
           </div>
         </div>
         <div class="filter-group-toggle">
-          <label>中介费</label>
+          <label id="i18n-label-fee">中介费</label>
           <div class="toggle-pills" data-filter="minFee" data-on="1">
             <button type="button" class="pill active" data-value="0">不限</button>
             <button type="button" class="pill" data-value="1">免佣金</button>
           </div>
         </div>
         <div class="filter-group-toggle">
-          <label>付款方式</label>
+          <label id="i18n-label-pay">付款方式</label>
           <div class="toggle-pills" data-filter="minPay" data-on="1">
             <button type="button" class="pill active" data-value="0">不限</button>
             <button type="button" class="pill" data-value="1">灵活付款</button>
           </div>
         </div>
-        <div class="filter-group-sm">
-          <label>性价比 ≥ <span id="minVal-display">0</span> 分<span class="label-hint">（满分 30）</span></label>
-          <input type="range" id="minVal" min="0" max="30" value="0" step="5">
+        <div class="filter-group-toggle">
+          <label id="i18n-label-verified">认证</label>
+          <div class="toggle-pills" data-filter="minVerified" data-on="1">
+            <button type="button" class="pill active" data-value="0">不限</button>
+            <button type="button" class="pill" data-value="1">已认证</button>
+          </div>
+        </div>
+        <div class="filter-group-toggle">
+          <label id="i18n-label-oven">烤箱</label>
+          <div class="toggle-pills" data-filter="minOven" data-on="1">
+            <button type="button" class="pill active" data-value="0">不限</button>
+            <button type="button" class="pill" data-value="1">有烤箱</button>
+          </div>
         </div>
         <div class="filter-group-sm">
-          <label>面积加分 ≥ <span id="minSize-display">0</span> 分<span class="label-hint">（满分 15）</span></label>
-          <input type="range" id="minSize" min="0" max="15" value="0" step="5">
+          <label id="i18n-label-val">综合成本 ≥ <span id="minVal-display">0</span> <span id="i18n-hint-val" class="label-hint">（满分 67）</span></label>
+          <input type="range" id="minVal" min="0" max="67" value="0" step="5">
+        </div>
+        <div class="filter-group-sm">
+          <label id="i18n-label-size">面积加分 ≥ <span id="minSize-display">0</span> <span id="i18n-hint-size" class="label-hint">（满分 10）</span></label>
+          <input type="range" id="minSize" min="0" max="10" value="0" step="5">
         </div>
       </div>
     </form>

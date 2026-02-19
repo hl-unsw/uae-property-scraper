@@ -394,20 +394,32 @@ body {
   color: var(--gold);
 }
 
-.header-badges {
-  flex-shrink: 0;
-}
-
 /* ─── Score Badge ────────────────────────────── */
 
 .score-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  line-height: 1;
+  min-width: 60px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.score-label {
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+  opacity: 0.7;
+}
+
+.score-val {
   font-family: var(--num);
-  font-size: 16px;
-  font-weight: 400;
-  padding: 2px 0;
-  white-space: nowrap;
-  min-width: 28px;
-  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .score-high {
@@ -459,12 +471,78 @@ body {
   margin-left: 4px;
 }
 
+/* ─── Cost Breakdown ─────────────────────────── */
+
+.cost-breakdown {
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  background: var(--bg-warm);
+  border-left: 2px solid var(--border);
+}
+
+.cost-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 2px 0;
+}
+
+.cost-row .cost-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.cost-row .cost-val {
+  font-family: var(--num);
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: -0.3px;
+}
+
+.cost-row.cost-saving .cost-label,
+.cost-row.cost-saving .cost-val {
+  color: var(--score-high);
+}
+
+.cost-row.cost-total {
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.cost-row.cost-total .cost-label {
+  font-weight: 500;
+  color: var(--text);
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+.cost-row.cost-total .cost-val {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-strong);
+}
+
+.cost-ratio {
+  font-size: 11px;
+  font-weight: 400;
+  margin-left: 6px;
+  letter-spacing: 0.3px;
+}
+
+.ratio-low  { color: var(--score-high); }  /* ≤25% salary — good */
+.ratio-mid  { color: var(--score-mid); }   /* 25-35% — moderate */
+.ratio-high { color: var(--score-low); }   /* >35% — expensive */
+
 /* ─── Meta Row ────────────────────────────────── */
 
 .listing-meta {
   display: flex;
-  gap: 14px;
-  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-bottom: 14px;
   font-size: 12px;
   color: var(--text-secondary);
   letter-spacing: 0.3px;
@@ -474,39 +552,14 @@ body {
   color: var(--text-muted);
 }
 
-/* ─── Feature Icons ──────────────────────────── */
-
-.feature-icons {
-  display: flex;
-  gap: 5px;
-}
-
-.feature-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border: 1px solid var(--border);
+.commute-tag {
   color: var(--gold);
-  font-size: 9px;
-  font-weight: 600;
-  font-family: var(--sans);
-  cursor: help;
-  transition: border-color 0.3s var(--ease);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.3px;
 }
 
-.listing-card:hover .feature-icon {
-  border-color: var(--gold);
-}
-
-/* ─── Location ────────────────────────────────── */
-
-.listing-location {
-  font-size: 12px;
-  margin-bottom: 16px;
-  line-height: 1.7;
-}
+/* ─── Location (inline in meta row) ───────────── */
 
 .location-main {
   color: var(--text);
@@ -517,56 +570,28 @@ body {
 .location-sub {
   color: var(--text-muted);
   font-size: 11px;
-  margin-left: 6px;
 }
 
-/* ─── Score Detail ───────────────────────────── */
+/* ─── Perks — only show what's included ───────── */
 
-.score-detail {
-  padding: 14px 0 0;
-  border-top: 1px solid var(--border-light);
-}
-
-.score-bar-row {
+.perks {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
 }
 
-.score-bar-row:last-child {
-  margin-bottom: 0;
-}
-
-.score-bar-label {
-  width: 52px;
-  color: var(--text-muted);
-  text-align: right;
-  flex-shrink: 0;
+.perk {
   font-size: 11px;
   letter-spacing: 0.3px;
+  padding: 3px 10px;
+  color: var(--gold);
+  border: 1px solid var(--gold);
 }
 
-.score-bar-track {
-  flex: 1;
-  height: 2px;
-  background: var(--border-light);
-  overflow: hidden;
-}
+/* ─── Meters (kept for potential future use) ──── */
 
-.score-bar-fill {
-  height: 100%;
-  background: var(--gold);
-  transition: width 0.6s var(--ease);
-}
-
-.score-bar-pts {
-  width: 36px;
-  color: var(--text-muted);
-  font-size: 10px;
-  font-family: var(--num);
-  flex-shrink: 0;
-}
+.meters { display: none; }
 
 /* ═══════════════════════════════════════════════
    SCROLL / LOADING / STATES

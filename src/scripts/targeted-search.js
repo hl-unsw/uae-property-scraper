@@ -61,6 +61,7 @@ const NEIGHBORHOODS = [
   { regex: /al.reem/i, en: 'Al Reem', zh: '里姆岛' },
   { regex: /bateen/i, en: 'Al Bateen', zh: '巴廷' },
   { regex: /khalidiyah|khalidiya/i, en: 'Al Khalidiyah', zh: '哈利迪亚' },
+  { regex: /maryah/i, en: 'Al Maryah Island', zh: '玛丽亚岛' },
 ];
 
 // Combined regex for MongoDB $regex queries
@@ -69,8 +70,112 @@ const COMBINED_PATTERN = NEIGHBORHOODS.map((n) => n.regex.source).join('|');
 // ─── Scoring Regexes ────────────────────────────────────────
 
 const UTILITIES_RE = /bills?.included|utilities?.included|dewa.included|water.*electric.*included/i;
+const CHILLER_RE = /chiller.?free|free.?chiller|cooling.?free/i;
 const NO_FEES_RE = /no.commission|no.agent.fee|direct.from.owner|landlord.direct/i;
 const FLEX_PAY_RE = /multiple.cheque|[2-9]\+?.cheque|12.cheque|monthly.pay|flexible.pay/i;
+const OVEN_RE = /\boven\b|cooker|kitchen.appliance/i;
+
+// ─── Score Weights (100 pts total) ──────────────────────────
+
+const SCORE_WEIGHTS = {
+  effective_cost: 67, // rent + commute - savings (parking/utilities/commission), per sqm, GLOBAL normalization
+  verified: 12,       // platform-verified listing (+2 from oven rebalance)
+  size_bonus: 8,      // peak at 50sqm; left-linear, right-plateau
+  payment: 6,         // flexible payment terms (multi-cheque / monthly)
+  oven: 3,            // has oven / kitchen appliances (reduced; Bayut gets 2 as data-gap compensation)
+  amenities: 4,       // amenities richness (pool, gym, balcony, security)
+};
+
+// ─── Cost Savings (AED/month) ───────────────────────────────
+
+const PARKING_SAVING    = 800;  // ~9,600/yr: rental + time + depreciation + fines
+const UTILITY_SAVING    = 750;  // summer 500–1,000 AED range, budget-safe estimate
+const CHILLER_SAVING    = 300;  // AC cooling covered by landlord (partial utility)
+const COMMISSION_SAVING = 300;  // ~3,500 one-off / 12 months ≈ 292, rounded up
+
+// ─── Size Bonus Constants ───────────────────────────────────
+// Left-linear (0→50sqm = 0→8), plateau (50→80sqm = 8), gentle decline (80+sqm)
+
+const IDEAL_SIZE_SQM = 50;
+
+// ─── Commute Data (peak-hour midpoint: min + driving km) ────
+// Target: Sky Tower, Al Reem Island
+// Source: 2026-02 traffic analysis incl. E10 construction impact
+// km: one-way driving distance via fastest route
+
+const COMMUTE_DATA = {
+  'Al Reem':             { min:  8, km:  3 },  // on-island
+  'Al Maryah Island':    { min: 11, km:  4 },  // adjacent island
+  'Al Muzoun':           { min: 15, km:  5 },
+  'Eastern Mangrove':    { min: 18, km:  7 },
+  'Al Saadiyat Island':  { min: 21, km: 14 },  // via E12 bridge
+  'Al Muntazah':         { min: 26, km: 13 },
+  'Mushrif':             { min: 30, km: 16 },
+  'Al Rawdah':           { min: 30, km: 16 },
+  'Al Nahda East':       { min: 33, km: 19 },
+  'Al Khalidiyah':       { min: 34, km: 16 },  // Corniche route
+  'Qasr Al Shatie':      { min: 34, km: 19 },
+  'Al Bateen':           { min: 36, km: 22 },
+  'Raha Beach':          { min: 38, km: 28 },  // E10 construction
+  'Al Raha Gardens':     { min: 38, km: 30 },
+  'Al Raha Lofts':       { min: 38, km: 29 },
+  'Al Zeina':            { min: 38, km: 28 },
+  'Al Hadeel':           { min: 38, km: 28 },
+  'Al Bandar':           { min: 38, km: 28 },
+  'Al Seef':             { min: 38, km: 28 },
+  'Al Muneera':          { min: 38, km: 29 },
+  'Al Rahah':            { min: 38, km: 29 },  // general Al Raha area
+  'Rabdan':              { min: 40, km: 33 },
+  'Al Gurm West':        { min: 42, km: 28 },
+  'Yas Island':          { min: 42, km: 30 },  // via E12
+  'Masdar City':         { min: 45, km: 37 },  // airport road merge
+  'Khalifa City':        { min: 47, km: 40 },
+  'MBZ City':            { min: 50, km: 45 },
+  'Zayed City':          { min: 52, km: 52 },
+  'Al Rayyana':          { min: 52, km: 52 },
+  'Al Reef':             { min: 56, km: 55 },
+  'Shakhbout City':      { min: 60, km: 58 },
+  'Bawabat Al Abu Dhabi':{ min: 60, km: 58 },
+  'Musaffah':            { min: 60, km: 55 },
+  'Baniyas':             { min: 65, km: 62 },
+  'Madinat Al Riyadh':   { min: 65, km: 65 },
+  'Abu Mreikhah':        { min: 65, km: 65 },
+  'Al Wathba':           { min: 65, km: 66 },
+  'Al Shahama':          { min: 70, km: 70 },
+  'Al Bahyah':           { min: 69, km: 66 },
+  'Al Mizn':             { min: 70, km: 70 },
+  'Al Haffar':           { min: 70, km: 70 },
+  'Al Bihouth':          { min: 70, km: 70 },
+  'Al Rahbah':           { min: 75, km: 75 },
+  'Al Falah':            { min: 80, km: 80 },
+  'Ajban':               { min: 82, km: 85 },
+};
+
+// ─── Cost Constants ──────────────────────────────────────────
+// Toyota Fortuner 4.0L GXR V6 4x4: 6.8 km/L
+// Summer peak fuel price: AED 2.60/L (budget-safe estimate)
+
+const REFERENCE_BUDGET = 30_000;   // AED (Internal reference for ranking)
+const WORK_DAYS        = 22;       // per month
+const HOURS_PER_DAY    = 8;
+const FUEL_EFFICIENCY  = 6.8;      // km/L
+const FUEL_PRICE       = 2.60;     // AED/L (summer peak)
+
+const COMMUTE_TIME_DISCOUNT = 0.6;  
+const PER_MINUTE_VALUE = REFERENCE_BUDGET / (WORK_DAYS * HOURS_PER_DAY * 60) * COMMUTE_TIME_DISCOUNT; // ~1.70 AED/min
+const FUEL_COST_PER_KM = FUEL_PRICE / FUEL_EFFICIENCY;                      // ~0.382 AED/km
+
+/**
+ * Calculate monthly commute costs for a neighborhood.
+ * Returns { time_cost, fuel_cost, total } in AED/month.
+ */
+function calcCommuteCost(neighborhoodEn) {
+  const d = COMMUTE_DATA[neighborhoodEn];
+  if (!d) return { time_cost: 0, fuel_cost: 0, total: 0 };
+  const time_cost = d.min * 2 * WORK_DAYS * PER_MINUTE_VALUE;
+  const fuel_cost = d.km  * 2 * WORK_DAYS * FUEL_COST_PER_KM;
+  return { time_cost: Math.round(time_cost), fuel_cost: Math.round(fuel_cost), total: Math.round(time_cost + fuel_cost) };
+}
 
 /**
  * Enhanced semantic check to avoid false positives like "Not direct from owner"
@@ -174,49 +279,105 @@ function getUrl(source, doc) {
   return '#';
 }
 
-// ─── Scoring ────────────────────────────────────────────────
-
-function scoreParking(source, doc) {
-  if (source === 'pf') {
-    const amenities = doc.property?.amenities || [];
-    if (amenities.some((a) => a === 'CP' || a === 'PA' || a.code === 'CP' || a.code === 'PA')) return 20;
-    return 0;
-  }
-  if (source === 'dubizzle') {
-    const amenities = doc.amenities_v2 || [];
-    if (amenities.some((a) => a.value === 'covered_parking' || a.slug === 'covered_parking')) return 20;
-    return 0;
-  }
-  // Bayut — limited data, check title
-  const title = doc.title || '';
-  if (/parking/i.test(title)) return 20;
-  return 0;
-}
-
-function scoreUtilities(source, doc) {
-  const text = getDescriptionText(source, doc);
-  return hasPositiveIntent(text, UTILITIES_RE) ? 15 : 0;
-}
-
-function scoreFees(source, doc) {
-  if (source === 'dubizzle' && doc.listed_by?.value === 'OW') return 10;
-  const text = getDescriptionText(source, doc);
-  return hasPositiveIntent(text, NO_FEES_RE) ? 10 : 0;
-}
-
-function scorePayment(source, doc) {
-  const text = getDescriptionText(source, doc);
-  return hasPositiveIntent(text, FLEX_PAY_RE) ? 10 : 0;
-}
+// ─── Detection (boolean) ─────────────────────────────────────
 
 function getDescriptionText(source, doc) {
   if (source === 'pf') return (doc.property?.description || '') + ' ' + (doc.property?.title || '');
   if (source === 'bayut') {
-    // Aggregate multiple title fields since full description is missing in list view
     return [doc.title, doc.title_l1, doc.title_l2, doc.title_l3].filter(Boolean).join(' ');
   }
   if (source === 'dubizzle') return (doc.description_short || '') + ' ' + (doc.name?.en || '');
   return '';
+}
+
+function hasParking(source, doc) {
+  if (source === 'pf') {
+    const codes = doc.property?.amenities || [];
+    if (codes.some((a) => a === 'CP' || a === 'PA' || a.code === 'CP' || a.code === 'PA')) return true;
+    const names = doc.property?.amenity_names || [];
+    if (names.some((n) => /parking/i.test(n))) return true;
+    return false;
+  }
+  if (source === 'dubizzle') {
+    const amenities = doc.amenities_v2 || [];
+    return amenities.some((a) => /parking/i.test(a.value || ''));
+  }
+  // Bayut — limited SSR data, check title
+  return /parking/i.test(doc.title || '');
+}
+
+function hasUtilitiesIncl(source, doc) {
+  const text = getDescriptionText(source, doc);
+  return hasPositiveIntent(text, UTILITIES_RE);
+}
+
+function hasChillerFree(source, doc) {
+  const text = getDescriptionText(source, doc);
+  return hasPositiveIntent(text, CHILLER_RE);
+}
+
+function hasNoCommission(source, doc) {
+  if (source === 'dubizzle' && doc.listed_by?.value === 'OW') return true;
+  const text = getDescriptionText(source, doc);
+  return hasPositiveIntent(text, NO_FEES_RE);
+}
+
+function hasOven(source, doc) {
+  if (source === 'pf') {
+    const codes = doc.property?.amenities || [];
+    if (codes.some((a) => a === 'BK' || a.code === 'BK')) return true;
+    const names = doc.property?.amenity_names || [];
+    if (names.some((n) => /kitchen.appliance/i.test(n))) return true;
+    return OVEN_RE.test(getDescriptionText(source, doc));
+  }
+  if (source === 'dubizzle') {
+    const amenities = doc.amenities_v2 || [];
+    if (amenities.some((a) => OVEN_RE.test(a.value || ''))) return true;
+    return OVEN_RE.test(getDescriptionText(source, doc));
+  }
+  // Bayut — regex on title fields (low coverage ~9%)
+  return OVEN_RE.test(getDescriptionText(source, doc));
+}
+
+// ─── Scoring (point-based) ───────────────────────────────────
+
+function scorePayment(source, doc) {
+  const text = getDescriptionText(source, doc);
+  return hasPositiveIntent(text, FLEX_PAY_RE) ? SCORE_WEIGHTS.payment : 0;
+}
+
+function scoreVerified(source, doc) {
+  if (source === 'pf') return doc.is_verified ? SCORE_WEIGHTS.verified : 0;
+  if (source === 'bayut') return doc.isVerified ? SCORE_WEIGHTS.verified : 0;
+  if (source === 'dubizzle') return doc.is_verified ? SCORE_WEIGHTS.verified : 0;
+  return 0;
+}
+
+function scoreAmenities(source, doc) {
+  const found = new Set();
+  if (source === 'pf') {
+    for (const n of (doc.property?.amenity_names || [])) {
+      const lower = n.toLowerCase();
+      if (lower.includes('pool')) found.add('pool');
+      if (lower.includes('gym')) found.add('gym');
+      if (lower.includes('balcon')) found.add('balcony');
+      if (lower.includes('security') || lower.includes('cctv')) found.add('security');
+    }
+  } else if (source === 'dubizzle') {
+    for (const a of (doc.amenities_v2 || [])) {
+      const v = (a.value || '').toLowerCase();
+      if (v.includes('pool')) found.add('pool');
+      if (v.includes('gym')) found.add('gym');
+      if (v.includes('balcon')) found.add('balcony');
+      if (v.includes('security') || v.includes('cctv')) found.add('security');
+    }
+  } else if (source === 'bayut') {
+    const title = (doc.title || '').toLowerCase();
+    if (/pool/.test(title)) found.add('pool');
+    if (/gym/.test(title)) found.add('gym');
+    if (/balcon/.test(title)) found.add('balcony');
+  }
+  return Math.min(SCORE_WEIGHTS.amenities, Math.round(found.size * (SCORE_WEIGHTS.amenities / 4)));
 }
 
 // ─── Main ───────────────────────────────────────────────────
@@ -274,6 +435,25 @@ async function main() {
           ? doc.title || ''
           : doc.name?.en || '';
 
+      const commuteInfo = COMMUTE_DATA[hood.en] || { min: null, km: null };
+      const commuteCost = calcCommuteCost(hood.en);
+      const monthlyRent = Math.round(price / 12);
+
+      // Boolean detections
+      const parking = hasParking(source, doc);
+      const utilitiesIncl = hasUtilitiesIncl(source, doc);
+      const chillerFree = !utilitiesIncl && hasChillerFree(source, doc);
+      const noCommission = hasNoCommission(source, doc);
+      const oven = hasOven(source, doc);
+
+      // Cost savings
+      const parkingSaving = parking ? PARKING_SAVING : 0;
+      const utilitySaving = utilitiesIncl ? UTILITY_SAVING : chillerFree ? CHILLER_SAVING : 0;
+      const commissionSaving = noCommission ? COMMISSION_SAVING : 0;
+
+      const effectiveMonthlyCost = monthlyRent + commuteCost.total
+        - parkingSaving - utilitySaving - commissionSaving;
+
       allListings.push({
         _raw: doc,
         source,
@@ -288,11 +468,29 @@ async function main() {
         url: getUrl(source, doc),
         neighborhood: hood,
         crawled_at: doc.crawled_at,
-        // score fields computed below
-        score_parking: scoreParking(source, doc),
-        score_utilities: scoreUtilities(source, doc),
-        score_fees: scoreFees(source, doc),
+        // Cost fields
+        commute_min: commuteInfo.min,
+        commute_km: commuteInfo.km,
+        monthly_rent: monthlyRent,
+        monthly_time_cost: commuteCost.time_cost,
+        monthly_fuel_cost: commuteCost.fuel_cost,
+        monthly_commute_cost: commuteCost.total,
+        effective_monthly_cost: effectiveMonthlyCost,
+        burden_index: Math.round((effectiveMonthlyCost / REFERENCE_BUDGET) * 100),
+        // Boolean flags
+        has_parking: parking,
+        has_utilities: utilitiesIncl,
+        has_chiller_free: chillerFree,
+        has_no_commission: noCommission,
+        has_oven: oven,
+        // Savings breakdown (AED/month)
+        monthly_parking_saving: parkingSaving,
+        monthly_utility_saving: utilitySaving,
+        monthly_commission_saving: commissionSaving,
+        // Score fields computed below
         score_payment: scorePayment(source, doc),
+        score_verified: scoreVerified(source, doc),
+        score_amenities: scoreAmenities(source, doc),
       });
     }
   }
@@ -305,36 +503,48 @@ async function main() {
     return;
   }
 
-  // 2) Compute value score (price per sqm, lower is better) — 0-30 points
-  const priceSqmValues = allListings
-    .filter((l) => l.sizeSqm > 0)
-    .map((l) => l.price / l.sizeSqm);
+  // 2) Effective-cost scoring (GLOBAL) — lower cost/sqm = higher score
+  //    Savings from parking/utilities/commission are already subtracted from effective_monthly_cost.
+  //    P5/P95 percentile capping to prevent outliers from compressing the score range.
 
-  const minPriceSqm = Math.min(...priceSqmValues);
-  const maxPriceSqm = Math.max(...priceSqmValues);
-  const priceSqmRange = maxPriceSqm - minPriceSqm || 1;
+  const rawCostPerSqm = allListings.filter((l) => l.sizeSqm > 0)
+    .map((l) => l.effective_monthly_cost / l.sizeSqm);
+  const sortedCosts = [...rawCostPerSqm].sort((a, b) => a - b);
+  const p5  = sortedCosts[Math.floor(sortedCosts.length * 0.05)] || 0;
+  const p95 = sortedCosts[Math.floor(sortedCosts.length * 0.95)] || 1;
+  const globalMinCost = p5;
+  const globalMaxCost = p95;
+  const globalCostRange = globalMaxCost - globalMinCost || 1;
 
-  // 3) Compute size bonus — 0-15 points
-  const sizes = allListings.map((l) => l.sizeSqm);
-  const minSize = Math.min(...sizes);
-  const maxSize = Math.max(...sizes);
-  const sizeRange = maxSize - minSize || 1;
-
-  // 4) Final scoring
+  // 3) Score each listing
   for (const listing of allListings) {
-    // Value score: lower price/sqm = higher score
-    const priceSqm = listing.sizeSqm > 0 ? listing.price / listing.sizeSqm : maxPriceSqm;
-    listing.score_value = Math.round(((maxPriceSqm - priceSqm) / priceSqmRange) * 30);
+    // Effective cost: GLOBAL normalization with P5/P95 capping
+    const rawCpSqm = listing.sizeSqm > 0
+      ? listing.effective_monthly_cost / listing.sizeSqm : p95;
+    const costPerSqm = Math.max(p5, Math.min(p95, rawCpSqm));
+    listing.score_effective_cost = Math.round(
+      ((globalMaxCost - costPerSqm) / globalCostRange) * SCORE_WEIGHTS.effective_cost);
 
-    // Size bonus: bigger = better
-    listing.score_size_bonus = Math.round(((listing.sizeSqm - minSize) / sizeRange) * 15);
+    // Size bonus: left-linear (0→50sqm), plateau (50→80sqm), gentle decline (80+sqm)
+    const sqm = listing.sizeSqm;
+    listing.score_size_bonus = sqm <= IDEAL_SIZE_SQM
+      ? Math.round((sqm / IDEAL_SIZE_SQM) * SCORE_WEIGHTS.size_bonus)
+      : sqm <= 80
+        ? SCORE_WEIGHTS.size_bonus
+        : Math.max(Math.round(SCORE_WEIGHTS.size_bonus / 2),
+            Math.round((1 - (sqm - 80) / 120) * SCORE_WEIGHTS.size_bonus));
 
-    listing.score = listing.score_parking
-      + listing.score_utilities
-      + listing.score_fees
+    // Oven (Bayut gets data-gap compensation of 2/3 when undetected)
+    listing.score_oven = listing.has_oven
+      ? SCORE_WEIGHTS.oven
+      : listing.source === 'bayut' ? 2 : 0;
+
+    listing.score = listing.score_effective_cost
+      + listing.score_verified
+      + listing.score_size_bonus
       + listing.score_payment
-      + listing.score_value
-      + listing.score_size_bonus;
+      + listing.score_oven
+      + listing.score_amenities;
   }
 
   // 5) Sort by score desc, take top 30%
@@ -351,7 +561,7 @@ async function main() {
     listing_id: l.listing_id,
     source: l.source,
     title: l.title,
-    title_zh: l.title, // keep English title — user can read originals
+    title_zh: l.title,
     price: l.price,
     size_sqm: l.sizeSqm,
     size_sqft: l.sizeSqft,
@@ -362,14 +572,34 @@ async function main() {
     neighborhood_en: l.neighborhood.en,
     neighborhood_zh: l.neighborhood.zh,
     url: l.url,
+    // Commute & cost
+    commute_min: l.commute_min,
+    commute_km: l.commute_km,
+    monthly_rent: l.monthly_rent,
+    monthly_time_cost: l.monthly_time_cost,
+    monthly_fuel_cost: l.monthly_fuel_cost,
+    monthly_commute_cost: l.monthly_commute_cost,
+    effective_monthly_cost: l.effective_monthly_cost,
+    burden_index: l.burden_index,
+    // Boolean flags
+    has_parking: l.has_parking,
+    has_utilities: l.has_utilities,
+    has_chiller_free: l.has_chiller_free,
+    has_no_commission: l.has_no_commission,
+    has_oven: l.has_oven,
+    // Savings breakdown (AED/month)
+    monthly_parking_saving: l.monthly_parking_saving,
+    monthly_utility_saving: l.monthly_utility_saving,
+    monthly_commission_saving: l.monthly_commission_saving,
+    // Scoring
     score: l.score,
     score_breakdown: {
-      parking: l.score_parking,
-      utilities: l.score_utilities,
-      fees: l.score_fees,
-      payment: l.score_payment,
-      value: l.score_value,
+      effective_cost: l.score_effective_cost,
+      verified: l.score_verified,
       size_bonus: l.score_size_bonus,
+      payment: l.score_payment,
+      oven: l.score_oven,
+      amenities: l.score_amenities,
     },
     neighborhood_matched: l.neighborhood.en,
     crawled_at: l.crawled_at,
@@ -379,6 +609,7 @@ async function main() {
   if (docs.length > 0) {
     await targetCol.insertMany(docs);
     await targetCol.createIndex({ score: -1 }, { name: 'idx_score_desc' });
+    await targetCol.createIndex({ effective_monthly_cost: 1 }, { name: 'idx_effective_cost' });
     await targetCol.createIndex({ neighborhood_en: 1 }, { name: 'idx_neighborhood' });
   }
 
@@ -386,13 +617,13 @@ async function main() {
 
   // Summary by neighborhood
   const bySrc = {};
-  const byHood = {};
+  const hoodCounts = {};
   for (const d of docs) {
     bySrc[d.source] = (bySrc[d.source] || 0) + 1;
-    byHood[d.neighborhood_en] = (byHood[d.neighborhood_en] || 0) + 1;
+    hoodCounts[d.neighborhood_en] = (hoodCounts[d.neighborhood_en] || 0) + 1;
   }
   logger.info({ bySource: bySrc }, 'Results by platform');
-  logger.info({ byNeighborhood: byHood }, 'Results by neighborhood');
+  logger.info({ byNeighborhood: hoodCounts }, 'Results by neighborhood');
 
   await client.close();
   logger.info('Done');

@@ -26,13 +26,16 @@ router.get('/targeted-results', async (req, res) => {
     const minScore = parseInt(req.query.minScore, 10) || 0;
     const source = req.query.source || '';
 
-    // New breakdown filters
+    // Breakdown filters
     const minVal = parseInt(req.query.minVal, 10) || 0;
     const minPark = parseInt(req.query.minPark, 10) || 0;
     const minUtil = parseInt(req.query.minUtil, 10) || 0;
     const minSize = parseInt(req.query.minSize, 10) || 0;
     const minFee = parseInt(req.query.minFee, 10) || 0;
     const minPay = parseInt(req.query.minPay, 10) || 0;
+    const minVerified = parseInt(req.query.minVerified, 10) || 0;
+    const minOven = parseInt(req.query.minOven, 10) || 0;
+    const maxCommute = parseInt(req.query.maxCommute, 10) || 0;
 
     const db = await getDb();
     const col = db.collection('targeted_results');
@@ -43,17 +46,23 @@ router.get('/targeted-results', async (req, res) => {
     if (minScore > 0) filter.score = { $gte: minScore };
     if (source) filter.source = source;
 
-    // Breakdown filters mapping to score_breakdown fields
-    if (minVal > 0) filter['score_breakdown.value'] = { $gte: minVal };
-    if (minPark > 0) filter['score_breakdown.parking'] = { $gte: minPark };
-    if (minUtil > 0) filter['score_breakdown.utilities'] = { $gte: minUtil };
+    // Boolean filters (parking/utilities/fees → has_* fields)
+    if (minPark > 0) filter.has_parking = true;
+    if (minUtil > 0) filter.has_utilities = true;
+    if (minFee > 0) filter.has_no_commission = true;
+    if (minOven > 0) filter.has_oven = true;
+    // Score-based filters
+    if (minVal > 0) filter['score_breakdown.effective_cost'] = { $gte: minVal };
     if (minSize > 0) filter['score_breakdown.size_bonus'] = { $gte: minSize };
-    if (minFee > 0) filter['score_breakdown.fees'] = { $gte: minFee };
     if (minPay > 0) filter['score_breakdown.payment'] = { $gte: minPay };
+    if (minVerified > 0) filter['score_breakdown.verified'] = { $gte: minVerified };
+    if (maxCommute > 0 && maxCommute < 90) filter.commute_min = { $lte: maxCommute };
 
     // Build sort
     const sortMap = {
       score: { score: -1 },
+      cost: { effective_monthly_cost: 1 },
+      commute: { commute_min: 1 },
       price: { price: 1 },
       price_desc: { price: -1 },
       size: { size_sqm: -1 },
@@ -74,6 +83,8 @@ router.get('/targeted-results', async (req, res) => {
             avgScore: { $avg: '$score' },
             maxScore: { $max: '$score' },
             minScore: { $min: '$score' },
+            avgEffectiveCost: { $avg: '$effective_monthly_cost' },
+            avgBurdenIndex: { $avg: '$burden_index' },
           },
         },
       ]).toArray(),
@@ -89,7 +100,7 @@ router.get('/targeted-results', async (req, res) => {
         : (allPrices[mid - 1].price + allPrices[mid].price) / 2;
     }
 
-    const s = stats[0] || { avgScore: 0, maxScore: 0, minScore: 0 };
+    const s = stats[0] || { avgScore: 0, maxScore: 0, minScore: 0, avgEffectiveCost: 0, avgBurdenIndex: 0 };
 
     res.json({
       docs,
@@ -103,6 +114,8 @@ router.get('/targeted-results', async (req, res) => {
         maxScore: s.maxScore || 0,
         minScore: s.minScore || 0,
         neighborhoodCount: neighborhoods.length,
+        avgEffectiveCost: Math.round(s.avgEffectiveCost || 0),
+        avgBurdenIndex: Math.round(s.avgBurdenIndex || 0),
       },
     });
   } catch (err) {
