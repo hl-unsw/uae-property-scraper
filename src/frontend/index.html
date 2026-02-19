@@ -1,86 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UAE Property Scraper Dashboard</title>
+  <title>阿布扎比租房数据看板</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header>
-    <h1>UAE Property Dashboard</h1>
-    <p class="subtitle">Abu Dhabi Rental Market Data</p>
+    <h1>阿布扎比租房数据看板</h1>
+    <p class="subtitle">实时市场监控与分析</p>
   </header>
 
   <!-- Stats Cards -->
   <section id="stats" class="stats-grid">
     <div class="stat-card">
-      <span class="stat-label">Total Listings</span>
+      <span class="stat-label">房源总数</span>
       <span class="stat-value" id="stat-total">--</span>
     </div>
     <div class="stat-card">
-      <span class="stat-label">Avg Price (AED/yr)</span>
+      <span class="stat-label">平均年租金 (AED)</span>
       <span class="stat-value" id="stat-avg-price">--</span>
     </div>
     <div class="stat-card">
-      <span class="stat-label">Price Range (AED)</span>
+      <span class="stat-label">价格区间 (AED)</span>
       <span class="stat-value" id="stat-price-range">--</span>
     </div>
     <div class="stat-card">
-      <span class="stat-label">Avg Size (sqft)</span>
+      <span class="stat-label">中位数租金 (AED)</span>
+      <span class="stat-value" id="stat-median-price">--</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">平均面积 (㎡)</span>
       <span class="stat-value" id="stat-avg-size">--</span>
     </div>
     <div class="stat-card">
-      <span class="stat-label">Last Crawled</span>
+      <span class="stat-label">单位均价 (AED/㎡)</span>
+      <span class="stat-value" id="stat-sqft-price">--</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">合理价格带 (P25-P75)</span>
+      <span class="stat-value" id="stat-iqr">--</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">房源新鲜度 (天)</span>
+      <span class="stat-value" id="stat-dom">--</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">上次更新</span>
       <span class="stat-value" id="stat-last-crawled">--</span>
     </div>
   </section>
 
   <!-- Bedroom Distribution Chart -->
   <section class="chart-section">
-    <h2>Bedroom Distribution</h2>
+    <h2>户型分布</h2>
     <div id="bedroom-chart" class="bar-chart"></div>
   </section>
 
   <!-- Filters -->
   <section class="filters">
-    <h2>Search Listings</h2>
+    <h2>房源搜索</h2>
     <form id="filter-form">
       <div class="filter-row">
         <div class="filter-group">
-          <label for="search">Keyword</label>
-          <input type="text" id="search" placeholder="e.g. Corniche, Marina...">
-        </div>
-        <div class="filter-group">
-          <label for="bedrooms">Bedrooms</label>
-          <select id="bedrooms">
-            <option value="">All</option>
-            <option value="0">Studio</option>
-            <option value="1">1 Bed</option>
-            <option value="2">2 Beds</option>
-            <option value="3">3 Beds</option>
-            <option value="4">4 Beds</option>
-            <option value="5">5+ Beds</option>
+          <label for="source">数据平台</label>
+          <select id="source">
+            <option value="">全部平台</option>
+            <option value="pf">PropertyFinder</option>
+            <option value="bayut">Bayut</option>
+            <option value="dubizzle">Dubizzle</option>
           </select>
         </div>
         <div class="filter-group">
-          <label for="minPrice">Min Price (AED)</label>
+          <label for="search">关键词</label>
+          <input type="text" id="search" placeholder="例如: Corniche, Marina...">
+        </div>
+        <div class="filter-group">
+          <label for="bedrooms">户型</label>
+          <select id="bedrooms">
+            <option value="">全部</option>
+            <option value="0">开间 (Studio)</option>
+            <option value="1">1室</option>
+            <option value="2">2室</option>
+            <option value="3">3室</option>
+            <option value="4">4室</option>
+            <option value="5">5室及以上</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="minPrice">最低价 (AED)</label>
           <input type="number" id="minPrice" placeholder="0">
         </div>
         <div class="filter-group">
-          <label for="maxPrice">Max Price (AED)</label>
+          <label for="maxPrice">最高价 (AED)</label>
           <input type="number" id="maxPrice" placeholder="999999">
         </div>
         <div class="filter-group">
-          <label for="furnished">Furnished</label>
+          <label for="furnished">装修</label>
           <select id="furnished">
-            <option value="">All</option>
-            <option value="YES">Furnished</option>
-            <option value="NO">Unfurnished</option>
-            <option value="PARTLY">Partly</option>
+            <option value="">全部</option>
+            <option value="YES">精装</option>
+            <option value="NO">毛坯/无家具</option>
+            <option value="PARTLY">简装/部分家具</option>
           </select>
         </div>
-        <button type="submit" class="btn">Search</button>
+        <button type="submit" class="btn">搜索</button>
       </div>
     </form>
   </section>
@@ -88,7 +113,7 @@
   <!-- Listing Results -->
   <section class="results">
     <div class="results-header">
-      <span id="results-count">0 results</span>
+      <span id="results-count">0 条结果</span>
       <div class="pagination" id="pagination"></div>
     </div>
     <div id="listings" class="listings-grid"></div>

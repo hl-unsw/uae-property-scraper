@@ -46,6 +46,130 @@ async function connect() {
 }
 
 /**
+ * Per-source field path mappings for querying and normalization.
+ */
+const FIELD_PATHS = {
+  pf: {
+    price: 'property.price.value',
+    size: 'property.size.value',
+    bedrooms: 'property.bedrooms',
+    title: 'property.title',
+    furnished: 'property.furnished',
+    location: 'property.location.full_name',
+  },
+  bayut: {
+    price: 'price',
+    size: 'area',
+    bedrooms: 'rooms',
+    title: 'title',
+    furnished: 'furnishingStatus',
+    location: null, // complex array — handled in normalizeListing
+  },
+  dubizzle: {
+    price: 'price',
+    size: 'size',
+    bedrooms: 'bedrooms',
+    title: 'name.en',
+    furnished: 'furnished',
+    location: null, // complex nested — handled in normalizeListing
+  },
+};
+
+/**
+ * Resolve a dot-path on an object (e.g. 'property.price.value').
+ */
+function getPath(obj, path) {
+  return path.split('.').reduce((o, k) => o?.[k], obj);
+}
+
+/**
+ * Convert any source's raw document into a common shape for the frontend.
+ */
+function normalizeListing(source, doc) {
+  const fp = FIELD_PATHS[source];
+
+  // Title
+  const title = getPath(doc, fp.title) || 'Untitled';
+
+  // Price & size
+  const price = Number(getPath(doc, fp.price)) || 0;
+  const sizeSqft = Number(getPath(doc, fp.size)) || 0;
+  const size = Math.round(sizeSqft * 0.092903);
+
+  // Bedrooms (number or string → always string)
+  const rawBeds = getPath(doc, fp.bedrooms);
+  const bedrooms = String(rawBeds ?? '');
+
+  // Furnished (PF: "YES"/"NO"/"PARTLY", Bayut: "furnished"/"unfurnished"/null, Dubizzle: boolean)
+  let furnished = getPath(doc, fp.furnished);
+  if (typeof furnished === 'boolean') furnished = furnished ? 'YES' : 'NO';
+  furnished = furnished || '';
+
+  // Location
+  let location = '';
+  if (source === 'bayut' && Array.isArray(doc.location)) {
+    location = doc.location.filter(l => l.level >= 2).map(l => l.name).join(', ');
+  } else if (source === 'dubizzle') {
+    const parts = [];
+    if (doc.building?.name?.en) parts.push(doc.building.name.en);
+    const hoods = doc.neighborhoods?.name?.en;
+    if (Array.isArray(hoods)) parts.push(...hoods);
+    else if (hoods) parts.push(hoods);
+    if (doc.city?.name?.en) parts.push(doc.city.name.en);
+    location = parts.join(', ');
+  } else {
+    location = fp.location ? (getPath(doc, fp.location) || '') : '';
+  }
+
+  // URL
+  let url;
+  if (source === 'pf') {
+    url = doc.property?.share_url || '#';
+  } else if (source === 'bayut') {
+    url = doc.slug ? `https://www.bayut.com/property/details-${doc.id}.html` : '#';
+  } else if (source === 'dubizzle') {
+    url = doc.absolute_url?.en || doc.short_url || '#';
+  } else {
+    url = '#';
+  }
+
+  return {
+    _id: doc._id,
+    listing_id: doc.listing_id,
+    source: doc.spider_source || source,
+    title, price, size, bedrooms, furnished, location, url,
+    crawled_at: doc.crawled_at,
+  };
+}
+
+/**
+ * Build a MongoDB query using the correct field paths for the given source.
+ */
+function buildSourceQuery(source, filters) {
+  const fp = FIELD_PATHS[source];
+  const query = {};
+  if (filters.minPrice) query[fp.price] = { $gte: Number(filters.minPrice) };
+  if (filters.maxPrice) query[fp.price] = { ...query[fp.price], $lte: Number(filters.maxPrice) };
+  if (filters.bedrooms) {
+    if (source === 'pf') {
+      // PF stores bedrooms as string; studios are "studio" not "0"
+      query[fp.bedrooms] = filters.bedrooms === '0' ? 'studio' : String(filters.bedrooms);
+    } else {
+      query[fp.bedrooms] = Number(filters.bedrooms);
+    }
+  }
+  if (filters.furnished) {
+    if (source === 'dubizzle') {
+      query[fp.furnished] = filters.furnished === 'YES';
+    } else {
+      query[fp.furnished] = filters.furnished;
+    }
+  }
+  if (filters.search) query[fp.title] = { $regex: filters.search, $options: 'i' };
+  return query;
+}
+
+/**
  * Source-specific adapters for validating and transforming raw items.
  * Each adapter defines how to filter valid items and extract listing_id.
  */
@@ -91,6 +215,9 @@ async function bulkUpsertListings(source, rawItems) {
           listing_id: adapter.getId(item),
           spider_source: source,
           crawled_at: now,
+        },
+        $setOnInsert: {
+          first_seen_at: now,
         },
       },
       upsert: true,
@@ -139,44 +266,39 @@ async function checkExistingIds(source, ids) {
 
 /**
  * Query listings for the API/frontend.
+ * When source === 'all', queries all 3 collections in parallel and merges results.
  */
 async function queryListings(source, filters = {}, page = 1, limit = 20) {
-  const collectionName = COLLECTIONS[source];
-  const query = {};
+  const skip = (page - 1) * limit;
 
-  if (filters.minPrice) {
-    query['property.price.value'] = { $gte: Number(filters.minPrice) };
-  }
-  if (filters.maxPrice) {
-    query['property.price.value'] = {
-      ...query['property.price.value'],
-      $lte: Number(filters.maxPrice),
+  if (source !== 'all') {
+    const query = buildSourceQuery(source, filters);
+    const col = db.collection(COLLECTIONS[source]);
+    const [docs, total] = await Promise.all([
+      col.find(query).sort({ crawled_at: -1 }).skip(skip).limit(limit).toArray(),
+      col.countDocuments(query),
+    ]);
+    return {
+      docs: docs.map(d => normalizeListing(source, d)),
+      total, page, totalPages: Math.ceil(total / limit),
     };
   }
-  if (filters.bedrooms) {
-    query['property.bedrooms'] = String(filters.bedrooms);
-  }
-  if (filters.furnished) {
-    query['property.furnished'] = filters.furnished;
-  }
-  if (filters.search) {
-    query['property.title'] = { $regex: filters.search, $options: 'i' };
-  }
 
-  const skip = (page - 1) * limit;
-  const collection = db.collection(collectionName);
+  // Multi-source: query all 3 in parallel
+  const sources = Object.keys(COLLECTIONS);
+  const results = await Promise.all(
+    sources.map(async (s) => {
+      const query = buildSourceQuery(s, filters);
+      const col = db.collection(COLLECTIONS[s]);
+      const docs = await col.find(query).sort({ crawled_at: -1 }).toArray();
+      return docs.map(d => normalizeListing(s, d));
+    })
+  );
 
-  const [docs, total] = await Promise.all([
-    collection
-      .find(query)
-      .sort({ crawled_at: -1 })
-      .skip(skip)
-      .limit(limit)
-      .toArray(),
-    collection.countDocuments(query),
-  ]);
-
-  return { docs, total, page, totalPages: Math.ceil(total / limit) };
+  const all = results.flat().sort((a, b) => new Date(b.crawled_at) - new Date(a.crawled_at));
+  const total = all.length;
+  const paged = all.slice(skip, skip + limit);
+  return { docs: paged, total, page, totalPages: Math.ceil(total / limit) };
 }
 
 /**
@@ -189,36 +311,177 @@ const STATS_FIELDS = {
 };
 
 async function getStats(source) {
+  if (source === 'all') {
+    const sources = Object.keys(COLLECTIONS);
+    const perSource = await Promise.all(sources.map(s => getStats(s)));
+    const totalListings = perSource.reduce((sum, s) => sum + s.totalListings, 0);
+    if (totalListings === 0) {
+      return { totalListings: 0, avgPrice: 0, minPrice: 0, maxPrice: 0, avgSize: 0, lastCrawled: null, medianPrice: 0, priceP25: 0, priceP75: 0, medianPricePerSqm: 0, medianDaysOnMarket: 0 };
+    }
+    const validPrices = perSource.filter(s => s.totalListings > 0);
+    const weightedAvg = (field) => Math.round(validPrices.reduce((s, p) => s + p[field] * p.totalListings, 0) / totalListings) || 0;
+    return {
+      totalListings,
+      avgPrice: weightedAvg('avgPrice'),
+      minPrice: Math.min(...validPrices.map(s => s.minPrice).filter(p => p > 0)) || 0,
+      maxPrice: Math.max(...validPrices.map(s => s.maxPrice)) || 0,
+      avgSize: weightedAvg('avgSize'),
+      lastCrawled: new Date(Math.max(...perSource.map(s => new Date(s.lastCrawled || 0)))),
+      medianPrice: weightedAvg('medianPrice'),
+      priceP25: Math.min(...validPrices.map(s => s.priceP25).filter(p => p > 0)) || 0,
+      priceP75: Math.max(...validPrices.map(s => s.priceP75)) || 0,
+      medianPricePerSqm: weightedAvg('medianPricePerSqm'),
+      medianDaysOnMarket: weightedAvg('medianDaysOnMarket'),
+    };
+  }
+
   const collectionName = COLLECTIONS[source];
   const collection = db.collection(collectionName);
-  const fields = STATS_FIELDS[source] || STATS_FIELDS.pf;
+  
+  // Define field mappings per source
+  const mappings = {
+    pf: {
+      price: '$property.price.value',
+      size: '$property.size.value',
+      date: '$property.listed_date'
+    },
+    bayut: {
+      price: '$price',
+      size: '$area',
+      date: '$first_seen_at'
+    },
+    dubizzle: {
+      price: '$price',
+      size: '$size',
+      date: '$crawled_at'
+    }
+  };
+
+  const fields = mappings[source] || mappings.pf;
+  const SQFT_TO_SQM = 0.092903;
 
   const [total, pipeline] = await Promise.all([
     collection.countDocuments(),
-    collection
-      .aggregate([
-        {
-          $group: {
-            _id: null,
-            avgPrice: { $avg: fields.price },
-            minPrice: { $min: fields.price },
-            maxPrice: { $max: fields.price },
-            avgSize: { $avg: fields.size },
-            lastCrawled: { $max: '$crawled_at' },
+    collection.aggregate([
+      {
+        $addFields: {
+          // Normalize fields for calculation
+          _calc_price: fields.price,
+          _calc_size: { $multiply: [fields.size, SQFT_TO_SQM] }, // Convert to SQM
+          _calc_date: { 
+            $ifNull: [ 
+              { $toDate: fields.date }, 
+              '$first_seen_at', 
+              '$crawled_at' 
+            ] 
+          }
+        }
+      },
+      {
+        $addFields: {
+          // Calculate derived metrics
+          _calc_price_sqm: {
+            $cond: [
+              { $gt: ['$_calc_size', 0] },
+              { $divide: ['$_calc_price', '$_calc_size'] },
+              null
+            ]
           },
-        },
-      ])
-      .toArray(),
+          _calc_dom_days: {
+            $dateDiff: {
+              startDate: '$_calc_date',
+              endDate: '$$NOW',
+              unit: 'day'
+            }
+          }
+        }
+      },
+      {
+        $facet: {
+          // General Stats
+          general: [
+            {
+              $group: {
+                _id: null,
+                avgPrice: { $avg: '$_calc_price' },
+                minPrice: { $min: '$_calc_price' },
+                maxPrice: { $max: '$_calc_price' },
+                avgSize: { $avg: '$_calc_size' },
+                lastCrawled: { $max: '$crawled_at' }
+              }
+            }
+          ],
+          // Price Percentiles (P25, Median, P75)
+          pricePercentiles: [
+             {
+               $group: {
+                 _id: null,
+                 values: {
+                   $percentile: {
+                     input: '$_calc_price',
+                     p: [0.25, 0.5, 0.75],
+                     method: 'approximate'
+                   }
+                 }
+               }
+             }
+          ],
+          // Price per Sqm Median
+          sqmPercentiles: [
+            { $match: { _calc_price_sqm: { $ne: null } } },
+            {
+              $group: {
+                _id: null,
+                values: {
+                  $percentile: {
+                    input: '$_calc_price_sqm',
+                    p: [0.5],
+                    method: 'approximate'
+                  }
+                }
+              }
+            }
+          ],
+          // Days on Market Median
+          domPercentiles: [
+            {
+              $group: {
+                _id: null,
+                values: {
+                  $percentile: {
+                    input: '$_calc_dom_days',
+                    p: [0.5],
+                    method: 'approximate'
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]).toArray()
   ]);
 
-  const agg = pipeline[0] || {};
+  const result = pipeline[0] || {};
+  const general = result.general?.[0] || {};
+  const priceP = result.pricePercentiles?.[0]?.values || [0, 0, 0];
+  const sqmP = result.sqmPercentiles?.[0]?.values || [0];
+  const domP = result.domPercentiles?.[0]?.values || [0];
+
   return {
     totalListings: total,
-    avgPrice: Math.round(agg.avgPrice || 0),
-    minPrice: agg.minPrice || 0,
-    maxPrice: agg.maxPrice || 0,
-    avgSize: Math.round(agg.avgSize || 0),
-    lastCrawled: agg.lastCrawled || null,
+    // General
+    avgPrice: Math.round(general.avgPrice || 0),
+    minPrice: general.minPrice || 0,
+    maxPrice: general.maxPrice || 0,
+    avgSize: Math.round(general.avgSize || 0),
+    lastCrawled: general.lastCrawled || null,
+    // New Advanced Stats
+    medianPrice: Math.round(priceP[1] || 0),      // P50
+    priceP25: Math.round(priceP[0] || 0),         // P25 (Lower Quartile)
+    priceP75: Math.round(priceP[2] || 0),         // P75 (Upper Quartile)
+    medianPricePerSqm: Math.round(sqmP[0] || 0),  // P50 Sqm Price
+    medianDaysOnMarket: Math.round(domP[0] || 0)   // Median Days on Market
   };
 }
 
@@ -226,11 +489,28 @@ async function getStats(source) {
  * Get bedroom distribution for charts.
  */
 async function getBedroomDistribution(source) {
+  if (source === 'all') {
+    const sources = Object.keys(COLLECTIONS);
+    const perSource = await Promise.all(sources.map(s => getBedroomDistribution(s)));
+    const merged = {};
+    for (const results of perSource) {
+      for (const { _id, count } of results) {
+        // Normalize "studio" → "0" for consistent grouping
+        const key = String(_id).toLowerCase() === 'studio' ? '0' : String(_id);
+        merged[key] = (merged[key] || 0) + count;
+      }
+    }
+    return Object.entries(merged)
+      .map(([_id, count]) => ({ _id, count }))
+      .sort((a, b) => String(a._id).localeCompare(String(b._id), undefined, { numeric: true }));
+  }
+
   const collectionName = COLLECTIONS[source];
+  const bedroomField = '$' + FIELD_PATHS[source].bedrooms;
   return db
     .collection(collectionName)
     .aggregate([
-      { $group: { _id: '$property.bedrooms', count: { $sum: 1 } } },
+      { $group: { _id: bedroomField, count: { $sum: 1 } } },
       { $sort: { _id: 1 } },
     ])
     .toArray();
