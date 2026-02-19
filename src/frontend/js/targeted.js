@@ -330,7 +330,7 @@ async function loadResults(append = false) {
       ? Math.round((data.stats.avgEffectiveCost || 0) * exchangeRate)
       : (data.stats.avgEffectiveCost || 0);
     document.getElementById('stat-avg-cost').textContent = avgCost.toLocaleString();
-    document.getElementById('stat-avg-ratio').textContent = `${data.stats.avgSalaryRatio || 0}%`;
+    document.getElementById('stat-avg-ratio').textContent = `${data.stats.avgBurdenIndex || 0}%`;
 
     populateNeighborhoods(data.neighborhoods);
 
@@ -409,7 +409,7 @@ function renderCard(doc) {
   const monthTime = Math.round((doc.monthly_time_cost || 0) * cx);
   const monthFuel = Math.round((doc.monthly_fuel_cost || 0) * cx);
   const monthTotal = Math.round((doc.effective_monthly_cost || 0) * cx);
-  const salaryPct = doc.salary_ratio || 0;
+  const burdenPct = doc.burden_index || 0;
 
   // Cost savings rows
   const savingsRows = [];
@@ -430,8 +430,8 @@ function renderCard(doc) {
     ? `<div class="perks">${perks.map(p => `<span class="perk">${p}</span>`).join('')}</div>`
     : '';
 
-  // Salary ratio tier for color
-  const ratioTier = salaryPct <= 25 ? 'low' : salaryPct <= 35 ? 'mid' : 'high';
+  // Burden index tier for color
+  const ratioTier = burdenPct <= 25 ? 'low' : burdenPct <= 35 ? 'mid' : 'high';
 
   return `
     <div class="listing-card">
@@ -463,7 +463,7 @@ function renderCard(doc) {
         ${savingsRows.map(s => `<div class="cost-row cost-saving"><span class="cost-label">${s.label}</span><span class="cost-val">−${s.val.toLocaleString()}</span></div>`).join('')}
         <div class="cost-row cost-total">
           <span class="cost-label">${t.cost_total}</span>
-          <span class="cost-val">${monthTotal.toLocaleString()} <span class="cost-ratio ratio-${ratioTier}">${salaryPct}% ${t.cost_salary}</span></span>
+          <span class="cost-val">${monthTotal.toLocaleString()} <span class="cost-ratio ratio-${ratioTier}">${burdenPct}% ${t.cost_salary}</span></span>
         </div>
       </div>
       <div class="listing-meta">

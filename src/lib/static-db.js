@@ -90,7 +90,9 @@ const staticDb = {
       stats: {
         avgScore,
         medianPrice,
-        neighborhoodCount: neighborhoods.length
+        neighborhoodCount: neighborhoods.length,
+        avgEffectiveCost: total > 0 ? Math.round(docs.reduce((acc, d) => acc + (d.effective_monthly_cost || 0), 0) / total) : 0,
+        avgBurdenIndex: total > 0 ? Math.round(docs.reduce((acc, d) => acc + (d.burden_index || 0), 0) / total) : 0
       }
     };
   }
