@@ -88,10 +88,11 @@ const SCORE_WEIGHTS = {
 
 // ─── Cost Savings (AED/month) ───────────────────────────────
 
-const PARKING_SAVING    = 800;  // ~9,600/yr: rental + time + depreciation + fines
-const UTILITY_SAVING    = 750;  // summer 500–1,000 AED range, budget-safe estimate
-const CHILLER_SAVING    = 300;  // AC cooling covered by landlord (partial utility)
-const COMMISSION_SAVING = 300;  // ~3,500 one-off / 12 months ≈ 292, rounded up
+const PARKING_SAVING    = 800;  
+const UTILITY_SAVING    = 1000; // 750 (bills) + 250 (convenience/no bureaucracy)
+const CHILLER_SAVING    = 450;  // 300 (bills) + 150 (convenience)
+const COMMISSION_SAVING = 300;  
+  // ~3,500 one-off / 12 months ≈ 292, rounded up
 
 // ─── Size Bonus Constants ───────────────────────────────────
 // Left-linear (0→50sqm = 0→8), plateau (50→80sqm = 8), gentle decline (80+sqm)
@@ -156,14 +157,14 @@ const COMMUTE_DATA = {
 // Summer peak fuel price: AED 2.60/L (budget-safe estimate)
 
 const REFERENCE_BUDGET = 30_000;   // AED (Internal reference for ranking)
-const WORK_DAYS        = 22;       // per month
+const WORK_DAYS        = 17.2;     // 365 - 104 - 30(leave) - 25(WFH) = 206 / 12
 const HOURS_PER_DAY    = 8;
-const FUEL_EFFICIENCY  = 6.8;      // km/L
+const FUEL_EFFICIENCY  = 7.5;      // 4.0L V6 single occupant, mostly highway
 const FUEL_PRICE       = 2.60;     // AED/L (summer peak)
 
 const COMMUTE_TIME_DISCOUNT = 0.6;  
-const PER_MINUTE_VALUE = REFERENCE_BUDGET / (WORK_DAYS * HOURS_PER_DAY * 60) * COMMUTE_TIME_DISCOUNT; // ~1.70 AED/min
-const FUEL_COST_PER_KM = FUEL_PRICE / FUEL_EFFICIENCY;                      // ~0.382 AED/km
+const PER_MINUTE_VALUE = REFERENCE_BUDGET / (22 * HOURS_PER_DAY * 60) * COMMUTE_TIME_DISCOUNT; // Rate based on standard 22 days, applied to actual 17.2 days
+const FUEL_COST_PER_KM = FUEL_PRICE / FUEL_EFFICIENCY;                      // ~0.347 AED/km
 
 /**
  * Calculate monthly commute costs for a neighborhood.
