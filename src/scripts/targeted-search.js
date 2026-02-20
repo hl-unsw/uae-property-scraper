@@ -349,7 +349,7 @@ function scorePayment(source, doc) {
 }
 
 function scoreVerified(source, doc) {
-  if (source === 'pf') return doc.is_verified ? SCORE_WEIGHTS.verified : 0;
+  if (source === 'pf') return doc.property?.is_verified ? SCORE_WEIGHTS.verified : 0;
   if (source === 'bayut') return doc.isVerified ? SCORE_WEIGHTS.verified : 0;
   if (source === 'dubizzle') return doc.is_verified ? SCORE_WEIGHTS.verified : 0;
   return 0;
