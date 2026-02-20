@@ -394,7 +394,48 @@ body {
   color: var(--gold);
 }
 
-/* ─── Score Badge ────────────────────────────── */
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.act-btn {
+  padding: 4px 8px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid var(--border);
+  background: var(--bg-warm);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--sans);
+  font-weight: 600;
+}
+
+.act-btn.star:hover { background: #fff9e6; border-color: #ffd700; color: #b8860b; }
+.act-btn.hide:hover { background: #fff5f5; border-color: #ffc1c1; color: #c53030; }
+
+.listing-card.is-interested {
+  border-left: 4px solid #ffd700;
+  background: linear-gradient(to right, #fffdf0, var(--bg-card));
+}
+
+.listing-card.is-ignored {
+  opacity: 0.4;
+  filter: grayscale(0.8);
+}
+
+.listing-card.is-ignored:hover {
+  opacity: 0.8;
+  filter: none;
+}
 
 .score-badge {
   display: flex;

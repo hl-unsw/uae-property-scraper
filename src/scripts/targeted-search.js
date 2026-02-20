@@ -101,55 +101,55 @@ const IDEAL_SIZE_SQM = 50;
 
 // ─── Commute Data (peak-hour midpoint: min + driving km) ────
 // Target: Sky Tower, Al Reem Island
-// Source: 2026-02 traffic analysis incl. E10 construction impact
-// km: one-way driving distance via fastest route
+// Source: Google Maps driving times from Sky Tower, Al Reem Island (2026-02-20)
+// km: one-way driving distance via fastest route, scaled proportionally
 
 const COMMUTE_DATA = {
-  'Al Reem':             { min:  8, km:  3 },  // on-island
+  'Al Reem':             { min:  5, km:  2 },  // on-island
   'Al Maryah Island':    { min: 11, km:  4 },  // adjacent island
   'Al Muzoun':           { min: 15, km:  5 },
-  'Eastern Mangrove':    { min: 18, km:  7 },
+  'Eastern Mangrove':    { min: 15, km:  6 },
+  'Al Muntazah':         { min: 16, km:  8 },
+  'Al Seef':             { min: 16, km: 12 },
+  'Al Khalidiyah':       { min: 17, km:  8 },  // Corniche route
+  'Mushrif':             { min: 17, km:  9 },
+  'Al Bateen':           { min: 19, km: 12 },
+  'Al Rawdah':           { min: 19, km: 10 },
   'Al Saadiyat Island':  { min: 21, km: 14 },  // via E12 bridge
-  'Al Muntazah':         { min: 26, km: 13 },
-  'Mushrif':             { min: 30, km: 16 },
-  'Al Rawdah':           { min: 30, km: 16 },
-  'Al Nahda East':       { min: 33, km: 19 },
-  'Al Khalidiyah':       { min: 34, km: 16 },  // Corniche route
-  'Qasr Al Shatie':      { min: 34, km: 19 },
-  'Al Bateen':           { min: 36, km: 22 },
-  'Raha Beach':          { min: 38, km: 28 },  // E10 construction
-  'Al Raha Gardens':     { min: 38, km: 30 },
-  'Al Raha Lofts':       { min: 38, km: 29 },
-  'Al Zeina':            { min: 38, km: 28 },
-  'Al Hadeel':           { min: 38, km: 28 },
-  'Al Bandar':           { min: 38, km: 28 },
-  'Al Seef':             { min: 38, km: 28 },
-  'Al Muneera':          { min: 38, km: 29 },
-  'Al Rahah':            { min: 38, km: 29 },  // general Al Raha area
-  'Rabdan':              { min: 40, km: 33 },
-  'Al Gurm West':        { min: 42, km: 28 },
-  'Yas Island':          { min: 42, km: 30 },  // via E12
-  'Masdar City':         { min: 45, km: 37 },  // airport road merge
-  'Khalifa City':        { min: 47, km: 40 },
-  'MBZ City':            { min: 50, km: 45 },
-  'Zayed City':          { min: 52, km: 52 },
-  'Al Rayyana':          { min: 52, km: 52 },
-  'Al Reef':             { min: 56, km: 55 },
-  'Shakhbout City':      { min: 60, km: 58 },
-  'Bawabat Al Abu Dhabi':{ min: 60, km: 58 },
-  'Musaffah':            { min: 60, km: 55 },
-  'Baniyas':             { min: 65, km: 62 },
-  'Madinat Al Riyadh':   { min: 65, km: 65 },
-  'Abu Mreikhah':        { min: 65, km: 65 },
-  'Al Wathba':           { min: 65, km: 66 },
-  'Al Shahama':          { min: 70, km: 70 },
-  'Al Bahyah':           { min: 69, km: 66 },
-  'Al Mizn':             { min: 70, km: 70 },
-  'Al Haffar':           { min: 70, km: 70 },
-  'Al Bihouth':          { min: 70, km: 70 },
-  'Al Rahbah':           { min: 75, km: 75 },
-  'Al Falah':            { min: 80, km: 80 },
-  'Ajban':               { min: 82, km: 85 },
+  'Rabdan':              { min: 22, km: 18 },
+  'Al Gurm West':        { min: 23, km: 15 },
+  'Al Raha Gardens':     { min: 23, km: 18 },
+  'Raha Beach':          { min: 23, km: 17 },
+  'Al Raha Lofts':       { min: 23, km: 18 },
+  'Al Zeina':            { min: 23, km: 17 },
+  'Al Hadeel':           { min: 23, km: 17 },
+  'Al Bandar':           { min: 23, km: 17 },
+  'Al Muneera':          { min: 23, km: 18 },
+  'Al Rahah':            { min: 23, km: 18 },  // general Al Raha area
+  'Qasr Al Shatie':      { min: 23, km: 13 },
+  'Al Rayyana':          { min: 25, km: 25 },
+  'Khalifa City':        { min: 26, km: 22 },
+  'MBZ City':            { min: 27, km: 24 },
+  'Masdar City':         { min: 28, km: 23 },  // airport road merge
+  'Zayed City':          { min: 28, km: 28 },
+  'Yas Island':          { min: 30, km: 21 },  // via E12
+  'Al Reef':             { min: 31, km: 30 },
+  'Shakhbout City':      { min: 33, km: 32 },
+  'Bawabat Al Abu Dhabi':{ min: 33, km: 32 },
+  'Al Falah':            { min: 35, km: 35 },
+  'Al Shahama':          { min: 37, km: 37 },
+  'Al Rahbah':           { min: 38, km: 38 },
+  'Al Nahda East':       { min: 40, km: 23 },
+  'Musaffah':            { min: 40, km: 37 },
+  'Madinat Al Riyadh':   { min: 45, km: 45 },
+  'Al Haffar':           { min: 48, km: 48 },
+  'Abu Mreikhah':        { min: 50, km: 50 },
+  'Al Wathba':           { min: 50, km: 51 },
+  'Baniyas':             { min: 50, km: 48 },
+  'Al Bahyah':           { min: 50, km: 48 },
+  'Al Mizn':             { min: 50, km: 50 },
+  'Al Bihouth':          { min: 50, km: 50 },
+  'Ajban':               { min: 67, km: 69 },
 };
 
 // ─── Cost Constants ──────────────────────────────────────────
@@ -557,6 +557,14 @@ async function main() {
 
   // 6) Save to targeted_results
   const targetCol = db.collection('targeted_results');
+  
+  // Backup existing interest statuses
+  const existingInterests = await targetCol.find({}, { projection: { listing_id: 1, interest: 1 } }).toArray();
+  const interestMap = {};
+  existingInterests.forEach(item => {
+    if (item.interest) interestMap[item.listing_id] = item.interest;
+  });
+
   await targetCol.deleteMany({}); // clear previous results
 
   const docs = top.map((l) => ({
@@ -593,6 +601,8 @@ async function main() {
     monthly_parking_saving: l.monthly_parking_saving,
     monthly_utility_saving: l.monthly_utility_saving,
     monthly_commission_saving: l.monthly_commission_saving,
+    // Interest preservation
+    interest: interestMap[l.listing_id] || null,
     // Scoring
     score: l.score,
     score_breakdown: {
