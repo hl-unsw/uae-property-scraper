@@ -36,6 +36,7 @@ router.get('/targeted-results', async (req, res) => {
     const minVerified = parseInt(req.query.minVerified, 10) || 0;
     const minOven = parseInt(req.query.minOven, 10) || 0;
     const maxCommute = parseInt(req.query.maxCommute, 10) || 0;
+    const interest = req.query.interest || ''; // 'interested' or 'ignored'
 
     const db = await getDb();
     const col = db.collection('targeted_results');
@@ -45,6 +46,7 @@ router.get('/targeted-results', async (req, res) => {
     if (neighborhood) filter.neighborhood_en = neighborhood;
     if (minScore > 0) filter.score = { $gte: minScore };
     if (source) filter.source = source;
+    if (interest) filter.interest = interest;
 
     // Boolean filters (parking/utilities/fees → has_* fields)
     if (minPark > 0) filter.has_parking = true;
@@ -118,6 +120,33 @@ router.get('/targeted-results', async (req, res) => {
         avgBurdenIndex: Math.round(s.avgBurdenIndex || 0),
       },
     });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * POST /api/targeted-results/interact
+ * Body: { listing_id, status, token }
+ */
+router.post('/targeted-results/interact', async (req, res) => {
+  try {
+    const { listing_id, status, token } = req.body;
+    
+    // Validate token
+    if (!token || token !== req.app.locals.adminToken) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const db = await getDb();
+    const col = db.collection('targeted_results');
+
+    const result = await col.updateOne(
+      { listing_id: String(listing_id) },
+      { $set: { interest: status, interacted_at: new Date() } }
+    );
+
+    res.json({ success: true, modifiedCount: result.modifiedCount });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
