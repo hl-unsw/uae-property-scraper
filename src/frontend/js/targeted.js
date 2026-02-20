@@ -6,9 +6,9 @@ let hasMore = true;
 let currentLang = localStorage.getItem('lang') || 'zh';
 let exchangeRate = 1.97; // Fallback
 
-// Admin Token from URL
+// Admin Token from URL (validated on init)
 const urlParams = new URLSearchParams(window.location.search);
-const adminToken = urlParams.get('token');
+let adminToken = null;
 
 const TRANSLATIONS = {
   zh: {
@@ -147,6 +147,7 @@ const TRANSLATIONS = {
 
 // ─── Init ────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
+  await validateToken();
   await fetchExchangeRate();
   initLanguage();
   loadResults();
@@ -196,6 +197,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 });
+
+async function validateToken() {
+  const token = urlParams.get('token');
+  if (!token) return;
+  try {
+    const res = await fetch(`${API}/api/auth/validate?token=${encodeURIComponent(token)}`);
+    const data = await res.json();
+    if (data.valid) adminToken = token;
+  } catch (err) {
+    // Silently fail — no admin mode
+  }
+}
 
 async function fetchExchangeRate() {
   try {

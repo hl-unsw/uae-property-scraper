@@ -19,6 +19,12 @@ app.use(express.json());
 // Serve frontend static files
 app.use(express.static(path.join(__dirname, '../frontend')));
 
+// Token validation
+app.get('/api/auth/validate', (req, res) => {
+  const token = req.query.token;
+  res.json({ valid: !!(token && token === ADMIN_TOKEN) });
+});
+
 // API routes
 app.use('/api', targetedRouter);
 app.use('/api/exchange', exchangeRouter);

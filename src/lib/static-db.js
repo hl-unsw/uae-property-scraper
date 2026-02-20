@@ -27,6 +27,9 @@ const staticDb = {
     if (params.source) {
       docs = docs.filter(d => d.source === params.source);
     }
+    if (params.interest) {
+      docs = docs.filter(d => d.interest === params.interest);
+    }
     
     // 2. Boolean filters (parking/utilities/fees/oven → has_* fields)
     if (params.minPark && parseInt(params.minPark, 10) > 0) {
