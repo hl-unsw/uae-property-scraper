@@ -9,8 +9,8 @@ const crypto = require('crypto');
 
 const app = express();
 
-// Generate random admin token for this session
-const ADMIN_TOKEN = crypto.randomBytes(8).toString('hex');
+// Admin token: fixed via env var on Vercel, random per session locally
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN || crypto.randomBytes(8).toString('hex');
 app.locals.adminToken = ADMIN_TOKEN;
 
 // Body parser for interactions
@@ -34,8 +34,12 @@ async function start() {
   app.listen(config.api.port, () => {
     logger.info({ port: config.api.port }, 'API server running');
     console.log('\n' + '═'.repeat(50));
-    console.log(`🚀 Access with ADMIN privileges:`);
-    console.log(`   http://localhost:${config.api.port}?token=${ADMIN_TOKEN}`);
+    if (process.env.ADMIN_TOKEN) {
+      console.log(`🔒 Using fixed ADMIN_TOKEN from environment`);
+    } else {
+      console.log(`🚀 Access with ADMIN privileges:`);
+      console.log(`   http://localhost:${config.api.port}?token=${ADMIN_TOKEN}`);
+    }
     console.log('═'.repeat(50) + '\n');
     logger.info(`Dashboard: http://localhost:${config.api.port}`);
   });

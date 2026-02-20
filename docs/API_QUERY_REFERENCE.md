@@ -116,6 +116,52 @@ Aggregate statistics. When `source=all`, aggregates across all 3 platforms using
 }
 ```
 
+### GET /api/targeted-results
+
+Curated listings with scoring, commute data, and cost breakdowns.
+
+| Parameter | Type | Default | Description | Example |
+|-----------|------|---------|-------------|---------|
+| `page` | integer | `1` | Page number (1-indexed) | `page=2` |
+| `limit` | integer | `20` | Results per page (max 100) | `limit=50` |
+| `sort` | string | `score` | Sort order: `score`, `cost`, `commute`, `newest`, `price`, `price_desc`, `size` | `sort=cost` |
+| `neighborhood` | string | — | Filter by neighborhood (English name) | `neighborhood=Al Reem Island` |
+| `interest` | string | — | Filter by interaction status: `interested`, `ignored` | `interest=interested` |
+| `minScore` | integer | `0` | Minimum overall score | `minScore=40` |
+| `minVal` | integer | `0` | Minimum effective cost score | `minVal=30` |
+| `minSize` | integer | `0` | Minimum size bonus score | `minSize=5` |
+| `maxCommute` | integer | `0` | Maximum commute time in minutes (0 = no filter) | `maxCommute=30` |
+| `minPark` | integer | `0` | `1` = has parking only | `minPark=1` |
+| `minUtil` | integer | `0` | `1` = utilities included only | `minUtil=1` |
+| `minFee` | integer | `0` | `1` = no commission only | `minFee=1` |
+| `minPay` | integer | `0` | `1` = flexible payment only | `minPay=1` |
+| `minVerified` | integer | `0` | `1` = verified only | `minVerified=1` |
+| `minOven` | integer | `0` | `1` = has oven only | `minOven=1` |
+
+### POST /api/targeted-results/interact
+
+Mark a listing as interested or ignored. Supports toggle — sending the same status again clears it (client sends `null`).
+
+**Authentication:** Requires `token` in request body matching the server's `ADMIN_TOKEN`.
+
+| Body Field | Type | Required | Description |
+|------------|------|----------|-------------|
+| `listing_id` | string | Yes | The listing ID to interact with |
+| `status` | string/null | Yes | `"interested"`, `"ignored"`, or `null` (clear) |
+| `token` | string | Yes | Admin token |
+
+**Token configuration:**
+
+| Environment | Behavior |
+|-------------|----------|
+| **Local dev** | Random token generated per server session, printed to console on startup |
+| **Vercel / production** | Set `ADMIN_TOKEN` env var for a fixed, persistent token |
+
+**Response:**
+```json
+{ "success": true, "modifiedCount": 1 }
+```
+
 ### GET /api/bedrooms
 
 Bedroom count distribution for charts. When `source=all`, merges counts across all platforms and normalizes "studio" → "0".

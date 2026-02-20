@@ -74,8 +74,8 @@ const TRANSLATIONS = {
     cost_fuel: '油费',
     cost_total: '月均总成本',
     cost_salary: '预算占比',
-    btn_star: '感兴趣',
-    btn_hide: '隐藏'
+    btn_star: '★',
+    btn_hide: '✕'
   },
   en: {
     title: 'Top Listings',
@@ -140,8 +140,8 @@ const TRANSLATIONS = {
     cost_fuel: 'Fuel',
     cost_total: 'Total/mo',
     cost_salary: 'of budget',
-    btn_star: 'Star',
-    btn_hide: 'Hide'
+    btn_star: '★',
+    btn_hide: '✕'
   }
 };
 

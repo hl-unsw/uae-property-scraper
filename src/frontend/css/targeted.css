@@ -407,16 +407,19 @@ body {
 }
 
 .act-btn {
-  padding: 4px 8px;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  font-size: 13px;
+  line-height: 26px;
+  text-align: center;
   border: 1px solid var(--border);
-  background: var(--bg-warm);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s var(--ease);
   font-family: var(--sans);
-  font-weight: 600;
 }
 
 .act-btn.star:hover { background: #fff9e6; border-color: #ffd700; color: #b8860b; }
