@@ -422,6 +422,18 @@ body {
 .act-btn.star:hover { background: #fff9e6; border-color: #ffd700; color: #b8860b; }
 .act-btn.hide:hover { background: #fff5f5; border-color: #ffc1c1; color: #c53030; }
 
+.act-btn.star.active {
+  background: #fff9e6;
+  border-color: #d4a843;
+  color: #8b6914;
+}
+
+.act-btn.hide.active {
+  background: #fff0f0;
+  border-color: #e8a0a0;
+  color: #a03030;
+}
+
 .listing-card.is-interested {
   border-left: 4px solid #ffd700;
   background: linear-gradient(to right, #fffdf0, var(--bg-card));

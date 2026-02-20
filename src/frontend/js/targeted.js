@@ -346,20 +346,30 @@ async function loadResults(append = false) {
 
 async function interact(listingId, status) {
   if (!adminToken) return;
+  const card = document.querySelector(`[data-id="${listingId}"]`);
+  if (!card) return;
+
+  // Toggle: if already in this state, clear it
+  const isActive = (status === 'interested' && card.classList.contains('is-interested'))
+                || (status === 'ignored' && card.classList.contains('is-ignored'));
+  const newStatus = isActive ? null : status;
+
   try {
     const res = await fetch(`${API}/api/targeted-results/interact`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ listing_id: listingId, status, token: adminToken })
+      body: JSON.stringify({ listing_id: listingId, status: newStatus, token: adminToken })
     });
     const data = await res.json();
     if (data.success) {
-      // Optimistic UI update
-      const card = document.querySelector(`[data-id="${listingId}"]`);
-      if (card) {
-        if (status === 'ignored') card.classList.add('is-ignored');
-        else card.classList.add('is-interested');
-      }
+      // Clear both states, then set new one
+      card.classList.remove('is-interested', 'is-ignored');
+      if (newStatus === 'interested') card.classList.add('is-interested');
+      else if (newStatus === 'ignored') card.classList.add('is-ignored');
+      // Update button active states
+      card.querySelectorAll('.act-btn').forEach(btn => btn.classList.remove('active'));
+      if (newStatus === 'interested') card.querySelector('.act-btn.star')?.classList.add('active');
+      else if (newStatus === 'ignored') card.querySelector('.act-btn.hide')?.classList.add('active');
     }
   } catch (err) {
     console.error('Interaction failed', err);
@@ -408,8 +418,8 @@ function renderCard(doc) {
 
   const adminActions = adminToken ? `
     <div class="admin-actions">
-      <button class="act-btn star" onclick="interact('${doc.listing_id}', 'interested')">${t.btn_star}</button>
-      <button class="act-btn hide" onclick="interact('${doc.listing_id}', 'ignored')">${t.btn_hide}</button>
+      <button class="act-btn star${doc.interest === 'interested' ? ' active' : ''}" onclick="interact('${doc.listing_id}', 'interested')">${t.btn_star}</button>
+      <button class="act-btn hide${doc.interest === 'ignored' ? ' active' : ''}" onclick="interact('${doc.listing_id}', 'ignored')">${t.btn_hide}</button>
     </div>
   ` : '';
 
