@@ -132,8 +132,7 @@ router.get('/targeted-results', async (req, res) => {
 router.post('/targeted-results/interact', async (req, res) => {
   try {
     const { listing_id, status, token } = req.body;
-    console.log(`[DEBUG] Interaction attempt: ID=${listing_id}, Status=${status}, TokenMatch=${token === req.app.locals.adminToken}`);
-    
+
     // Validate token
     if (!token || token !== req.app.locals.adminToken) {
       return res.status(401).json({ error: 'Unauthorized' });
