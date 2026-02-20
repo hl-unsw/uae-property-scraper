@@ -69,9 +69,9 @@ const COMBINED_PATTERN = NEIGHBORHOODS.map((n) => n.regex.source).join('|');
 
 // ─── Scoring Regexes ────────────────────────────────────────
 
-const UTILITIES_RE = /bills?.included|utilities?.included|dewa.included|water.*electric.*included/i;
-const CHILLER_RE = /chiller.?free|free.?chiller|cooling.?free/i;
-const NO_FEES_RE = /no.commission|no.agent.fee|direct.from.owner|landlord.direct/i;
+const UTILITIES_RE = /bills?\s*inclu\w+|utilit\w*\s*inclu\w+|utilit\w*\s*free|free\s*utilit\w*|dewa\s*inclu\w+|free\s*dewa|free\s*addc|addc\s*(inclu\w+|free)|no\s+addc|water.*electri\w*\s*(inclu\w+|free)|electri\w*.*water\s*(inclu\w+|free)|inclu\w+\s*water.*electri|free\s+bills?|0\s+bills?|inclusive\s+of\s+(electri|water)|all\s+bills/i;
+const CHILLER_RE = /chiller.?free|free.?chiller|cooling.?free|air.condition\w*\s*\(?free\)?|free.?a\/c/i;
+const NO_FEES_RE = /no.commission|no.agent.fee|direct.from.owner|landlord.direct|0\s*%?\s*commission|zero.commission|commission.?free|free.?commission|without.commission|no.broker/i;
 const FLEX_PAY_RE = /multiple.cheque|[2-9]\+?.cheque|12.cheque|monthly.pay|flexible.pay/i;
 const OVEN_RE = /\boven\b|cooker|kitchen.appliance/i;
 
@@ -294,17 +294,18 @@ function getDescriptionText(source, doc) {
 function hasParking(source, doc) {
   if (source === 'pf') {
     const codes = doc.property?.amenities || [];
-    if (codes.some((a) => a === 'CP' || a === 'PA' || a.code === 'CP' || a.code === 'PA')) return true;
+    if (codes.some((a) => a === 'CP' || a.code === 'CP')) return true; // PA = Pets Allowed, not parking
     const names = doc.property?.amenity_names || [];
     if (names.some((n) => /parking/i.test(n))) return true;
-    return false;
+    // Fallback: check description text for parking mentions
+    return hasPositiveIntent(getDescriptionText(source, doc), /\bparking\b/i);
   }
   if (source === 'dubizzle') {
     const amenities = doc.amenities_v2 || [];
     return amenities.some((a) => /parking/i.test(a.value || ''));
   }
-  // Bayut — limited SSR data, check title
-  return /parking/i.test(doc.title || '');
+  // Bayut — limited SSR data, check title with negation awareness
+  return hasPositiveIntent(doc.title || '', /\bparking\b/i);
 }
 
 function hasUtilitiesIncl(source, doc) {
