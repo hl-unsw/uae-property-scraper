@@ -5,17 +5,32 @@ let isLoading = false;
 let hasMore = true;
 let currentLang = localStorage.getItem('lang') || 'zh';
 let exchangeRate = 1.97; // Fallback
+let exchangeRateUpdated = null;
+let fetchController = null;
 
 // Auth state
 let isAuthenticated = false;
+
+const ESCAPE_MAP = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;'
+};
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/[&<>"']/g, s => ESCAPE_MAP[s]);
+}
 
 const TRANSLATIONS = {
   zh: {
     title: '精选房源',
     match_label: '匹配度',
     stat_total: '房源',
-    stat_avg_score: '均分',
-    stat_avg_cost: '月均成本',
+    stat_avg_score: '中位分',
+    stat_avg_cost: '中位成本',
     stat_avg_ratio: '负担率',
     top_meta: '50k–80k · 开间/一居 · 精选推荐',
     label_neighborhood: '片区',
@@ -80,8 +95,8 @@ const TRANSLATIONS = {
     title: 'Top Listings',
     match_label: 'Match',
     stat_total: 'Listings',
-    stat_avg_score: 'Avg Score',
-    stat_avg_cost: 'Avg Cost/Mo',
+    stat_avg_score: 'Med Score',
+    stat_avg_cost: 'Med Cost/Mo',
     stat_avg_ratio: 'Burden %',
     top_meta: '50k–80k · Studio/1BR · Curated',
     label_neighborhood: 'Area',
@@ -196,6 +211,23 @@ document.addEventListener('DOMContentLoaded', async () => {
       setLanguage(lang);
     });
   });
+
+  // Event Delegation for Listing Actions
+  const listingsContainer = document.getElementById('listings');
+  if (listingsContainer) {
+    listingsContainer.addEventListener('click', (e) => {
+      const btn = e.target.closest('.act-btn');
+      if (!btn) return;
+      
+      const card = btn.closest('.listing-card');
+      const listingId = card?.dataset.id;
+      const status = btn.classList.contains('star') ? 'interested' : 'ignored';
+      
+      if (listingId && card) {
+        interact(listingId, status, card);
+      }
+    });
+  }
 });
 
 // ─── Auth ─────────────────────────────────
@@ -279,7 +311,7 @@ async function loginWebAuthn() {
     if (result.verified) {
       isAuthenticated = true;
       renderAuthUI();
-      resetAndLoad();
+      injectAdminButtons();
     } else {
       alert(result.error || 'Authentication failed');
     }
@@ -383,7 +415,7 @@ async function logout() {
   } catch (err) { /* ignore */ }
   isAuthenticated = false;
   renderAuthUI();
-  resetAndLoad();
+  removeAdminButtons();
 }
 
 // ─── Exchange Rate ────────────────────────
@@ -393,6 +425,7 @@ async function fetchExchangeRate() {
     const res = await fetch(`${API}/api/exchange/rate`);
     const data = await res.json();
     if (data.rate) exchangeRate = data.rate;
+    exchangeRateUpdated = data.lastUpdated ? new Date(data.lastUpdated) : new Date();
   } catch (err) {
     console.warn('Failed to fetch exchange rate', err);
   }
@@ -411,10 +444,26 @@ function setLanguage(lang, reload = true) {
   });
 
   applyI18n();
+  updateRateDisplay();
   renderAuthUI();
 
   if (reload) {
     resetAndLoad();
+  }
+}
+
+function updateRateDisplay() {
+  const el = document.getElementById('rate-info');
+  if (!el) return;
+  if (currentLang === 'zh') {
+    let text = `1 AED ≈ ¥${exchangeRate.toFixed(2)}`;
+    if (exchangeRateUpdated) {
+      text += ` · ${exchangeRateUpdated.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })} 更新`;
+    }
+    el.textContent = text;
+    el.style.display = '';
+  } else {
+    el.style.display = 'none';
   }
 }
 
@@ -477,8 +526,14 @@ function getActiveFilterValue(filterName) {
 }
 
 async function loadResults(append = false) {
-  if (isLoading) return;
+  if (isLoading && !append) {
+    if (fetchController) fetchController.abort();
+  }
+  
+  if (isLoading && append) return; // Prevent multiple pagination calls
+  
   isLoading = true;
+  fetchController = new AbortController();
 
   const container = document.getElementById('listings');
   const loadingEl = document.getElementById('scroll-loading');
@@ -505,14 +560,16 @@ async function loadResults(append = false) {
       maxCommute: document.getElementById('maxCommute').value,
     });
 
-    const res = await fetch(`${API}/api/targeted-results?${params}`);
+    const res = await fetch(`${API}/api/targeted-results?${params}`, {
+      signal: fetchController.signal
+    });
     const data = await res.json();
 
     document.getElementById('stat-total').textContent = data.total.toLocaleString();
-    document.getElementById('stat-avg-score').textContent = data.stats.avgScore;
-    const avgCost = currentLang === 'zh' ? Math.round((data.stats.avgEffectiveCost || 0) * exchangeRate) : (data.stats.avgEffectiveCost || 0);
-    document.getElementById('stat-avg-cost').textContent = avgCost.toLocaleString();
-    document.getElementById('stat-avg-ratio').textContent = `${data.stats.avgBurdenIndex || 0}%`;
+    document.getElementById('stat-avg-score').textContent = data.stats.medianScore;
+    const medCost = currentLang === 'zh' ? Math.round((data.stats.medianCost || 0) * exchangeRate) : (data.stats.medianCost || 0);
+    document.getElementById('stat-avg-cost').textContent = medCost.toLocaleString();
+    document.getElementById('stat-avg-ratio').textContent = `${data.stats.medianBurden || 0}%`;
 
     populateNeighborhoods(data.neighborhoods);
 
@@ -528,17 +585,19 @@ async function loadResults(append = false) {
 
     hasMore = currentPage < data.totalPages;
   } catch (err) {
+    if (err.name === 'AbortError') return;
     if (!append) container.innerHTML = `<div class="empty-state"><h3>${TRANSLATIONS[currentLang].conn_error}</h3></div>`;
     hasMore = false;
   } finally {
     isLoading = false;
     if (loadingEl) loadingEl.classList.remove('visible');
+    fetchController = null;
   }
 }
 
-async function interact(listingId, status) {
+async function interact(listingId, status, cardEl = null) {
   if (!isAuthenticated) return;
-  const card = document.querySelector(`[data-id="${listingId}"]`);
+  const card = cardEl || document.querySelector(`[data-id="${listingId}"]`);
   if (!card) return;
 
   // Toggle: if already in this state, clear it
@@ -574,11 +633,13 @@ function populateNeighborhoods(hoods) {
   if (neighborhoodsFilled || !hoods?.length) return;
   neighborhoodsFilled = true;
   const sel = document.getElementById('neighborhood');
+  const fragment = document.createDocumentFragment();
   for (const h of hoods) {
     const opt = document.createElement('option');
     opt.value = h; opt.textContent = h;
-    sel.appendChild(opt);
+    fragment.appendChild(opt);
   }
+  sel.appendChild(fragment);
 }
 
 // ─── Render ──────────────────────────────
@@ -611,8 +672,8 @@ function renderCard(doc) {
 
   const adminActions = isAuthenticated ? `
     <div class="admin-actions">
-      <button class="act-btn star${doc.interest === 'interested' ? ' active' : ''}" onclick="interact('${doc.listing_id}', 'interested')">${t.btn_star}</button>
-      <button class="act-btn hide${doc.interest === 'ignored' ? ' active' : ''}" onclick="interact('${doc.listing_id}', 'ignored')">${t.btn_hide}</button>
+      <button class="act-btn star${doc.interest === 'interested' ? ' active' : ''}">${t.btn_star}</button>
+      <button class="act-btn hide${doc.interest === 'ignored' ? ' active' : ''}">${t.btn_hide}</button>
     </div>
   ` : '';
 
@@ -646,6 +707,27 @@ function renderCard(doc) {
   `;
 }
 
+function injectAdminButtons() {
+  const t = TRANSLATIONS[currentLang];
+  document.querySelectorAll('.listing-card').forEach(card => {
+    if (card.querySelector('.admin-actions')) return;
+    const headerRight = card.querySelector('.header-right');
+    if (!headerRight) return;
+    const interest = card.classList.contains('is-interested') ? 'interested'
+                   : card.classList.contains('is-ignored') ? 'ignored' : null;
+    headerRight.insertAdjacentHTML('beforeend', `
+      <div class="admin-actions">
+        <button class="act-btn star${interest === 'interested' ? ' active' : ''}">${t.btn_star}</button>
+        <button class="act-btn hide${interest === 'ignored' ? ' active' : ''}">${t.btn_hide}</button>
+      </div>
+    `);
+  });
+}
+
+function removeAdminButtons() {
+  document.querySelectorAll('.admin-actions').forEach(el => el.remove());
+}
+
 function resetAndLoad() { currentPage = 1; hasMore = true; loadResults(false); }
 function setupInfiniteScroll() {
   const sentinel = document.getElementById('scroll-sentinel');
@@ -655,7 +737,6 @@ function setupInfiniteScroll() {
   }, { rootMargin: '200px' });
   observer.observe(sentinel);
 }
-function escapeHtml(str) { if (!str) return ''; const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
 window.interact = interact;
 window.loginWebAuthn = loginWebAuthn;
 window.registerWebAuthn = registerWebAuthn;
