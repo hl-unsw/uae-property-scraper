@@ -6,9 +6,8 @@ let hasMore = true;
 let currentLang = localStorage.getItem('lang') || 'zh';
 let exchangeRate = 1.97; // Fallback
 
-// Admin Token from URL (validated on init)
-const urlParams = new URLSearchParams(window.location.search);
-let adminToken = null;
+// Auth state
+let isAuthenticated = false;
 
 const TRANSLATIONS = {
   zh: {
@@ -147,7 +146,8 @@ const TRANSLATIONS = {
 
 // ─── Init ────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
-  await validateToken();
+  await checkAuth();
+  renderAuthUI();
   await fetchExchangeRate();
   initLanguage();
   loadResults();
@@ -198,17 +198,195 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 });
 
-async function validateToken() {
-  const token = urlParams.get('token');
-  if (!token) return;
+// ─── Auth ─────────────────────────────────
+
+async function checkAuth() {
   try {
-    const res = await fetch(`${API}/api/auth/validate?token=${encodeURIComponent(token)}`);
+    const res = await fetch(`${API}/api/auth/validate`, {
+      credentials: 'same-origin',
+    });
     const data = await res.json();
-    if (data.valid) adminToken = token;
+    if (data.valid) isAuthenticated = true;
+  } catch (err) { /* ignore */ }
+}
+
+function renderAuthUI() {
+  const topBar = document.querySelector('.top-meta-group');
+  if (!topBar) return;
+
+  // Remove existing auth actions if any
+  const existing = topBar.querySelector('.auth-actions');
+  if (existing) existing.remove();
+
+  const container = document.createElement('div');
+  container.className = 'auth-actions';
+
+  if (isAuthenticated) {
+    const logoutBtn = document.createElement('button');
+    logoutBtn.type = 'button';
+    logoutBtn.className = 'auth-btn';
+    logoutBtn.textContent = currentLang === 'zh' ? '登出' : 'Logout';
+    logoutBtn.addEventListener('click', logout);
+    container.appendChild(logoutBtn);
+  } else {
+    // Login button
+    const loginBtn = document.createElement('button');
+    loginBtn.type = 'button';
+    loginBtn.className = 'auth-btn auth-btn-primary';
+    loginBtn.textContent = 'Touch ID';
+    loginBtn.addEventListener('click', loginWebAuthn);
+    container.appendChild(loginBtn);
+
+    // Register button (prompt for token on click)
+    const regBtn = document.createElement('button');
+    regBtn.type = 'button';
+    regBtn.className = 'auth-btn';
+    regBtn.textContent = currentLang === 'zh' ? '注册指纹' : 'Register';
+    regBtn.addEventListener('click', registerWebAuthn);
+    container.appendChild(regBtn);
+  }
+
+  topBar.appendChild(container);
+}
+
+async function loginWebAuthn() {
+  try {
+    // 1. Get login options
+    const optRes = await fetch(`${API}/api/webauthn/login-options`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+    });
+    if (!optRes.ok) {
+      const err = await optRes.json();
+      alert(err.error || 'Failed to get login options');
+      return;
+    }
+    const options = await optRes.json();
+
+    // 2. Touch ID prompt
+    const credential = await SimpleWebAuthnBrowser.startAuthentication({ optionsJSON: options });
+
+    // 3. Verify
+    const verRes = await fetch(`${API}/api/webauthn/login-verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(credential),
+    });
+    const result = await verRes.json();
+
+    if (result.verified) {
+      isAuthenticated = true;
+      renderAuthUI();
+      resetAndLoad();
+    } else {
+      alert(result.error || 'Authentication failed');
+    }
   } catch (err) {
-    // Silently fail — no admin mode
+    if (err.name !== 'AbortError') {
+      console.error('WebAuthn login failed', err);
+      alert(currentLang === 'zh' ? '认证失败' : 'Authentication failed');
+    }
   }
 }
+
+async function registerWebAuthn() {
+  const token = prompt(currentLang === 'zh' ? '请输入管理员 Token：' : 'Enter admin token:');
+  if (!token) return;
+
+  try {
+    // 1. Get registration options
+    const optRes = await fetch(`${API}/api/webauthn/register-options`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ token }),
+    });
+    if (!optRes.ok) {
+      const err = await optRes.json();
+      alert(err.error || 'Failed to get registration options');
+      return;
+    }
+    const options = await optRes.json();
+
+    // 2. Touch ID prompt
+    const credential = await SimpleWebAuthnBrowser.startRegistration({ optionsJSON: options });
+
+    // 3. Verify
+    const verRes = await fetch(`${API}/api/webauthn/register-verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(credential),
+    });
+    const result = await verRes.json();
+
+    if (result.verified) {
+      showCredentialResult(result.envVars);
+    } else {
+      alert(result.error || 'Registration failed');
+    }
+  } catch (err) {
+    if (err.name !== 'AbortError') {
+      console.error('WebAuthn registration failed', err);
+      alert(currentLang === 'zh' ? '注册失败' : 'Registration failed');
+    }
+  }
+}
+
+function showCredentialResult(envVars) {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+
+  const text = `WEBAUTHN_CREDENTIAL_ID=${envVars.WEBAUTHN_CREDENTIAL_ID}\nWEBAUTHN_PUBLIC_KEY=${envVars.WEBAUTHN_PUBLIC_KEY}`;
+
+  const note = currentLang === 'zh'
+    ? '保存到 Vercel 环境变量后，需要重新部署才能生效。'
+    : 'After saving these to Vercel, you must redeploy for changes to take effect.';
+
+  overlay.innerHTML = `
+    <div class="modal-content">
+      <h3>${currentLang === 'zh' ? '注册成功 — 复制到 Vercel 环境变量' : 'Registration Success — Copy to Vercel Env Vars'}</h3>
+      <pre class="credential-block">${escapeHtml(text)}</pre>
+      <p class="modal-note">${note}</p>
+      <div class="modal-actions">
+        <button type="button" class="auth-btn auth-btn-primary" id="modal-copy">${currentLang === 'zh' ? '复制' : 'Copy'}</button>
+        <button type="button" class="auth-btn" id="modal-close">${currentLang === 'zh' ? '关闭' : 'Close'}</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  document.getElementById('modal-copy').addEventListener('click', () => {
+    navigator.clipboard.writeText(text).then(() => {
+      document.getElementById('modal-copy').textContent = currentLang === 'zh' ? '已复制' : 'Copied!';
+    });
+  });
+
+  document.getElementById('modal-close').addEventListener('click', () => {
+    overlay.remove();
+  });
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.remove();
+  });
+}
+
+async function logout() {
+  try {
+    await fetch(`${API}/api/auth/logout`, {
+      method: 'POST',
+      credentials: 'same-origin',
+    });
+  } catch (err) { /* ignore */ }
+  isAuthenticated = false;
+  renderAuthUI();
+  resetAndLoad();
+}
+
+// ─── Exchange Rate ────────────────────────
 
 async function fetchExchangeRate() {
   try {
@@ -227,12 +405,13 @@ function initLanguage() {
 function setLanguage(lang, reload = true) {
   currentLang = lang;
   localStorage.setItem('lang', lang);
-  
+
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
 
   applyI18n();
+  renderAuthUI();
 
   if (reload) {
     resetAndLoad();
@@ -251,7 +430,7 @@ function applyI18n() {
   document.getElementById('i18n-label-neighborhood').firstChild.textContent = t.label_neighborhood;
   document.getElementById('i18n-label-sort').firstChild.textContent = t.label_sort;
   document.getElementById('i18n-opt-neighborhood-all').textContent = t.opt_all_hoods;
-  
+
   // Interest Filter Labels
   const labelInt = document.getElementById('i18n-label-interest');
   if (labelInt) labelInt.textContent = t.label_interest;
@@ -271,7 +450,7 @@ function applyI18n() {
   const toggles = { minPark: 'park', minUtil: 'util', minFee: 'fee', minPay: 'pay', minVerified: 'verified', minOven: 'oven' };
   const toggleLabels = { minPark: 'parking', minUtil: 'utilities', minFee: 'fees', minPay: 'payment', minVerified: 'verified_label', minOven: 'oven_label' };
   const toggleOptions = { minPark: 'has_parking', minUtil: 'inc_util', minFee: 'no_fee', minPay: 'flex_pay', minVerified: 'is_verified', minOven: 'has_oven' };
-  
+
   Object.keys(toggles).forEach(key => {
     const group = document.querySelector(`.toggle-pills[data-filter="${key}"]`);
     if (group) {
@@ -358,7 +537,7 @@ async function loadResults(append = false) {
 }
 
 async function interact(listingId, status) {
-  if (!adminToken) return;
+  if (!isAuthenticated) return;
   const card = document.querySelector(`[data-id="${listingId}"]`);
   if (!card) return;
 
@@ -371,7 +550,8 @@ async function interact(listingId, status) {
     const res = await fetch(`${API}/api/targeted-results/interact`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ listing_id: listingId, status: newStatus, token: adminToken })
+      credentials: 'same-origin',
+      body: JSON.stringify({ listing_id: listingId, status: newStatus }),
     });
     const data = await res.json();
     if (data.success) {
@@ -429,7 +609,7 @@ function renderCard(doc) {
   if (sb.payment > 0) perks.push(t.flex_pay);
   if (doc.has_oven) perks.push(t.has_oven);
 
-  const adminActions = adminToken ? `
+  const adminActions = isAuthenticated ? `
     <div class="admin-actions">
       <button class="act-btn star${doc.interest === 'interested' ? ' active' : ''}" onclick="interact('${doc.listing_id}', 'interested')">${t.btn_star}</button>
       <button class="act-btn hide${doc.interest === 'ignored' ? ' active' : ''}" onclick="interact('${doc.listing_id}', 'ignored')">${t.btn_hide}</button>
@@ -477,3 +657,6 @@ function setupInfiniteScroll() {
 }
 function escapeHtml(str) { if (!str) return ''; const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
 window.interact = interact;
+window.loginWebAuthn = loginWebAuthn;
+window.registerWebAuthn = registerWebAuthn;
+window.logout = logout;

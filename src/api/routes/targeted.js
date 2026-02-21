@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { MongoClient } = require('mongodb');
 const config = require('../../config');
+const { isAdmin } = require('../../lib/auth');
 
 const router = Router();
 
@@ -127,14 +128,13 @@ router.get('/targeted-results', async (req, res) => {
 
 /**
  * POST /api/targeted-results/interact
- * Body: { listing_id, status, token }
+ * Body: { listing_id, status }
  */
 router.post('/targeted-results/interact', async (req, res) => {
   try {
-    const { listing_id, status, token } = req.body;
+    const { listing_id, status } = req.body;
 
-    // Validate token
-    if (!token || token !== req.app.locals.adminToken) {
+    if (!isAdmin(req)) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
