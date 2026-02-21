@@ -56,8 +56,8 @@ let rateCache = { rate: 1.97, last: 0 };
 
 app.get('/api/exchange/rate', async (req, res) => {
   const now = Date.now();
-  if (now - rateCache.last < 3600000) {
-    return res.json({ rate: rateCache.rate });
+  if (now - rateCache.last < 3600000 && rateCache.last > 0) {
+    return res.json({ rate: rateCache.rate, lastUpdated: rateCache.last });
   }
 
   try {
@@ -75,7 +75,7 @@ app.get('/api/exchange/rate', async (req, res) => {
   } catch (err) {
     console.error('Exchange rate fetch failed, using fallback');
   }
-  res.json({ rate: rateCache.rate });
+  res.json({ rate: rateCache.rate, lastUpdated: rateCache.last || null });
 });
 
 // ─── Auth + WebAuthn (shared module) ─────────────────

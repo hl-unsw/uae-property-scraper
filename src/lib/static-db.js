@@ -80,18 +80,17 @@ const staticDb = {
 
     // 4. Statistics (Calculated before pagination)
     const total = docs.length;
-    const sortedPrices = [...docs].map(d => d.price).filter(p => p > 0).sort((a, b) => a - b);
-    let medianPrice = 0;
-    if (sortedPrices.length > 0) {
-      const mid = Math.floor(sortedPrices.length / 2);
-      medianPrice = sortedPrices.length % 2 !== 0 
-        ? sortedPrices[mid] 
-        : (sortedPrices[mid - 1] + sortedPrices[mid]) / 2;
+
+    function median(values) {
+      if (!values.length) return 0;
+      values.sort((a, b) => a - b);
+      const mid = Math.floor(values.length / 2);
+      return values.length % 2 !== 0 ? values[mid] : (values[mid - 1] + values[mid]) / 2;
     }
 
-    const avgScore = total > 0 
-      ? Math.round(docs.reduce((acc, d) => acc + (d.score || 0), 0) / total) 
-      : 0;
+    const scores = docs.map(d => d.score || 0);
+    const costs = docs.map(d => d.effective_monthly_cost || 0);
+    const burdens = docs.map(d => d.burden_index || 0);
 
     const neighborhoods = [...new Set(docs.map(d => d.neighborhood_en))].filter(Boolean).sort();
 
@@ -107,11 +106,10 @@ const staticDb = {
       totalPages: Math.ceil(total / limit),
       neighborhoods,
       stats: {
-        avgScore,
-        medianPrice,
+        medianScore: Math.round(median(scores)),
+        medianCost: Math.round(median(costs)),
+        medianBurden: Math.round(median(burdens)),
         neighborhoodCount: neighborhoods.length,
-        avgEffectiveCost: total > 0 ? Math.round(docs.reduce((acc, d) => acc + (d.effective_monthly_cost || 0), 0) / total) : 0,
-        avgBurdenIndex: total > 0 ? Math.round(docs.reduce((acc, d) => acc + (d.burden_index || 0), 0) / total) : 0
       }
     };
   }
