@@ -140,27 +140,44 @@ Curated listings with scoring, commute data, and cost breakdowns.
 
 ### POST /api/targeted-results/interact
 
-Mark a listing as interested or ignored. Supports toggle — sending the same status again clears it (client sends `null`).
+标记房源为感兴趣或忽略。重复发送相同状态会清除（客户端发送 `null`）。
 
-**Authentication:** Requires `token` in request body matching the server's `ADMIN_TOKEN`.
+**鉴权：** 需携带有效的 `__session` HttpOnly Cookie（通过 Touch ID 登录获得）。
 
-| Body Field | Type | Required | Description |
-|------------|------|----------|-------------|
-| `listing_id` | string | Yes | The listing ID to interact with |
-| `status` | string/null | Yes | `"interested"`, `"ignored"`, or `null` (clear) |
-| `token` | string | Yes | Admin token |
+| Body 字段 | 类型 | 必填 | 说明 |
+|-----------|------|------|------|
+| `listing_id` | string | 是 | 房源 ID |
+| `status` | string/null | 是 | `"interested"`、`"ignored"` 或 `null`（清除） |
 
-**Token configuration:**
-
-| Environment | Behavior |
-|-------------|----------|
-| **Local dev** | Random token generated per server session, printed to console on startup |
-| **Vercel / production** | Set `ADMIN_TOKEN` env var for a fixed, persistent token |
-
-**Response:**
+**响应：**
 ```json
 { "success": true, "modifiedCount": 1 }
 ```
+
+### 认证机制（WebAuthn / Touch ID）
+
+管理员通过 Touch ID 认证，Session 以 HMAC 签名的 HttpOnly Cookie 存储，无数据库参与。
+
+**相关端点：**
+
+| 端点 | 方法 | 说明 |
+|------|------|------|
+| `/api/auth/validate` | GET | 检查 `__session` Cookie 是否有效 |
+| `/api/webauthn/register-options` | POST | 生成注册选项（需 body 中的 `ADMIN_TOKEN`） |
+| `/api/webauthn/register-verify` | POST | 验证注册，返回凭证数据 |
+| `/api/webauthn/login-options` | POST | 生成登录 challenge |
+| `/api/webauthn/login-verify` | POST | 验证 Touch ID 签名，签发 session cookie（24h） |
+| `/api/auth/logout` | POST | 清除 session cookie |
+
+**环境变量：**
+
+| 变量 | 说明 |
+|------|------|
+| `HMAC_SECRET` | 签名 challenge 和 session（`openssl rand -hex 32`） |
+| `ADMIN_TOKEN` | 注册时一次性使用的引导凭证 |
+| `WEBAUTHN_RP_ID` | 域名（本地默认 `localhost`，生产设为 Vercel 域名） |
+| `WEBAUTHN_CREDENTIAL_ID` | 注册后获得，写入环境变量 |
+| `WEBAUTHN_PUBLIC_KEY` | 注册后获得，写入环境变量 |
 
 ### GET /api/bedrooms
 
