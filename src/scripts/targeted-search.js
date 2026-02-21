@@ -73,7 +73,7 @@ const UTILITIES_RE = /bills?\s*inclu\w+|utilit\w*\s*inclu\w+|utilit\w*\s*free|fr
 const CHILLER_RE = /chiller.?free|free.?chiller|cooling.?free|air.condition\w*\s*\(?free\)?|free.?a\/c/i;
 const NO_FEES_RE = /no.commission|no.agent.fee|direct.from.owner|landlord.direct|0\s*%?\s*commission|zero.commission|commission.?free|free.?commission|without.commission|no.broker/i;
 const FLEX_PAY_RE = /multiple.cheque|[2-9]\+?.cheque|12.cheque|monthly.pay|flexible.pay/i;
-const OVEN_RE = /\boven\b|cooker|kitchen.appliance/i;
+const OVEN_RE = /\boven\b|cooker|kitchen.appliance|kitchen.*(?:equipped|premium\s+appliance|built.in\s+appliance|fitted)/i;
 
 // ─── Score Weights (100 pts total) ──────────────────────────
 
@@ -82,7 +82,7 @@ const SCORE_WEIGHTS = {
   verified: 12,       // platform-verified listing (+2 from oven rebalance)
   size_bonus: 8,      // peak at 50sqm; left-linear, right-plateau
   payment: 6,         // flexible payment terms (multi-cheque / monthly)
-  oven: 3,            // has oven / kitchen appliances (reduced; Bayut gets 2 as data-gap compensation)
+  oven: 3,            // has oven / kitchen appliances
   amenities: 4,       // amenities richness (pool, gym, balcony, security)
 };
 
@@ -536,10 +536,8 @@ async function main() {
         : Math.max(Math.round(SCORE_WEIGHTS.size_bonus / 2),
             Math.round((1 - (sqm - 80) / 120) * SCORE_WEIGHTS.size_bonus));
 
-    // Oven (Bayut gets data-gap compensation of 2/3 when undetected)
-    listing.score_oven = listing.has_oven
-      ? SCORE_WEIGHTS.oven
-      : listing.source === 'bayut' ? 2 : 0;
+    // Oven
+    listing.score_oven = listing.has_oven ? SCORE_WEIGHTS.oven : 0;
 
     listing.score = listing.score_effective_cost
       + listing.score_verified
