@@ -2,6 +2,7 @@ const express = require('express');
 const { MongoClient } = require('mongodb');
 const staticDb = require('../src/lib/static-db');
 const axios = require('axios');
+const { isAdmin, mountAuthRoutes } = require('../src/lib/auth');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
   }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -60,7 +62,7 @@ app.get('/api/exchange/rate', async (req, res) => {
 
   try {
     const response = await axios.get('https://wise.com/rates/live?source=AED&target=CNY', {
-      headers: { 
+      headers: {
         'User-Agent': 'Mozilla/5.0',
         'Referer': 'https://wise.com/'
       },
@@ -76,19 +78,15 @@ app.get('/api/exchange/rate', async (req, res) => {
   res.json({ rate: rateCache.rate });
 });
 
-// Token validation — frontend checks before showing admin UI
-app.get('/api/auth/validate', (req, res) => {
-  const token = req.query.token;
-  const valid = !!(process.env.ADMIN_TOKEN && token === process.env.ADMIN_TOKEN);
-  res.json({ valid });
-});
+// ─── Auth + WebAuthn (shared module) ─────────────────
+mountAuthRoutes(app);
 
 // Listing interaction (requires MongoDB)
 app.post('/api/targeted-results/interact', async (req, res) => {
   try {
-    const { listing_id, status, token } = req.body;
+    const { listing_id, status } = req.body;
 
-    if (!process.env.ADMIN_TOKEN || token !== process.env.ADMIN_TOKEN) {
+    if (!isAdmin(req)) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
