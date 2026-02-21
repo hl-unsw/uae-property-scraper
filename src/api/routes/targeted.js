@@ -74,36 +74,23 @@ router.get('/targeted-results', async (req, res) => {
     const sortObj = sortMap[sort] || sortMap.score;
 
     const skip = (page - 1) * limit;
-    const [docs, total, neighborhoods, stats, allPrices] = await Promise.all([
+    const [docs, total, neighborhoods, statDocs] = await Promise.all([
       col.find(filter).sort(sortObj).skip(skip).limit(limit).toArray(),
       col.countDocuments(filter),
       col.distinct('neighborhood_en'),
-      col.aggregate([
-        { $match: filter },
-        {
-          $group: {
-            _id: null,
-            avgScore: { $avg: '$score' },
-            maxScore: { $max: '$score' },
-            minScore: { $min: '$score' },
-            avgEffectiveCost: { $avg: '$effective_monthly_cost' },
-            avgBurdenIndex: { $avg: '$burden_index' },
-          },
-        },
-      ]).toArray(),
-      col.find(filter, { projection: { price: 1 } }).sort({ price: 1 }).toArray(),
+      col.find(filter, { projection: { score: 1, effective_monthly_cost: 1, burden_index: 1 } }).toArray(),
     ]);
 
-    // Calculate median price
-    let medianPrice = 0;
-    if (allPrices.length > 0) {
-      const mid = Math.floor(allPrices.length / 2);
-      medianPrice = allPrices.length % 2 !== 0
-        ? allPrices[mid].price
-        : (allPrices[mid - 1].price + allPrices[mid].price) / 2;
+    function median(values) {
+      if (!values.length) return 0;
+      values.sort((a, b) => a - b);
+      const mid = Math.floor(values.length / 2);
+      return values.length % 2 !== 0 ? values[mid] : (values[mid - 1] + values[mid]) / 2;
     }
 
-    const s = stats[0] || { avgScore: 0, maxScore: 0, minScore: 0, avgEffectiveCost: 0, avgBurdenIndex: 0 };
+    const scores = statDocs.map(d => d.score || 0);
+    const costs = statDocs.map(d => d.effective_monthly_cost || 0);
+    const burdens = statDocs.map(d => d.burden_index || 0);
 
     res.json({
       docs,
@@ -112,13 +99,10 @@ router.get('/targeted-results', async (req, res) => {
       totalPages: Math.ceil(total / limit),
       neighborhoods: neighborhoods.sort(),
       stats: {
-        avgScore: Math.round(s.avgScore || 0),
-        medianPrice: Math.round(medianPrice),
-        maxScore: s.maxScore || 0,
-        minScore: s.minScore || 0,
+        medianScore: Math.round(median(scores)),
+        medianCost: Math.round(median(costs)),
+        medianBurden: Math.round(median(burdens)),
         neighborhoodCount: neighborhoods.length,
-        avgEffectiveCost: Math.round(s.avgEffectiveCost || 0),
-        avgBurdenIndex: Math.round(s.avgBurdenIndex || 0),
       },
     });
   } catch (err) {

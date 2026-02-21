@@ -34,7 +34,7 @@ router.get('/rate', async (req, res) => {
   } catch (err) {
     logger.warn({ err: err.message }, 'Failed to fetch rate from Wise, using fallback');
   }
-  res.json({ rate: cache.rate });
+  res.json({ rate: cache.rate, lastUpdated: cache.lastUpdated || null });
 });
 
 module.exports = router;

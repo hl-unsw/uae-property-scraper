@@ -144,6 +144,12 @@ body {
   font-weight: 400;
 }
 
+.rate-info {
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
 /* ─── Language Switcher ──────────────────────── */
 
 .lang-switcher {
