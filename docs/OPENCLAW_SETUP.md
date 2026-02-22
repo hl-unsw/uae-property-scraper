@@ -1,6 +1,6 @@
 # OpenClaw 定时调度配置
 
-本文档说明如何通过 OpenClaw 定时执行 `pipeline-lite.sh`，实现 PropertyFinder + Dubizzle 的无人值守增量爬取、评分、导出和部署。
+本文档说明如何通过 OpenClaw 定时执行 `pipeline-lite.sh`，实现 PropertyFinder + Dubizzle 的无人值守爬取、评分、导出和部署。
 
 ---
 
@@ -9,58 +9,114 @@
 | 项目 | 值 |
 |------|-----|
 | 脚本 | `scripts/pipeline-lite.sh` |
-| 推荐频率 | 每 3 小时 |
+| 频率 | 每 2 小时 + 10 分钟随机抖动（防反爬） |
+| 爬取模式 | `SCRAPE_MODE=full`（全量）或 `incremental`（增量，默认） |
 | 覆盖平台 | PropertyFinder、Dubizzle |
 | 跳过平台 | Bayut（需有头浏览器 + 手动验证码） |
-| 预计耗时 | 20–90 秒 |
+| 预计耗时 | 20–90 秒（增量），更长（全量） |
 | 输出 | `data/static/*.json` 推送至 Git → Vercel 自动部署 |
 | 退出码 | 0 = 成功，1 = 失败 |
 
 ---
 
-## 流程图
+## 架构
 
 ```
+GuestOS (OpenClaw cron)
+  │
+  │  openclaw cron → agent turn → exec tool
+  │
+  ▼
+ssh huan.lu@192.168.64.1 'bash -l -c "SCRAPE_MODE=full bash /path/to/scripts/pipeline-lite.sh"'
+  │
+  ▼
+HostOS (项目所在机器)
+  │
+  ▼
 Preflight ──→ Scrape PF ──→ Scrape Dubizzle ──→ Score ──→ Git Pull ──→ Export JSON ──→ Git Push
    │              │                │                │          │              │              │
    ▼              ▼                ▼                ▼          ▼              ▼              ▼
- Node/Mongo    增量爬取         增量爬取          全局排名    rebase 同步    MongoDB→JSON    Vercel 部署
+ Node/Mongo    全量/增量        全量/增量        全局排名    rebase 同步    MongoDB→JSON    Vercel 部署
  Git 检查      ~60s             ~7s              ~5s         ~1s            ~2s             ~2s
 ```
 
 ---
 
-## OpenClaw 配置
+## 当前 Cron Job
 
-### 命令
+| 项目 | 值 |
+|------|-----|
+| Job ID | `d51ad594-f113-4c59-82b3-b1569f1d71cc` |
+| Name | `uae-property-scrape` |
+| Cron 表达式 | `0 */2 * * *` |
+| 时区 | Asia/Dubai |
+| 抖动窗口 | 10 分钟（`staggerMs: 600000`） |
+| Agent | `main` |
+| 超时 | 600 秒 |
+| 执行命令 | `ssh huan.lu@192.168.64.1 'bash -l -c "SCRAPE_MODE=full bash /Users/huan.lu/GitHub/uae-property-scraper/scripts/pipeline-lite.sh"'` |
+
+### 管理命令
+
+在 GuestOS 上执行（需先 `export PATH="/opt/homebrew/bin:$PATH"`）：
 
 ```bash
-cd /path/to/uae-property-scraper && bash scripts/pipeline-lite.sh
+# 查看所有 cron jobs
+openclaw cron list --json
+
+# 手动触发
+openclaw cron run d51ad594-f113-4c59-82b3-b1569f1d71cc
+
+# 查看运行历史
+openclaw cron runs --id d51ad594-f113-4c59-82b3-b1569f1d71cc
+
+# 禁用
+openclaw cron disable d51ad594-f113-4c59-82b3-b1569f1d71cc
+
+# 启用
+openclaw cron enable d51ad594-f113-4c59-82b3-b1569f1d71cc
+
+# 删除
+openclaw cron rm d51ad594-f113-4c59-82b3-b1569f1d71cc
 ```
 
-> 将 `/path/to/uae-property-scraper` 替换为项目实际绝对路径。
+### 重新创建（如需修改参数）
 
-### Cron 表达式
-
+```bash
+openclaw cron add \
+  --name "uae-property-scrape" \
+  --description "Full scrape PF+Dubizzle, score, export JSON, git push to Vercel" \
+  --cron "0 */2 * * *" \
+  --stagger 10m \
+  --tz "Asia/Dubai" \
+  --message "Run the UAE property scraper pipeline. Execute this single command via your exec tool: ssh huan.lu@192.168.64.1 'bash -l -c \"SCRAPE_MODE=full bash /Users/huan.lu/GitHub/uae-property-scraper/scripts/pipeline-lite.sh\"'. Report the full stdout and stderr. If any step fails, report the error details." \
+  --agent main \
+  --timeout-seconds 600 \
+  --no-deliver
 ```
-0 */3 * * *
-```
 
-每 3 小时整点执行一次（00:00, 03:00, 06:00, 09:00, 12:00, 15:00, 18:00, 21:00）。
+---
 
-### 环境要求
+## 环境要求
 
-OpenClaw 执行环境必须满足：
+### HostOS（项目所在）
 
 | 依赖 | 说明 |
 |------|------|
 | Node.js | v18+（项目使用 `require()` 语法） |
 | npm | 已安装项目依赖（`npm install`） |
-| MongoDB | 可达（本地 Docker 或远程 Atlas） |
-| Git | 已配置 push 权限（SSH key 或 HTTPS token） |
-| `.env` | 项目根目录有 `.env` 文件，含以下变量 |
+| MongoDB | 可达（本地 Docker 端口 27018） |
+| Git | 已配置 push 权限（SSH key） |
+| `.env` | 项目根目录有 `.env` 文件 |
 
-### 必需环境变量
+### GuestOS（OpenClaw 所在）
+
+| 依赖 | 说明 |
+|------|------|
+| OpenClaw | Gateway 运行中，监听 `127.0.0.1:18789` |
+| SSH | 可免密连接 HostOS（`huan.lu@192.168.64.1`） |
+| 设备配对 | CLI 已与 Gateway 配对（`openclaw devices list` 确认） |
+
+### 必需环境变量（HostOS `.env`）
 
 ```env
 MONGO_URI=mongodb://localhost:27017    # 或 Atlas 连接串
@@ -100,18 +156,18 @@ git commit + push               # 有变更才提交
 
 ## 日志示例
 
-成功执行：
+成功执行（全量）：
 
 ```
-[pipeline-lite 15:00:02] Preflight checks...
-[pipeline-lite 15:00:03] [1/4] Scraping PropertyFinder (incremental)...
-[pipeline-lite 15:00:18] [1/4] Scraping Dubizzle (incremental)...
-[pipeline-lite 15:00:20] [2/4] Running targeted scoring...
-[pipeline-lite 15:00:22] [3/4] Syncing with remote...
-[pipeline-lite 15:00:23] [3/4] Exporting MongoDB to static JSON...
-[pipeline-lite 15:00:24] [4/4] Committing and pushing...
-[pipeline-lite 15:00:26] Pushed. Vercel will redeploy.
-[pipeline-lite 15:00:26] Done. Total: 24s
+[pipeline-lite 22:05:09] Preflight checks...
+[pipeline-lite 22:05:09] [1/4] Scraping PropertyFinder (full)...
+[pipeline-lite 22:05:37] [1/4] Scraping Dubizzle (full)...
+[pipeline-lite 22:05:37] [2/4] Running targeted scoring...
+[pipeline-lite 22:05:37] [3/4] Syncing with remote...
+[pipeline-lite 22:05:37] [3/4] Exporting MongoDB to static JSON...
+[pipeline-lite 22:05:37] [4/4] Committing and pushing...
+[pipeline-lite 22:05:38] Pushed. Vercel will redeploy.
+[pipeline-lite 22:05:38] Done. Total: 29s
 ```
 
 无变更（跳过推送）：
@@ -128,30 +184,35 @@ git commit + push               # 有变更才提交
 
 | 错误信息 | 原因 | 解决方式 |
 |----------|------|----------|
-| `node not found` | Node.js 未安装或不在 PATH | 在 OpenClaw 环境中安装 Node.js |
-| `MongoDB unreachable` | MongoDB 未运行或连接串错误 | 检查 Docker / Atlas 状态和 `.env` |
+| `node not found` | 非交互式 SSH 的 PATH 缺失 | 确保用 `bash -l -c "..."` 包裹命令 |
+| `MongoDB unreachable` | MongoDB 未运行或连接串错误 | 检查 Docker 状态和 `.env` |
 | `Uncommitted non-data changes` | 工作区有手动修改未提交 | 手动 commit 或 stash |
-| `Git pull --rebase failed` | 远程有冲突变更 | 手动 `cd` 到项目目录，`git rebase --continue` 或 `--abort` |
-| `Git push failed` | 权限问题或远程保护规则 | 检查 SSH key / HTTPS token |
+| `Git pull --rebase failed` | 远程有冲突变更 | 手动 `git rebase --continue` 或 `--abort` |
+| `Git push failed` | 权限问题或远程保护规则 | 检查 SSH key |
 | `PropertyFinder scrape failed` | BuildID 过期或反爬拦截 | 重试通常自动恢复（BuildID 自动刷新） |
 | `Dubizzle scrape failed` | Algolia API 超时或限流 | 等待下一轮自动重试 |
+| `pairing required` | OpenClaw CLI 未与 Gateway 配对 | `openclaw devices list` → `openclaw devices approve <id>` |
+| `gateway timeout` | Gateway 响应超时 | 检查 Gateway 是否运行：`openclaw health` |
 
 ---
 
 ## 手动测试
 
-首次配置 OpenClaw 前，建议先手动执行一次验证：
+### 从 HostOS 本地测试
 
 ```bash
-# 1. 确认依赖已安装
-cd /path/to/uae-property-scraper
-npm install
-
-# 2. 执行管线
-bash scripts/pipeline-lite.sh
-
-# 3. 预期输出：退出码 0，终端显示 "Done. Total: XXs"
+cd /Users/huan.lu/GitHub/uae-property-scraper
+SCRAPE_MODE=full bash scripts/pipeline-lite.sh
 echo $?  # 应输出 0
+```
+
+### 从 GuestOS 远程测试（模拟 cron 执行路径）
+
+```bash
+export PATH="/opt/homebrew/bin:$PATH"
+openclaw cron run d51ad594-f113-4c59-82b3-b1569f1d71cc
+# 等待 1-2 分钟后查看结果：
+openclaw cron runs --id d51ad594-f113-4c59-82b3-b1569f1d71cc
 ```
 
 ---
