@@ -4,9 +4,14 @@
 # Skips Bayut (requires headed browser + manual captcha).
 #
 # Flow: preflight -> scrape PF -> scrape Dubizzle -> score -> export -> git push
-# Expected runtime: ~90 seconds
+# Expected runtime: ~90 seconds (incremental), longer for full
+#
+# Usage: bash scripts/pipeline-lite.sh              # incremental (default)
+#        SCRAPE_MODE=full bash scripts/pipeline-lite.sh  # full scrape
 
 set -euo pipefail
+
+SCRAPE_MODE="${SCRAPE_MODE:-incremental}"
 
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$PROJECT_DIR"
@@ -34,12 +39,12 @@ if ! git diff --quiet -- ':!data/static'; then
   fail "Uncommitted non-data changes in working tree. Aborting to avoid conflict."
 fi
 
-# ─── 1. Incremental Scrapes ──────────────────────────────────
-log "[1/4] Scraping PropertyFinder (incremental)..."
-npm run scrape:incremental 2>&1 || fail "PropertyFinder scrape failed"
+# ─── 1. Scrapes ────────────────────────────────────────────────
+log "[1/4] Scraping PropertyFinder ($SCRAPE_MODE)..."
+npm run "scrape:$SCRAPE_MODE" 2>&1 || fail "PropertyFinder scrape failed"
 
-log "[1/4] Scraping Dubizzle (incremental)..."
-npm run scrape:dubizzle:incremental 2>&1 || fail "Dubizzle scrape failed"
+log "[1/4] Scraping Dubizzle ($SCRAPE_MODE)..."
+npm run "scrape:dubizzle:$SCRAPE_MODE" 2>&1 || fail "Dubizzle scrape failed"
 
 # ─── 2. Global Ranking ───────────────────────────────────────
 log "[2/4] Running targeted scoring..."
@@ -63,7 +68,7 @@ git add data/static/*.json
 if git diff --staged --quiet; then
   log "No data changes. Skipping push."
 else
-  git commit -m "data: auto-update $(date +'%Y-%m-%d %H:%M') [PF+Dubizzle]"
+  git commit -m "data: auto-update $(date +'%Y-%m-%d %H:%M') [PF+Dubizzle] ($SCRAPE_MODE)"
   git push origin main || fail "Git push failed"
   log "Pushed. Vercel will redeploy."
 fi
