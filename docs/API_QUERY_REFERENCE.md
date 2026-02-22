@@ -47,78 +47,11 @@ npm run server                   # http://localhost:3000
 
 Base URL: `http://localhost:3000/api`
 
-### GET /api/listings
-
-Paginated search over locally stored listings.
-
-| Parameter | Type | Default | Description | Example |
-|-----------|------|---------|-------------|---------|
-| `page` | integer | `1` | Page number (1-indexed) | `page=3` |
-| `limit` | integer | `20` | Results per page (max recommended: 100) | `limit=50` |
-| `source` | string | `all` | Data source: `all` (mix all 3 platforms), `pf`, `bayut`, `dubizzle` | `source=all` |
-| `minPrice` | integer | — | Minimum price (AED, inclusive) | `minPrice=30000` |
-| `maxPrice` | integer | — | Maximum price (AED, inclusive) | `maxPrice=80000` |
-| `bedrooms` | string | — | Bedroom count. `0` = Studio | `bedrooms=2` |
-| `furnished` | string | — | Furnishing status | `YES`, `NO`, `PARTLY` |
-| `search` | string | — | Keyword search (regex on title, case-insensitive) | `search=Corniche` |
-
-**Response:**
-
-When `source=all` (default), listings from all 3 platforms are mixed and sorted by `crawled_at` descending. Each doc is **normalized** to a common shape regardless of source:
-
-```json
-{
-  "docs": [
-    {
-      "_id": "...",
-      "listing_id": "10768666",
-      "source": "bayut",
-      "title": "A Premium Residence | Full Facilities",
-      "price": 80000,
-      "size": 6,
-      "bedrooms": "1",
-      "furnished": "unfurnished",
-      "location": "Al Reem Island, Shams Abu Dhabi",
-      "url": "https://www.bayut.com/property/details-10768666.html",
-      "crawled_at": "2026-02-19T09:37:38.480Z"
-    }
-  ],
-  "total": 567,
-  "page": 1,
-  "totalPages": 114
-}
-```
-
-The `source` field on each doc indicates which platform it came from (`pf`, `bayut`, or `dubizzle`).
-
-### GET /api/stats
-
-Aggregate statistics. When `source=all`, aggregates across all 3 platforms using weighted averages.
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `source` | string | `all` | Data source: `all`, `pf`, `bayut`, `dubizzle` |
-
-**Response:**
-```json
-{
-  "totalListings": 567,
-  "avgPrice": 71480,
-  "minPrice": 52000,
-  "maxPrice": 80000,
-  "avgSize": 35,
-  "lastCrawled": "2026-02-19T09:37:38.480Z",
-  "medianPrice": 72411,
-  "priceP25": 65000,
-  "priceP75": 75000,
-  "medianPricePerSqm": 6641,
-  "medianDaysOnMarket": 1
-}
-```
-
 ### GET /api/targeted-results
 
 Curated listings with scoring, commute data, and cost breakdowns.
+
+**Query Parameters:**
 
 | Parameter | Type | Default | Description | Example |
 |-----------|------|---------|-------------|---------|
@@ -137,6 +70,47 @@ Curated listings with scoring, commute data, and cost breakdowns.
 | `minPay` | integer | `0` | `1` = flexible payment only | `minPay=1` |
 | `minVerified` | integer | `0` | `1` = verified only | `minVerified=1` |
 | `minOven` | integer | `0` | `1` = has oven only | `minOven=1` |
+
+**Response:**
+
+```json
+{
+  "docs": [ ...listing objects... ],
+  "total": 178,
+  "page": 1,
+  "totalPages": 9,
+  "neighborhoods": ["Al Reem Island", "Khalifa City A", ...],
+  "stats": {
+    "medianScore": 70,
+    "medianCost": 6184,
+    "medianBurden": 21,
+    "neighborhoodCount": 16
+  }
+}
+```
+
+| 字段 | 说明 |
+|------|------|
+| `stats.medianScore` | 筛选结果的匹配分中位数（满分 100） |
+| `stats.medianCost` | 月均有效成本中位数（AED，含房租 + 通勤 − 节省） |
+| `stats.medianBurden` | 预算占比中位数（百分比） |
+
+每条 listing 的 `title_zh` 字段包含中文翻译标题。
+
+### GET /api/exchange/rate
+
+实时 AED→CNY 汇率（来自 Wise API，1 小时缓存）。
+
+**Response:**
+
+```json
+{ "rate": 1.88, "lastUpdated": 1771684113395 }
+```
+
+| 字段 | 说明 |
+|------|------|
+| `rate` | 1 AED 对应的人民币金额 |
+| `lastUpdated` | 汇率获取时间（Unix 毫秒时间戳），`null` 表示使用 fallback 值 |
 
 ### POST /api/targeted-results/interact
 
@@ -195,6 +169,40 @@ Bedroom count distribution for charts. When `source=all`, merges counts across a
 ]
 ```
 Note: `_id` is the bedroom count as string. `"0"` = Studio. PropertyFinder uses `"studio"` internally but it is normalized to `"0"` when merging across sources.
+
+---
+
+## Automated Pipeline
+
+### pipeline-lite.sh（无人值守定时任务）
+
+轻量级数据管线，跳过 Bayut（需要有头浏览器 + 手动验证码），仅爬取 PropertyFinder 和 Dubizzle。
+
+```bash
+bash scripts/pipeline-lite.sh
+```
+
+**流程（4 步）：**
+
+| 步骤 | 操作 | 说明 |
+|------|------|------|
+| Preflight | Node.js 检查、MongoDB 连通性、Git 工作区干净 | 任一失败立即退出 |
+| 1/4 | `npm run scrape:incremental` + `scrape:dubizzle:incremental` | 增量爬取 PF + Dubizzle |
+| 2/4 | `npm run search:targeted` | 全局重新评分排名 |
+| 3/4 | `git pull --rebase` → `npm run export:json` | 先同步远程再导出 |
+| 4/4 | `git add` → `git commit` → `git push` | 有变更则推送，Vercel 自动部署 |
+
+**前置条件：**
+- Node.js 已安装
+- MongoDB 可达（Docker 运行中或远程连接）
+- Git 工作区无未提交的非数据文件
+- `.env` 包含 `MONGO_URI` 等必要变量
+
+**运行时间：** 约 20–90 秒（取决于增量数据量）
+
+**退出码：** 成功 = 0，任何步骤失败 = 1（`set -euo pipefail`）
+
+详见 [OpenClaw 定时调度文档](OPENCLAW_SETUP.md)。
 
 ---
 
@@ -784,11 +792,6 @@ Note: POI_ID and coordinates must be resolved from Property Finder's location au
 ## Example Queries
 
 ### "Show me furnished 2-bedroom apartments in Abu Dhabi under 80k yearly"
-
-**Local API:**
-```
-GET /api/listings?bedrooms=2&furnished=YES&maxPrice=80000
-```
 
 **PropertyFinder upstream:**
 ```
