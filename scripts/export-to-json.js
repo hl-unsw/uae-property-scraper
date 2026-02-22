@@ -9,7 +9,7 @@ async function exportData() {
     await client.connect();
     const db = client.db(config.mongo.dbName);
     
-    const collections = ['propertyfinder_raw', 'bayut_raw', 'dubizzle_raw', 'targeted_results'];
+    const collections = ['targeted_results'];
     const outputDir = path.join(__dirname, '../data/static');
     
     if (!fs.existsSync(outputDir)) {

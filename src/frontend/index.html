@@ -7,23 +7,23 @@
   <link rel="stylesheet" href="css/targeted.css">
 </head>
 <body>
-  <nav class="top-bar">
+  <nav class="top-bar" role="navigation" aria-label="Main Navigation">
     <div class="brand">
       <h1 id="i18n-title">精选房源</h1>
     </div>
 
-    <div class="stats-inline">
+    <div class="stats-inline" aria-live="polite">
       <div class="stat-item">
-        <span class="v" id="stat-total">—</span><span class="l" id="i18n-stat-total">房源</span>
+        <span class="v" id="stat-total" aria-labelledby="i18n-stat-total">—</span><span class="l" id="i18n-stat-total">房源</span>
       </div>
       <div class="stat-item">
-        <span class="v" id="stat-avg-score">—</span><span class="l" id="i18n-stat-avg-score">中位分</span>
+        <span class="v" id="stat-avg-score" aria-labelledby="i18n-stat-avg-score">—</span><span class="l" id="i18n-stat-avg-score">中位分</span>
       </div>
       <div class="stat-item">
-        <span class="v" id="stat-avg-cost">—</span><span class="l" id="i18n-stat-avg-cost">中位成本</span>
+        <span class="v" id="stat-avg-cost" aria-labelledby="i18n-stat-avg-cost">—</span><span class="l" id="i18n-stat-avg-cost">中位成本</span>
       </div>
       <div class="stat-item">
-        <span class="v" id="stat-avg-ratio">—</span><span class="l" id="i18n-stat-avg-ratio">占比</span>
+        <span class="v" id="stat-avg-ratio" aria-labelledby="i18n-stat-avg-ratio">—</span><span class="l" id="i18n-stat-avg-ratio">占比</span>
       </div>
     </div>
 
@@ -31,14 +31,20 @@
       <div class="top-meta" id="i18n-top-meta">50k–80k · 开间/一居</div>
       <span class="rate-info" id="rate-info"></span>
       <div class="lang-switcher">
-        <button type="button" class="lang-btn active" data-lang="zh">CN</button>
-        <button type="button" class="lang-btn" data-lang="en">EN</button>
+        <button type="button" class="lang-btn active" data-lang="zh" aria-label="切换到中文">CN</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-label="Switch to English">EN</button>
       </div>
     </div>
   </nav>
 
+  <div class="mobile-filter-trigger">
+    <button type="button" id="toggle-filters" aria-expanded="false" aria-controls="filters-section">
+      <span class="icon">🔍</span> <span id="i18n-filter-toggle">筛选条件</span>
+    </button>
+  </div>
+
   <!-- Filters -->
-  <section class="filters">
+  <section class="filters" id="filters-section" aria-labelledby="i18n-filter-toggle">
     <form id="filter-form">
       <div class="filter-row main-filters">
         <div class="filter-group">
@@ -133,7 +139,7 @@
   </section>
 
   <!-- Results -->
-  <section class="results">
+  <main class="results">
     <div id="listings" class="listings-grid"></div>
     <div class="pagination-container">
       <div class="pagination" id="pagination"></div>
@@ -141,7 +147,7 @@
     <div id="scroll-sentinel" class="scroll-sentinel">
       <span class="scroll-loading" id="scroll-loading"></span>
     </div>
-  </section>
+  </main>
 
   <script src="https://unpkg.com/@simplewebauthn/browser@13/dist/bundle/index.umd.min.js"></script>
   <script src="js/targeted.js"></script>

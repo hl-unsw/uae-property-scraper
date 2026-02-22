@@ -89,7 +89,10 @@ const TRANSLATIONS = {
     cost_total: '月均总成本',
     cost_salary: '预算占比',
     btn_star: '★',
-    btn_hide: '✕'
+    btn_hide: '✕',
+    filter_toggle: '筛选条件',
+    btn_star_hint: '标记为感兴趣',
+    btn_hide_hint: '忽略此房源'
   },
   en: {
     title: 'Top Listings',
@@ -155,7 +158,10 @@ const TRANSLATIONS = {
     cost_total: 'Total/mo',
     cost_salary: 'of budget',
     btn_star: '★',
-    btn_hide: '✕'
+    btn_hide: '✕',
+    filter_toggle: 'Filters',
+    btn_star_hint: 'Mark as interested',
+    btn_hide_hint: 'Ignore listing'
   }
 };
 
@@ -226,6 +232,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (listingId && card) {
         interact(listingId, status, card);
       }
+    });
+  }
+
+  // Mobile Filter Toggle
+  const toggleBtn = document.getElementById('toggle-filters');
+  const filtersSection = document.getElementById('filters-section');
+  if (toggleBtn && filtersSection) {
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', !isExpanded);
+      filtersSection.classList.toggle('visible');
     });
   }
 });
@@ -516,6 +533,8 @@ function applyI18n() {
   document.getElementById('i18n-hint-size').textContent = t.hint_size;
   document.getElementById('i18n-label-commute').firstChild.textContent = t.label_commute;
   document.getElementById('i18n-hint-commute').textContent = t.hint_commute;
+  const filterToggle = document.getElementById('i18n-filter-toggle');
+  if (filterToggle) filterToggle.textContent = t.filter_toggle;
 }
 
 // ─── API ─────────────────────────────────
@@ -672,8 +691,8 @@ function renderCard(doc) {
 
   const adminActions = isAuthenticated ? `
     <div class="admin-actions">
-      <button class="act-btn star${doc.interest === 'interested' ? ' active' : ''}">${t.btn_star}</button>
-      <button class="act-btn hide${doc.interest === 'ignored' ? ' active' : ''}">${t.btn_hide}</button>
+      <button class="act-btn star${doc.interest === 'interested' ? ' active' : ''}" aria-label="${t.btn_star_hint}">${t.btn_star}</button>
+      <button class="act-btn hide${doc.interest === 'ignored' ? ' active' : ''}" aria-label="${t.btn_hide_hint}">${t.btn_hide}</button>
     </div>
   ` : '';
 
