@@ -86,6 +86,14 @@ const SCORE_WEIGHTS = {
   amenities: 4,       // amenities richness (pool, gym, balcony, security)
 };
 
+// ─── Staleness Decay (days on market penalty) ────────────────
+const STALENESS_DECAY = [
+  { days: 90, penalty: -5 },
+  { days: 60, penalty: -3 },
+  { days: 30, penalty: -2 },
+  // 0-30 days: no penalty
+];
+
 // ─── Cost Savings (AED/month) ───────────────────────────────
 
 const PARKING_SAVING    = 800;  
@@ -210,6 +218,7 @@ const SOURCES = {
       'property.bedrooms': { $in: ['studio', '1'] },
       'property.size.value': { $gte: 323 },
       'property.location.full_name': { $regex: COMBINED_PATTERN, $options: 'i' },
+      stale_since: null, // exclude stale listings (matches null and missing)
     },
   },
   bayut: {
@@ -220,6 +229,7 @@ const SOURCES = {
       rooms: { $in: [0, 1] },
       area: { $gte: 30 }, // 30 sqm (Bayut area is in sqm)
       'location.name': { $regex: COMBINED_PATTERN, $options: 'i' },
+      stale_since: null,
     },
   },
   dubizzle: {
@@ -229,6 +239,7 @@ const SOURCES = {
       bedrooms: { $in: [0, 1] },
       size: { $gte: 323 },
       'neighborhoods.name.en': { $regex: COMBINED_PATTERN, $options: 'i' },
+      stale_since: null,
     },
   },
 };
@@ -382,6 +393,29 @@ function scoreAmenities(source, doc) {
   return Math.min(SCORE_WEIGHTS.amenities, Math.round(found.size * (SCORE_WEIGHTS.amenities / 4)));
 }
 
+/**
+ * Calculate staleness penalty based on days on market.
+ * Uses property.listed_date for PF, first_seen_at for others.
+ */
+function calcStalenessPenalty(source, doc) {
+  let listedDate;
+  if (source === 'pf') {
+    const raw = doc.property?.listed_date;
+    listedDate = raw ? new Date(raw) : doc.first_seen_at;
+  } else {
+    listedDate = doc.first_seen_at;
+  }
+
+  if (!listedDate) return 0;
+
+  const daysOnMarket = (Date.now() - new Date(listedDate).getTime()) / (24 * 60 * 60 * 1000);
+
+  for (const tier of STALENESS_DECAY) {
+    if (daysOnMarket >= tier.days) return tier.penalty;
+  }
+  return 0;
+}
+
 // ─── Main ───────────────────────────────────────────────────
 
 async function main() {
@@ -389,6 +423,16 @@ async function main() {
   await client.connect();
   const db = client.db(config.mongo.dbName);
   logger.info('Connected to MongoDB');
+
+  // 0) Cleanup stale listings older than 7 days
+  for (const [source, cfg] of Object.entries(SOURCES)) {
+    const col = db.collection(cfg.collection);
+    const cutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const result = await col.deleteMany({ stale_since: { $lte: cutoff } });
+    if (result.deletedCount > 0) {
+      logger.info({ source, deleted: result.deletedCount }, 'Cleaned up stale listings (> 7 days)');
+    }
+  }
 
   // 1) Query all 3 sources
   const allListings = [];
@@ -493,6 +537,7 @@ async function main() {
         score_payment: scorePayment(source, doc),
         score_verified: scoreVerified(source, doc),
         score_amenities: scoreAmenities(source, doc),
+        staleness_penalty: calcStalenessPenalty(source, doc),
       });
     }
   }
@@ -544,7 +589,8 @@ async function main() {
       + listing.score_size_bonus
       + listing.score_payment
       + listing.score_oven
-      + listing.score_amenities;
+      + listing.score_amenities
+      + listing.staleness_penalty;
   }
 
   // 5) Sort by score desc, take top 30%
@@ -610,6 +656,7 @@ async function main() {
       payment: l.score_payment,
       oven: l.score_oven,
       amenities: l.score_amenities,
+      staleness: l.staleness_penalty,
     },
     neighborhood_matched: l.neighborhood.en,
     crawled_at: l.crawled_at,
@@ -639,7 +686,13 @@ async function main() {
   logger.info('Done');
 }
 
-main().catch((err) => {
-  logger.fatal({ err: err.message }, 'Targeted search failed');
-  process.exit(1);
-});
+// Only run main() when executed directly (not when required for testing)
+if (require.main === module) {
+  main().catch((err) => {
+    logger.fatal({ err: err.message }, 'Targeted search failed');
+    process.exit(1);
+  });
+}
+
+// Export for testing
+module.exports = { calcStalenessPenalty, STALENESS_DECAY, SOURCES };

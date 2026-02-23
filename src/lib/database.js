@@ -215,6 +215,7 @@ async function bulkUpsertListings(source, rawItems) {
           listing_id: adapter.getId(item),
           spider_source: source,
           crawled_at: now,
+          stale_since: null,
         },
         $setOnInsert: {
           first_seen_at: now,
@@ -517,6 +518,74 @@ async function getBedroomDistribution(source) {
 }
 
 /**
+ * Mark listings not seen in a full crawl as stale.
+ * Safety check: skips if activeIds < 50% of existing DB count (crawl likely failed).
+ * Returns { marked, cleared, skipped }.
+ */
+async function markStaleListings(source, activeIds) {
+  const collectionName = COLLECTIONS[source];
+  if (!collectionName) throw new Error(`Unknown source: ${source}`);
+
+  const collection = db.collection(collectionName);
+  const activeCount = await collection.countDocuments({ stale_since: null });
+
+  // Safety valve: if crawl returned < 50% of ACTIVE listings, something went wrong
+  if (activeCount > 0 && activeIds.length < activeCount * 0.5) {
+    logger.warn(
+      { source, activeIds: activeIds.length, activeCount },
+      'Stale marking SKIPPED — crawled count too low (< 50% of active), possible crawl failure',
+    );
+    return { marked: 0, cleared: 0, skipped: true };
+  }
+
+  const activeSet = new Set(activeIds);
+  const now = new Date();
+
+  // Mark listings NOT in activeIds as stale (only if not already stale)
+  const markResult = await collection.updateMany(
+    { listing_id: { $nin: [...activeSet] }, stale_since: null },
+    { $set: { stale_since: now } },
+  );
+
+  // Clear stale mark for listings that reappeared
+  const clearResult = await collection.updateMany(
+    { listing_id: { $in: [...activeSet] }, stale_since: { $ne: null } },
+    { $set: { stale_since: null } },
+  );
+
+  const stats = {
+    marked: markResult.modifiedCount || 0,
+    cleared: clearResult.modifiedCount || 0,
+    skipped: false,
+  };
+
+  logger.info({ source, ...stats }, 'Stale listing marking complete');
+  return stats;
+}
+
+/**
+ * Delete listings that have been stale for longer than `days`.
+ * Returns the number of deleted documents.
+ */
+async function cleanupStaleListings(source, days = 7) {
+  const collectionName = COLLECTIONS[source];
+  if (!collectionName) throw new Error(`Unknown source: ${source}`);
+
+  const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
+  const collection = db.collection(collectionName);
+
+  const result = await collection.deleteMany({
+    stale_since: { $lte: cutoff },
+  });
+
+  const deleted = result.deletedCount || 0;
+  if (deleted > 0) {
+    logger.info({ source, deleted, days }, 'Stale listings cleaned up');
+  }
+  return deleted;
+}
+
+/**
  * Gracefully close the connection.
  */
 async function close() {
@@ -536,5 +605,7 @@ module.exports = {
   queryListings,
   getStats,
   getBedroomDistribution,
+  markStaleListings,
+  cleanupStaleListings,
   COLLECTIONS,
 };
