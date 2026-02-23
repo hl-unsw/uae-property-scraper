@@ -50,7 +50,7 @@ async function fetchPage(httpClient, params, page, retries = config.scraper.maxR
     }
 
     const listings = pageProps.searchResult?.listings || [];
-    const meta = pageProps.meta || {};
+    const meta = pageProps.searchResult?.meta || {};
 
     return {
       listings,
