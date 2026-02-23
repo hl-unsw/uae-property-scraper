@@ -41,6 +41,8 @@
   --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
   --ease-spring: cubic-bezier(0.19, 1, 0.22, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --text-dark-muted: #888;   /* muted text on dark backgrounds */
+  --text-dark-hover: #bbb;   /* hover text on dark backgrounds */
   --transition-duration: 0.5s;
 }
 
@@ -123,15 +125,15 @@ body {
 .stat-item .v {
   font-family: var(--num);
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--gold-light);
 }
 
 .stat-item .l {
   font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #8a8a8a;
+  letter-spacing: 1.5px;
+  color: var(--text-dark-muted);
   font-weight: 400;
 }
 
@@ -143,8 +145,8 @@ body {
 
 .top-meta {
   font-size: 10px;
-  color: #8a8a8a;
-  letter-spacing: 2px;
+  color: var(--text-dark-muted);
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   font-weight: 400;
 }
@@ -169,7 +171,7 @@ body {
   font-weight: 400;
   letter-spacing: 1.5px;
   background: transparent;
-  color: #666;
+  color: var(--text-dark-muted);
   border: 1px solid #444;
   cursor: pointer;
   transition: all 0.35s var(--ease-spring);
@@ -186,15 +188,15 @@ body {
 }
 
 .lang-btn:not(.active):hover {
-  color: #aaa;
-  border-color: #666;
+  color: var(--text-dark-hover);
+  border-color: var(--text-dark-muted);
 }
 
 /* ─── Auth Actions (Touch ID) ────────────── */
 
 .auth-actions {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   margin-left: 12px;
 }
 
@@ -206,7 +208,7 @@ body {
   letter-spacing: 1.5px;
   text-transform: uppercase;
   background: transparent;
-  color: #666;
+  color: var(--text-dark-muted);
   border: 1px solid #444;
   cursor: pointer;
   transition: all 0.35s var(--ease-spring);
@@ -214,8 +216,8 @@ body {
 }
 
 .auth-btn:hover {
-  color: #aaa;
-  border-color: #666;
+  color: var(--text-dark-hover);
+  border-color: var(--text-dark-muted);
 }
 
 .auth-btn-primary {
@@ -325,7 +327,7 @@ body {
   border: none;
   font-family: var(--sans);
   font-size: 13px;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   cursor: pointer;
   display: flex;
@@ -360,7 +362,7 @@ body {
   border-top: 1px solid var(--border-light);
   display: flex !important;
   align-items: flex-end;
-  gap: 28px;
+  gap: 24px;
   flex-wrap: wrap;
 }
 
@@ -376,7 +378,7 @@ body {
 .filter-group-sm label,
 .filter-group-toggle label {
   font-size: 10px;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--text-muted);
   font-weight: 500;
@@ -494,7 +496,7 @@ body {
   background: var(--bg-dark);
   color: var(--text-inverse);
   border-color: var(--bg-dark);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .toggle-pills .pill:not(.active):hover {
@@ -507,7 +509,7 @@ body {
    ═══════════════════════════════════════════════ */
 
 .results {
-  padding: 56px 48px 120px;
+  padding: 48px 48px 80px;
 }
 
 .listings-grid {
@@ -528,7 +530,7 @@ body {
 .listing-card {
   background: var(--bg-card);
   border: none;
-  padding: 32px 28px 28px;
+  padding: 28px;
   box-shadow: none;
   transition: opacity 0.5s var(--ease), box-shadow 0.5s var(--ease), transform 0.5s var(--ease);
 }
@@ -587,7 +589,7 @@ body {
 
 .admin-actions {
   display: flex;
-  gap: 4px;
+  gap: 6px;
 }
 
 .act-btn {
@@ -649,9 +651,9 @@ body {
 }
 
 .score-label {
-  font-size: 7px;
+  font-size: 9px;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   margin-bottom: 3px;
   opacity: 0.7;
 }
@@ -696,7 +698,7 @@ body {
 .listing-price .price-num {
   font-family: var(--num);
   font-size: 28px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--text-strong);
   letter-spacing: -0.5px;
 }
@@ -879,7 +881,7 @@ body {
 .empty-state h3 {
   font-family: var(--serif);
   font-size: 24px;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--text-secondary);
   margin-bottom: 16px;
   letter-spacing: -0.5px;
@@ -895,7 +897,7 @@ body {
   padding: 100px;
   color: var(--text-muted);
   font-size: 11px;
-  letter-spacing: 3px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   font-weight: 400;
 }
@@ -911,7 +913,7 @@ body {
 @media (max-width: 1024px) {
   .top-bar { padding: 10px 32px; }
   .stats-inline { gap: 20px; }
-  .stat-item .v { font-size: 17px; }
+  .stat-item .v { font-size: 16px; }
   .filters { padding: 28px 32px; }
   .results { padding: 40px 32px 100px; }
   .listings-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
