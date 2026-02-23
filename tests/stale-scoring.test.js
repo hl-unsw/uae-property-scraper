@@ -42,9 +42,9 @@ describe('calcStalenessPenalty', () => {
       expect(calcStalenessPenalty('pf', doc)).toBe(-2);
     });
 
-    test('PF with null property returns 0', () => {
+    test('PF with null property and no first_seen_at -> assumes 30+ days penalty', () => {
       const doc = { property: null, first_seen_at: null };
-      expect(calcStalenessPenalty('pf', doc)).toBe(0);
+      expect(calcStalenessPenalty('pf', doc)).toBe(-2);
     });
   });
 
@@ -67,10 +67,10 @@ describe('calcStalenessPenalty', () => {
   });
 
   describe('Edge cases', () => {
-    test('No date at all -> 0 penalty', () => {
-      expect(calcStalenessPenalty('pf', { property: {} })).toBe(0);
-      expect(calcStalenessPenalty('bayut', {})).toBe(0);
-      expect(calcStalenessPenalty('dubizzle', {})).toBe(0);
+    test('No date at all -> assumes 30+ days penalty (not 0)', () => {
+      expect(calcStalenessPenalty('pf', { property: {} })).toBe(-2);
+      expect(calcStalenessPenalty('bayut', {})).toBe(-2);
+      expect(calcStalenessPenalty('dubizzle', {})).toBe(-2);
     });
 
     test('Future date -> 0 penalty', () => {

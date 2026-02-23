@@ -406,7 +406,7 @@ function calcStalenessPenalty(source, doc) {
     listedDate = doc.first_seen_at;
   }
 
-  if (!listedDate) return 0;
+  if (!listedDate) return STALENESS_DECAY[STALENESS_DECAY.length - 1].penalty; // assume 30+ days
 
   const daysOnMarket = (Date.now() - new Date(listedDate).getTime()) / (24 * 60 * 60 * 1000);
 
