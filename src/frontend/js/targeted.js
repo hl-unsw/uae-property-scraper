@@ -92,7 +92,8 @@ const TRANSLATIONS = {
     btn_hide: '✕',
     filter_toggle: '筛选条件',
     btn_star_hint: '标记为感兴趣',
-    btn_hide_hint: '忽略此房源'
+    btn_hide_hint: '忽略此房源',
+    updated_label: '更新'
   },
   en: {
     title: 'Top Listings',
@@ -161,7 +162,8 @@ const TRANSLATIONS = {
     btn_hide: '✕',
     filter_toggle: 'Filters',
     btn_star_hint: 'Mark as interested',
-    btn_hide_hint: 'Ignore listing'
+    btn_hide_hint: 'Ignore listing',
+    updated_label: 'Updated'
   }
 };
 
@@ -589,6 +591,31 @@ async function loadResults(append = false) {
     const medCost = currentLang === 'zh' ? Math.round((data.stats.medianCost || 0) * exchangeRate) : (data.stats.medianCost || 0);
     document.getElementById('stat-avg-cost').textContent = medCost.toLocaleString();
     document.getElementById('stat-avg-ratio').textContent = `${data.stats.medianBurden || 0}%`;
+
+    // Display lastUpdated timestamp in Dubai time
+    const updatedEl = document.getElementById('stat-updated');
+    if (updatedEl && data.stats.lastUpdated) {
+      const d = new Date(data.stats.lastUpdated);
+      const opts = { timeZone: 'Asia/Dubai', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
+      const t = TRANSLATIONS[currentLang];
+      if (currentLang === 'zh') {
+        const fmt = new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Dubai', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+        const parts = fmt.formatToParts(d);
+        const mo = parts.find(p => p.type === 'month')?.value;
+        const da = parts.find(p => p.type === 'day')?.value;
+        const hr = parts.find(p => p.type === 'hour')?.value;
+        const mi = parts.find(p => p.type === 'minute')?.value;
+        updatedEl.textContent = `${mo}月${da}日 ${hr}:${mi} ${t.updated_label}`;
+      } else {
+        const fmt = new Intl.DateTimeFormat('en-US', opts);
+        const parts = fmt.formatToParts(d);
+        const mo = parts.find(p => p.type === 'month')?.value;
+        const da = parts.find(p => p.type === 'day')?.value;
+        const hr = parts.find(p => p.type === 'hour')?.value;
+        const mi = parts.find(p => p.type === 'minute')?.value;
+        updatedEl.textContent = `${t.updated_label} ${mo} ${da}, ${hr}:${mi}`;
+      }
+    }
 
     populateNeighborhoods(data.neighborhoods);
 

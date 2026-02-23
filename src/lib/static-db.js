@@ -16,7 +16,15 @@ function readJson(name) {
 const staticDb = {
   queryTargeted: (params) => {
     let docs = readJson('targeted_results');
-    
+
+    // Compute latest scored_at across ALL docs (before filtering) for data freshness
+    let lastUpdated = null;
+    for (const d of docs) {
+      if (d.scored_at && (!lastUpdated || d.scored_at > lastUpdated)) {
+        lastUpdated = d.scored_at;
+      }
+    }
+
     // 1. Basic Filters
     if (params.neighborhood) {
       docs = docs.filter(d => d.neighborhood_en === params.neighborhood);
@@ -110,6 +118,7 @@ const staticDb = {
         medianCost: Math.round(median(costs)),
         medianBurden: Math.round(median(burdens)),
         neighborhoodCount: neighborhoods.length,
+        lastUpdated: lastUpdated || null,
       }
     };
   }
