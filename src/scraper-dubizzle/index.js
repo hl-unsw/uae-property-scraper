@@ -19,7 +19,7 @@ process.on('SIGTERM', () => shutdown('SIGTERM'));
 
 // ─── Process One Search Combination ─────────────────────────────────
 
-async function processSearchCombination(combo, mode) {
+async function processSearchCombination(combo, mode, seenIds) {
   const { label } = combo;
   const isIncremental = mode === 'incremental';
   const breaker = isIncremental
@@ -48,6 +48,13 @@ async function processSearchCombination(combo, mode) {
     }
 
     totalPages = result.nbPages;
+
+    // Collect listing IDs for stale detection (full crawl)
+    if (seenIds) {
+      for (const item of result.hits) {
+        if (item.id) seenIds.add(String(item.id));
+      }
+    }
 
     // Incremental: circuit breaker check
     if (isIncremental && breaker) {
@@ -124,12 +131,20 @@ async function main() {
   logger.info({ combinations: combinations.length }, 'Search combinations generated');
 
   // 3. Process sequentially
+  const isFullCrawl = mode === 'full';
+  const seenIds = isFullCrawl ? new Set() : null;
+
   for (const combo of combinations) {
     if (shuttingDown) break;
-    await processSearchCombination(combo, mode);
+    await processSearchCombination(combo, mode, seenIds);
   }
 
-  // 4. Summary
+  // 4. Mark stale listings (full crawl only, if not interrupted)
+  if (isFullCrawl && !shuttingDown && seenIds.size > 0) {
+    await db.markStaleListings('dubizzle', [...seenIds]);
+  }
+
+  // 5. Summary
   const stats = await db.getStats('dubizzle');
   logger.info(stats, '=== Dubizzle scraping complete. Database summary ===');
 

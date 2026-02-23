@@ -21,7 +21,7 @@ process.on('SIGTERM', () => shutdown('SIGTERM'));
 
 // ─── Process One Search Combination ─────────────────────────────────
 
-async function processSearchCombination(browserSession, combo, mode) {
+async function processSearchCombination(browserSession, combo, mode, seenIds) {
   const { label } = combo;
   const isIncremental = mode === 'incremental';
   const breaker = isIncremental
@@ -49,6 +49,13 @@ async function processSearchCombination(browserSession, combo, mode) {
     }
 
     totalPages = result.nbPages;
+
+    // Collect listing IDs for stale detection (full crawl)
+    if (seenIds) {
+      for (const item of result.hits) {
+        if (item.id && item.purpose) seenIds.add(String(item.id));
+      }
+    }
 
     // Incremental: circuit breaker check
     if (isIncremental && breaker) {
@@ -135,12 +142,20 @@ async function main() {
   logger.info({ combinations: combinations.length }, 'Search combinations generated');
 
   // 4. Process sequentially (single browser page)
+  const isFullCrawl = mode === 'full';
+  const seenIds = isFullCrawl ? new Set() : null;
+
   for (const combo of combinations) {
     if (shuttingDown) break;
-    await processSearchCombination(session, combo, mode);
+    await processSearchCombination(session, combo, mode, seenIds);
   }
 
-  // 5. Summary
+  // 5. Mark stale listings (full crawl only, if not interrupted)
+  if (isFullCrawl && !shuttingDown && seenIds.size > 0) {
+    await db.markStaleListings('bayut', [...seenIds]);
+  }
+
+  // 6. Summary
   const stats = await db.getStats('bayut');
   logger.info(stats, '=== Bayut scraping complete. Database summary ===');
 

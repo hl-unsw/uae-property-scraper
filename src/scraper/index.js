@@ -27,7 +27,7 @@ process.on('SIGTERM', () => shutdown('SIGTERM'));
 /**
  * Crawl all pages for one search filter combination.
  */
-async function processSearchCombination(httpClient, combo, mode) {
+async function processSearchCombination(httpClient, combo, mode, seenIds) {
   const { params, label } = combo;
   const isIncremental = mode === 'incremental';
 
@@ -61,6 +61,15 @@ async function processSearchCombination(httpClient, combo, mode) {
     }
 
     totalPages = result.meta.pageCount;
+
+    // Collect listing IDs for stale detection (full crawl)
+    if (seenIds) {
+      for (const item of result.listings) {
+        if (item.listing_type === 'property' && item.property?.id) {
+          seenIds.add(item.property.id);
+        }
+      }
+    }
 
     // Incremental: circuit breaker check
     if (isIncremental && breaker) {
@@ -137,18 +146,25 @@ async function main() {
   logger.info({ combinations: combinations.length }, 'Search combinations generated');
 
   // 5. Process with concurrency limiter
+  const isFullCrawl = mode === 'full';
+  const seenIds = isFullCrawl ? new Set() : null;
   const limit = pLimit(concurrency);
 
   const tasks = combinations.map((combo) =>
     limit(() => {
       if (shuttingDown) return Promise.resolve();
-      return processSearchCombination(httpClient, combo, mode);
+      return processSearchCombination(httpClient, combo, mode, seenIds);
     })
   );
 
   await Promise.all(tasks);
 
-  // 6. Summary
+  // 6. Mark stale listings (full crawl only, if not interrupted)
+  if (isFullCrawl && !shuttingDown && seenIds.size > 0) {
+    await db.markStaleListings('pf', [...seenIds]);
+  }
+
+  // 7. Summary
   const stats = await db.getStats('pf');
   logger.info(stats, '=== Scraping complete. Database summary ===');
 
