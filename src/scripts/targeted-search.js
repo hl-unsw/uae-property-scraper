@@ -514,6 +514,7 @@ async function main() {
         url: getUrl(source, doc),
         neighborhood: hood,
         crawled_at: doc.crawled_at,
+        first_seen_at: doc.first_seen_at || null,
         // Cost fields
         commute_min: commuteInfo.min,
         commute_km: commuteInfo.km,
@@ -660,6 +661,7 @@ async function main() {
     },
     neighborhood_matched: l.neighborhood.en,
     crawled_at: l.crawled_at,
+    first_seen_at: l.first_seen_at,
     scored_at: new Date(),
   }));
 

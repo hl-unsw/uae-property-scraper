@@ -235,6 +235,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         interact(listingId, status, card);
       }
     });
+
+    listingsContainer.addEventListener('animationend', (e) => {
+      if (e.animationName === 'border-trace') {
+        const card = e.target.closest('.listing-card');
+        if (card) card.classList.remove('is-new', 'in-view');
+      }
+    });
   }
 
   // Mobile Filter Toggle
@@ -629,6 +636,8 @@ async function loadResults(append = false) {
     if (append) container.insertAdjacentHTML('beforeend', cardsHtml);
     else container.innerHTML = cardsHtml;
 
+    observeNewListings();
+
     hasMore = currentPage < data.totalPages;
   } catch (err) {
     if (err.name === 'AbortError') return;
@@ -702,6 +711,8 @@ function renderCard(doc) {
   const neighborhood = currentLang === 'zh' ? (doc.neighborhood_zh || doc.neighborhood_matched) : doc.neighborhood_matched;
   const location = currentLang === 'zh' ? '' : doc.location;
   const dateStr = doc.crawled_at ? new Date(doc.crawled_at).toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : 'en-US', { month: 'numeric', day: 'numeric' }) : '';
+  const isNew = doc.first_seen_at &&
+    (Date.now() - new Date(doc.first_seen_at).getTime()) < 72 * 3600000;
   const commuteStr = doc.commute_min ? `~${doc.commute_min} ${t.commute_unit} / ${doc.commute_km}km` : '';
   const burdenPct = doc.burden_index || 0;
   const ratioTier = burdenPct <= 25 ? 'low' : burdenPct <= 35 ? 'mid' : 'high';
@@ -726,7 +737,7 @@ function renderCard(doc) {
   const statusClass = doc.interest === 'interested' ? 'is-interested' : doc.interest === 'ignored' ? 'is-ignored' : '';
 
   return `
-    <div class="listing-card ${statusClass}" data-id="${doc.listing_id}">
+    <div class="listing-card ${statusClass}${isNew ? ' is-new' : ''}" data-id="${doc.listing_id}">
       <div class="listing-header">
         <div class="listing-title">
           <a href="${escapeHtml(doc.url)}" target="_blank" rel="noopener">${escapeHtml(title)}</a>
@@ -772,6 +783,17 @@ function injectAdminButtons() {
 
 function removeAdminButtons() {
   document.querySelectorAll('.admin-actions').forEach(el => el.remove());
+}
+
+function observeNewListings() {
+  const cards = document.querySelectorAll('.listing-card.is-new:not(.in-view)');
+  if (!cards.length) return;
+  const obs = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) { e.target.classList.add('in-view'); obs.unobserve(e.target); }
+    }
+  }, { threshold: 0.3 });
+  cards.forEach(c => obs.observe(c));
 }
 
 function resetAndLoad() { currentPage = 1; hasMore = true; loadResults(false); }
