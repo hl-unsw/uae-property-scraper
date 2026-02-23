@@ -50,21 +50,31 @@ async function fetchBayutPage(session, combo, page) {
       { timeout: STATE_EXTRACT_TIMEOUT_MS },
     ).catch(() => {});
 
-    // Extract data from SSR-embedded window.state
-    const content = await session.page.evaluate(() => {
+    // Extract raw data from SSR-embedded window.state (no fallbacks inside evaluate)
+    const raw = await session.page.evaluate(() => {
       const c = window.state?.algolia?.content;
       if (!c) return null;
-      return {
-        hits: c.hits || [],
-        nbHits: c.nbHits || 0,
-        nbPages: c.nbPages || 0,
-      };
+      return { hits: c.hits, nbHits: c.nbHits, nbPages: c.nbPages };
     });
 
-    if (!content || content.hits.length === 0) {
+    if (!raw || !Array.isArray(raw.hits) || raw.hits.length === 0) {
       logger.warn({ page, url: searchUrl }, 'No listing data found in window.state');
       return null;
     }
+
+    // Validate expected fields — silent fallbacks here caused the PF page-1-only bug
+    if (raw.nbPages === undefined || raw.nbHits === undefined) {
+      logger.warn(
+        { page },
+        'Bayut SSR state missing nbPages/nbHits — page structure may have changed',
+      );
+    }
+
+    const content = {
+      hits: raw.hits,
+      nbHits: raw.nbHits || 0,
+      nbPages: raw.nbPages || 0,
+    };
 
     logger.debug(
       { page, hits: content.hits.length, nbHits: content.nbHits, nbPages: content.nbPages },

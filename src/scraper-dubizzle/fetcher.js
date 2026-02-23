@@ -79,6 +79,14 @@ async function fetchDubizzlePage(combo, page, hitsPerPage = 50) {
       return null;
     }
 
+    // Validate expected fields — silent fallbacks here caused the PF page-1-only bug
+    if (result.hits === undefined || result.nbPages === undefined) {
+      logger.warn(
+        { page, keys: Object.keys(result).join(',') },
+        'Algolia response missing expected fields (hits/nbPages) — API structure may have changed',
+      );
+    }
+
     return {
       hits: result.hits || [],
       nbHits: result.nbHits || 0,
