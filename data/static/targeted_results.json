@@ -1,6 +1,102 @@
 [
   {
-    "_id": "699f3a75a79ed60dcba1fe2c",
+    "_id": "699f5694d5971a4f7c1f576e",
+    "listing_id": "26809827",
+    "source": "dubizzle",
+    "title": "Private Balcony Brand New Luxurious One Bedroom Hall Separate Kitchen Proper Bathtub Washroom Near",
+    "title_zh": "Private Balcony Brand New Luxurious One Bedroom Hall Separate Kitchen Proper Bathtub Washroom Near",
+    "price": 54000,
+    "size_sqm": 102,
+    "size_sqft": 1100,
+    "bedrooms": "1",
+    "furnished": "NO",
+    "location": "Khalifa City, Abu Dhabi",
+    "location_zh": "哈利法城",
+    "neighborhood_en": "Khalifa City",
+    "neighborhood_zh": "哈利法城",
+    "url": "https://abudhabi.dubizzle.com/property-for-rent/residential/apartmentflat/2025/12/27/private-balcony-brand-new-luxurious-one-3-157367/",
+    "commute_min": 26,
+    "commute_km": 22,
+    "monthly_rent": 4500,
+    "monthly_time_cost": 1525,
+    "monthly_fuel_cost": 262,
+    "monthly_commute_cost": 1787,
+    "effective_monthly_cost": 5487,
+    "burden_index": 18,
+    "has_parking": true,
+    "has_utilities": false,
+    "has_chiller_free": false,
+    "has_no_commission": false,
+    "has_oven": false,
+    "monthly_parking_saving": 800,
+    "monthly_utility_saving": 0,
+    "monthly_commission_saving": 0,
+    "interest": null,
+    "score": 88,
+    "score_breakdown": {
+      "effective_cost": 67,
+      "verified": 12,
+      "size_bonus": 7,
+      "payment": 0,
+      "oven": 0,
+      "amenities": 2,
+      "staleness": 0
+    },
+    "neighborhood_matched": "Khalifa City",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
+    "first_seen_at": "2026-02-21T14:03:56.023Z",
+    "scored_at": "2026-02-25T20:07:48.786Z"
+  },
+  {
+    "_id": "699f5694d5971a4f7c1f576f",
+    "listing_id": "26750531",
+    "source": "dubizzle",
+    "title": "Luxury|1 BHK|Sep Kitchen H uge Room Big Sunlight Window And Private Garden On Prime Location In KCA",
+    "title_zh": "Luxury|1 BHK|Sep Kitchen H uge Room Big Sunlight Window And Private Garden On Prime Location In KCA",
+    "price": 55000,
+    "size_sqm": 93,
+    "size_sqft": 1000,
+    "bedrooms": "1",
+    "furnished": "NO",
+    "location": "Khalifa City, Abu Dhabi",
+    "location_zh": "哈利法城",
+    "neighborhood_en": "Khalifa City",
+    "neighborhood_zh": "哈利法城",
+    "url": "https://abudhabi.dubizzle.com/property-for-rent/residential/apartmentflat/2025/12/6/luxury-1-bhk-sep-kitchen-h-uge-room-big-3-209195/",
+    "commute_min": 26,
+    "commute_km": 22,
+    "monthly_rent": 4583,
+    "monthly_time_cost": 1525,
+    "monthly_fuel_cost": 262,
+    "monthly_commute_cost": 1787,
+    "effective_monthly_cost": 5570,
+    "burden_index": 19,
+    "has_parking": true,
+    "has_utilities": false,
+    "has_chiller_free": false,
+    "has_no_commission": false,
+    "has_oven": false,
+    "monthly_parking_saving": 800,
+    "monthly_utility_saving": 0,
+    "monthly_commission_saving": 0,
+    "interest": null,
+    "score": 87,
+    "score_breakdown": {
+      "effective_cost": 66,
+      "verified": 12,
+      "size_bonus": 7,
+      "payment": 0,
+      "oven": 0,
+      "amenities": 2,
+      "staleness": 0
+    },
+    "neighborhood_matched": "Khalifa City",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
+    "first_seen_at": "2026-02-21T14:03:56.023Z",
+    "scored_at": "2026-02-25T20:07:48.786Z"
+  },
+  {
+    "_id": "699f5694d5971a4f7c1f5770",
     "listing_id": "16239948",
     "source": "pf",
     "title": "EUROPEAN STYLE 1BHK WITH HUGE KITCHEN AND WASHROOM",
@@ -43,12 +139,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:06:57.114Z",
+    "crawled_at": "2026-02-25T20:06:57.098Z",
     "first_seen_at": "2026-02-19T10:50:19.651Z",
-    "scored_at": "2026-02-25T18:07:49.725Z"
+    "scored_at": "2026-02-25T20:07:48.786Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe2d",
+    "_id": "699f5694d5971a4f7c1f5771",
     "listing_id": "51128648",
     "source": "pf",
     "title": "Type C | Relaxation Mode on | Spacious Unit |",
@@ -91,12 +187,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reef",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": "2026-02-19T10:50:19.651Z",
-    "scored_at": "2026-02-25T18:07:49.725Z"
+    "scored_at": "2026-02-25T20:07:48.786Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe2e",
+    "_id": "699f5694d5971a4f7c1f5772",
     "listing_id": "26791956",
     "source": "dubizzle",
     "title": "Elegant And Spacious 1BHK With Separate Kitchen, Nice Washroom And Big Window In Khalifa City A",
@@ -139,12 +235,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.725Z"
+    "scored_at": "2026-02-25T20:07:48.786Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe2f",
+    "_id": "699f5694d5971a4f7c1f5773",
     "listing_id": "26687505",
     "source": "dubizzle",
     "title": "Spacious 1BHK With Separate Kitchen Sunlight Windows Excellent Rooms Size Proper Washroom Khalifa City a",
@@ -187,12 +283,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": "2026-02-19T10:49:55.481Z",
-    "scored_at": "2026-02-25T18:07:49.725Z"
+    "scored_at": "2026-02-25T20:07:48.786Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe30",
+    "_id": "699f5694d5971a4f7c1f5774",
     "listing_id": "56963147",
     "source": "pf",
     "title": "EUROPEAN STYLE 1BHK WITH HUGE KITCHEN AND WASHROOM",
@@ -235,12 +331,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": "2026-02-25T14:05:58.070Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.786Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe31",
+    "_id": "699f5694d5971a4f7c1f5775",
     "listing_id": "26800633",
     "source": "dubizzle",
     "title": "Spacious Studio | Mangrove View | Ready to Move",
@@ -283,12 +379,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:40.683Z",
+    "crawled_at": "2026-02-25T20:07:40.525Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe32",
+    "_id": "699f5694d5971a4f7c1f5776",
     "listing_id": "26759982",
     "source": "dubizzle",
     "title": "Deluxe 1BHK | Free ADDC | NO COMMISSION | Just Listed",
@@ -331,12 +427,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe33",
+    "_id": "699f5694d5971a4f7c1f5777",
     "listing_id": "26986994",
     "source": "dubizzle",
     "title": "Mangrove View | Move-in Ready | Up to 2 Payments",
@@ -379,12 +475,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": "2026-02-25T12:07:36.942Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe34",
+    "_id": "699f5694d5971a4f7c1f5778",
     "listing_id": "16204762",
     "source": "pf",
     "title": "Lavish Fully Furnished 1BR|Private Entrance|M6200|",
@@ -427,12 +523,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:06:57.114Z",
+    "crawled_at": "2026-02-25T20:06:57.098Z",
     "first_seen_at": "2026-02-23T13:58:38.637Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe35",
+    "_id": "699f5694d5971a4f7c1f5779",
     "listing_id": "15924928",
     "source": "pf",
     "title": "Mangrove View | Prime Location | Ready to Move",
@@ -475,12 +571,12 @@
       "staleness": -3
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:19.943Z",
+    "crawled_at": "2026-02-25T20:06:20.128Z",
     "first_seen_at": "2026-02-23T13:58:16.656Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe36",
+    "_id": "699f5694d5971a4f7c1f577a",
     "listing_id": "54938889",
     "source": "pf",
     "title": "Type D 1BR| Vacating Next Month| Book It Now",
@@ -523,12 +619,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reef",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": "2026-02-20T11:34:24.677Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe37",
+    "_id": "699f5694d5971a4f7c1f577b",
     "listing_id": "56531076",
     "source": "pf",
     "title": "Modern BR Unit | Canal View | Premium Location",
@@ -571,12 +667,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:27.108Z",
+    "crawled_at": "2026-02-25T20:06:26.265Z",
     "first_seen_at": "2026-02-24T08:06:04.859Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe38",
+    "_id": "699f5694d5971a4f7c1f577c",
     "listing_id": "16309405",
     "source": "pf",
     "title": "Furnished Suite In Alreem/ 5800 Monthly",
@@ -619,12 +715,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:35.138Z",
+    "crawled_at": "2026-02-25T20:07:34.199Z",
     "first_seen_at": "2026-02-23T13:59:01.958Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe39",
+    "_id": "699f5694d5971a4f7c1f577d",
     "listing_id": "26982237",
     "source": "dubizzle",
     "title": "Modern BR Unit | Canal View | Premium Location",
@@ -667,12 +763,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": "2026-02-24T08:07:25.398Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe3a",
+    "_id": "699f5694d5971a4f7c1f577e",
     "listing_id": "54390009",
     "source": "pf",
     "title": "Spacious 1 BHK Apartment with Utilities included",
@@ -715,12 +811,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe3b",
+    "_id": "699f5694d5971a4f7c1f577f",
     "listing_id": "16225231",
     "source": "pf",
     "title": "European Luxury 1BHK+Backyard+Free WIFI+4700-Month",
@@ -763,12 +859,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": "2026-02-19T10:50:19.651Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe3c",
+    "_id": "699f5694d5971a4f7c1f5780",
     "listing_id": "54466475",
     "source": "pf",
     "title": "Family Community 1 BR, Separate kitchen, Wardrobes",
@@ -811,12 +907,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": "2026-02-20T11:34:24.677Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe3d",
+    "_id": "699f5694d5971a4f7c1f5781",
     "listing_id": "26860463",
     "source": "dubizzle",
     "title": "Luxury Studio with Amazing View | Available | Flexible Payment",
@@ -859,12 +955,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:44.064Z",
+    "crawled_at": "2026-02-25T20:07:43.503Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe3e",
+    "_id": "699f5694d5971a4f7c1f5782",
     "listing_id": "53984592",
     "source": "pf",
     "title": "luxury|Furnished1BHK|Sep Kitchen|Monthly 5700/|KCA",
@@ -907,12 +1003,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": "2026-02-19T10:50:19.651Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe3f",
+    "_id": "699f5694d5971a4f7c1f5783",
     "listing_id": "54962355",
     "source": "pf",
     "title": "European Villa 1Bedroom + Separate Kitchen+ Bath",
@@ -955,12 +1051,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:06:57.114Z",
+    "crawled_at": "2026-02-25T20:06:57.098Z",
     "first_seen_at": "2026-02-21T14:03:46.183Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe40",
+    "_id": "699f5694d5971a4f7c1f5784",
     "listing_id": "54961579",
     "source": "pf",
     "title": "1st Tenant Luxury 1Bedroom+Kitchen+Washroom 60K",
@@ -1003,12 +1099,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:06:57.114Z",
+    "crawled_at": "2026-02-25T20:06:57.098Z",
     "first_seen_at": "2026-02-21T14:03:46.183Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe41",
+    "_id": "699f5694d5971a4f7c1f5785",
     "listing_id": "56535273",
     "source": "pf",
     "title": "Sea View Fully Furnished in Al Reem/5600 Monthly",
@@ -1051,12 +1147,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:19.950Z",
+    "crawled_at": "2026-02-25T20:07:18.808Z",
     "first_seen_at": "2026-02-24T10:07:31.625Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe42",
+    "_id": "699f5694d5971a4f7c1f5786",
     "listing_id": "26979123",
     "source": "dubizzle",
     "title": "Vacant / Ready to move / Spacious",
@@ -1099,12 +1195,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:44.064Z",
+    "crawled_at": "2026-02-25T20:07:43.503Z",
     "first_seen_at": "2026-02-23T08:06:06.808Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe43",
+    "_id": "699f5694d5971a4f7c1f5787",
     "listing_id": "26585144",
     "source": "dubizzle",
     "title": "Excellent Sunny 1 Bedroom Hall With Separate Kitchen Big Windows Spacious Bath Tub In KCA",
@@ -1147,12 +1243,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": "2026-02-19T10:49:59.176Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe44",
+    "_id": "699f5694d5971a4f7c1f5788",
     "listing_id": "26884679",
     "source": "dubizzle",
     "title": "Brand new|High finishing|1BHK|Private entrance|Covered parking|Modern|Ready to move|Separate kitchen and bathroom",
@@ -1195,12 +1291,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": "2026-02-19T11:20:22.177Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe45",
+    "_id": "699f5694d5971a4f7c1f5789",
     "listing_id": "26742612",
     "source": "dubizzle",
     "title": "Exclusive | Brand new 1/BHK | Sep.kitchen | modern bath | Ready to move | Parking",
@@ -1243,12 +1339,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Shakhbout City",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": "2026-02-19T11:20:23.675Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe46",
+    "_id": "699f5694d5971a4f7c1f578a",
     "listing_id": "26679278",
     "source": "dubizzle",
     "title": "Brand new | Modern 1BHK |Ready to move|Separate kitchen and bathroom",
@@ -1291,12 +1387,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": "2026-02-20T11:34:19.142Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe47",
+    "_id": "699f5694d5971a4f7c1f578b",
     "listing_id": "16302930",
     "source": "pf",
     "title": "Spacious One-Bedroom /Tawtheeq Available/Free Bill",
@@ -1339,12 +1435,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": "2026-02-19T10:50:19.651Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe48",
+    "_id": "699f5694d5971a4f7c1f578c",
     "listing_id": "16250131",
     "source": "pf",
     "title": "1bhk Excellent ventilation in Mohammed Bin Zayed",
@@ -1387,12 +1483,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Zayed City",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": "2026-02-23T13:58:23.364Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe49",
+    "_id": "699f5694d5971a4f7c1f578d",
     "listing_id": "16270385",
     "source": "pf",
     "title": "Lavish 1 Bedroom and Hall|Monthly4800|Free Wi-Fi",
@@ -1435,12 +1531,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:06:57.114Z",
+    "crawled_at": "2026-02-25T20:06:57.098Z",
     "first_seen_at": "2026-02-23T13:58:38.637Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe4a",
+    "_id": "699f5694d5971a4f7c1f578e",
     "listing_id": "16329731",
     "source": "pf",
     "title": "Massive Studio I 2 Big Balcony I Ready to move |",
@@ -1483,12 +1579,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Baniyas",
-    "crawled_at": "2026-02-25T18:06:04.990Z",
+    "crawled_at": "2026-02-25T20:06:03.900Z",
     "first_seen_at": "2026-02-23T00:05:33.236Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe4b",
+    "_id": "699f5694d5971a4f7c1f578f",
     "listing_id": "26972751",
     "source": "dubizzle",
     "title": "Elegant & Spacious 1BHK for Rent in Al Rahba – Prime Location",
@@ -1531,12 +1627,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Rahbah",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": "2026-02-20T11:34:20.545Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe4c",
+    "_id": "699f5694d5971a4f7c1f5790",
     "listing_id": "26842336",
     "source": "dubizzle",
     "title": "Family Community 1bhk Separate Kitchen Proper Washroom Near Safeer Mall In KCA",
@@ -1579,12 +1675,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:49.352Z",
+    "crawled_at": "2026-02-25T20:07:48.432Z",
     "first_seen_at": "2026-02-20T11:34:20.545Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe4d",
+    "_id": "699f5694d5971a4f7c1f5791",
     "listing_id": "26986319",
     "source": "dubizzle",
     "title": "Vacant Soon | High Floor | Book Now",
@@ -1627,12 +1723,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": "2026-02-25T12:07:36.942Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe4e",
+    "_id": "699f5694d5971a4f7c1f5792",
     "listing_id": "56144186",
     "source": "pf",
     "title": "HOTTEST PRICE!! 2 Cheques | Higher Floor |Call Now",
@@ -1675,12 +1771,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:11.646Z",
+    "crawled_at": "2026-02-25T20:06:11.941Z",
     "first_seen_at": "2026-02-23T12:01:27.555Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe4f",
+    "_id": "699f5694d5971a4f7c1f5793",
     "listing_id": "16248249",
     "source": "pf",
     "title": "Type D | Upcoming 1BR | Ideal Community",
@@ -1723,12 +1819,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reef",
-    "crawled_at": "2026-02-25T18:06:27.108Z",
+    "crawled_at": "2026-02-25T20:06:26.265Z",
     "first_seen_at": "2026-02-23T13:57:53.492Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe50",
+    "_id": "699f5694d5971a4f7c1f5794",
     "listing_id": "16304367",
     "source": "pf",
     "title": "Spacious One Bedroom+Hall|Near Forsan Central Mall",
@@ -1771,12 +1867,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:06:57.114Z",
+    "crawled_at": "2026-02-25T20:06:57.098Z",
     "first_seen_at": "2026-02-23T13:58:38.637Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe51",
+    "_id": "699f5694d5971a4f7c1f5795",
     "listing_id": "53985204",
     "source": "pf",
     "title": "SPACIOUS 1-BEDRM HALL WITH HUGE BALCONY IN MBZ CIT",
@@ -1819,12 +1915,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Zayed City",
-    "crawled_at": "2026-02-25T18:07:12.065Z",
+    "crawled_at": "2026-02-25T20:07:12.052Z",
     "first_seen_at": "2026-02-23T13:58:54.618Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe52",
+    "_id": "699f5694d5971a4f7c1f5796",
     "listing_id": "15797074",
     "source": "pf",
     "title": "Deluxe 1BHK | Free ADDC | NO COMMISSION",
@@ -1867,12 +1963,12 @@
       "staleness": -3
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:06:11.646Z",
+    "crawled_at": "2026-02-25T20:06:11.941Z",
     "first_seen_at": "2026-02-23T13:58:54.618Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe53",
+    "_id": "699f5694d5971a4f7c1f5797",
     "listing_id": "56963994",
     "source": "pf",
     "title": "Family Community 1 BR, Separate kitchen, Wardrobes",
@@ -1915,12 +2011,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Shakhbout City",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": "2026-02-25T14:05:58.070Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe54",
+    "_id": "699f5694d5971a4f7c1f5798",
     "listing_id": "10890508",
     "source": "bayut",
     "title": "Brand new-Amazing cozy 1/BHK | Wardrobe | Bathtub | Sep. kitchen | covered parking",
@@ -1965,10 +2061,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": "2026-02-19T11:23:00.847Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe55",
+    "_id": "699f5694d5971a4f7c1f5799",
     "listing_id": "10669677",
     "source": "bayut",
     "title": "Brand new|High finishing|1BHK|Private entrance|Covered parking|Modern|Ready to move|Separate kitchen and bathroom",
@@ -2013,10 +2109,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": "2026-02-19T11:23:15.012Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe56",
+    "_id": "699f5694d5971a4f7c1f579a",
     "listing_id": "10204421",
     "source": "bayut",
     "title": "Exclusive | Brand new 1/BHK | Sep. kitchen | modern bath | Ready to move | Parking",
@@ -2061,10 +2157,10 @@
     "neighborhood_matched": "Shakhbout City",
     "crawled_at": "2026-02-25T13:32:03.704Z",
     "first_seen_at": "2026-02-19T11:23:31.999Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe57",
+    "_id": "699f5694d5971a4f7c1f579b",
     "listing_id": "10950853",
     "source": "bayut",
     "title": "Hot Offer 1 Bed Hall Apart with Wardrobes And Chiller Free Available in Shabiya 9",
@@ -2109,10 +2205,10 @@
     "neighborhood_matched": "Zayed City",
     "crawled_at": "2026-02-25T13:27:37.455Z",
     "first_seen_at": "2026-02-23T09:51:35.377Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe58",
+    "_id": "699f5694d5971a4f7c1f579c",
     "listing_id": "9982570",
     "source": "bayut",
     "title": "Brand new | Modern 1BHK |Ready to move|Separate kitchen and bathroom",
@@ -2157,10 +2253,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": "2026-02-25T13:26:29.947Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe59",
+    "_id": "699f5694d5971a4f7c1f579d",
     "listing_id": "26523864",
     "source": "dubizzle",
     "title": "Luxurious 01:Bedroom Hall",
@@ -2203,12 +2299,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Shahama",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": "2026-02-19T10:49:55.481Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe5a",
+    "_id": "699f5694d5971a4f7c1f579e",
     "listing_id": "26773271",
     "source": "dubizzle",
     "title": "Bright & Spacious One Bedroom Hall Apartment",
@@ -2251,12 +2347,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Rahbah",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": "2026-02-19T10:49:55.481Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe5b",
+    "_id": "699f5694d5971a4f7c1f579f",
     "listing_id": "26523028",
     "source": "dubizzle",
     "title": "Spacious One bedroom hall in Al Shahama Abudhabi",
@@ -2299,12 +2395,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Shahama",
-    "crawled_at": "2026-02-25T18:07:49.352Z",
+    "crawled_at": "2026-02-25T20:07:48.432Z",
     "first_seen_at": "2026-02-19T10:49:55.481Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe5c",
+    "_id": "699f5694d5971a4f7c1f57a0",
     "listing_id": "26958592",
     "source": "dubizzle",
     "title": "Brand new-Amazing cozy 1/BHK | Wardrobe | Bathtub | Sep.kitchen | covered parking",
@@ -2347,60 +2443,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": "2026-02-19T12:35:50.197Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe5d",
-    "listing_id": "26894643",
-    "source": "dubizzle",
-    "title": "Brand New 1bhk With 2 Washroom & Private Entrance Mbz",
-    "title_zh": "Brand New 1bhk With 2 Washroom & Private Entrance Mbz",
-    "price": 62000,
-    "size_sqm": 146,
-    "size_sqft": 1570,
-    "bedrooms": "1",
-    "furnished": "NO",
-    "location": "Mohamed Bin Zayed Centre, Mohamed Bin Zayed City, Abu Dhabi",
-    "location_zh": "扎耶德城",
-    "neighborhood_en": "Zayed City",
-    "neighborhood_zh": "扎耶德城",
-    "url": "https://abudhabi.dubizzle.com/property-for-rent/residential/apartmentflat/2026/1/26/specious-1bhk-2-washroom-terrace-near-m-3-742968/",
-    "commute_min": 28,
-    "commute_km": 28,
-    "monthly_rent": 5167,
-    "monthly_time_cost": 1642,
-    "monthly_fuel_cost": 334,
-    "monthly_commute_cost": 1976,
-    "effective_monthly_cost": 7143,
-    "burden_index": 24,
-    "has_parking": false,
-    "has_utilities": false,
-    "has_chiller_free": false,
-    "has_no_commission": false,
-    "has_oven": false,
-    "monthly_parking_saving": 0,
-    "monthly_utility_saving": 0,
-    "monthly_commission_saving": 0,
-    "interest": null,
-    "score": 73,
-    "score_breakdown": {
-      "effective_cost": 67,
-      "verified": 0,
-      "size_bonus": 4,
-      "payment": 0,
-      "oven": 0,
-      "amenities": 2,
-      "staleness": 0
-    },
-    "neighborhood_matched": "Zayed City",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
-    "first_seen_at": "2026-02-20T11:34:20.545Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
-  },
-  {
-    "_id": "699f3a75a79ed60dcba1fe5e",
+    "_id": "699f5694d5971a4f7c1f57a1",
     "listing_id": "26865308",
     "source": "dubizzle",
     "title": "Family Community 1bhk Separate Kitchen Proper Washroom Near Market In KCA",
@@ -2443,12 +2491,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:49.352Z",
+    "crawled_at": "2026-02-25T20:07:48.432Z",
     "first_seen_at": "2026-02-20T11:34:20.545Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe5f",
+    "_id": "699f5694d5971a4f7c1f57a2",
     "listing_id": "16234849",
     "source": "pf",
     "title": "Modern 1BHK | Free ADDC | 0% Commission- Brand New",
@@ -2491,12 +2539,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe60",
+    "_id": "699f5694d5971a4f7c1f57a3",
     "listing_id": "16231901",
     "source": "pf",
     "title": "European Styles 1BHK+Free WIFI+Kitchen+Bath 4600\\M",
@@ -2539,12 +2587,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": "2026-02-23T13:58:23.364Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe61",
+    "_id": "699f5694d5971a4f7c1f57a4",
     "listing_id": "56532188",
     "source": "pf",
     "title": "Prime Location / Newly Built Unit / 0 % Commission",
@@ -2587,12 +2635,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Rabdan",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": "2026-02-24T10:06:53.875Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe62",
+    "_id": "699f5694d5971a4f7c1f57a5",
     "listing_id": "53190756",
     "source": "pf",
     "title": "VACANT | Urban View | Upto 4 Payments | High Floor",
@@ -2635,12 +2683,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:33.669Z",
+    "crawled_at": "2026-02-25T20:06:34.775Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe63",
+    "_id": "699f5694d5971a4f7c1f57a6",
     "listing_id": "10919526",
     "source": "bayut",
     "title": "European Compound Luxury 1Bedroom+Kitchen+Bath +Free WIFI 4800-monthly",
@@ -2685,10 +2733,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": "2026-02-19T10:52:50.097Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe64",
+    "_id": "699f5694d5971a4f7c1f57a7",
     "listing_id": "10305579",
     "source": "bayut",
     "title": "Bright & Spacious One Bedroom Hall Apartment",
@@ -2733,10 +2781,10 @@
     "neighborhood_matched": "Al Rahbah",
     "crawled_at": "2026-02-25T13:31:28.281Z",
     "first_seen_at": "2026-02-19T10:52:50.097Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe65",
+    "_id": "699f5694d5971a4f7c1f57a8",
     "listing_id": "9484350",
     "source": "bayut",
     "title": "Luxurious 01:Bedroom Hall",
@@ -2781,10 +2829,10 @@
     "neighborhood_matched": "Al Shahama",
     "crawled_at": "2026-02-25T13:30:55.715Z",
     "first_seen_at": "2026-02-19T10:52:57.304Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe66",
+    "_id": "699f5694d5971a4f7c1f57a9",
     "listing_id": "9481597",
     "source": "bayut",
     "title": "Spacious One bedroom hall in Al Shahama Abudhabi",
@@ -2829,10 +2877,10 @@
     "neighborhood_matched": "Al Shahama",
     "crawled_at": "2026-02-25T13:30:55.715Z",
     "first_seen_at": "2026-02-19T10:52:57.304Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe67",
+    "_id": "699f5694d5971a4f7c1f57aa",
     "listing_id": "10948653",
     "source": "bayut",
     "title": "Spacious 1BHK with 2 Baths & Basement Parking | Shabiya 12",
@@ -2877,10 +2925,10 @@
     "neighborhood_matched": "Zayed City",
     "crawled_at": "2026-02-25T13:27:37.455Z",
     "first_seen_at": "2026-02-23T09:51:35.377Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe68",
+    "_id": "699f5694d5971a4f7c1f57ab",
     "listing_id": "26928799",
     "source": "dubizzle",
     "title": "Cozy Unit in a Vibrant Residential Hub",
@@ -2923,12 +2971,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reef",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe69",
+    "_id": "699f5694d5971a4f7c1f57ac",
     "listing_id": "26927062",
     "source": "dubizzle",
     "title": "Well-Planned 1-Bedroom Home in a Self-Sufficient Community",
@@ -2971,12 +3019,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reef",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe6a",
+    "_id": "699f5694d5971a4f7c1f57ad",
     "listing_id": "26825736",
     "source": "dubizzle",
     "title": "New 01 Bedroom Hall Apartment for Family | Al Rahba",
@@ -3019,12 +3067,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Rahbah",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": "2026-02-19T10:49:55.481Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe6b",
+    "_id": "699f5694d5971a4f7c1f57ae",
     "listing_id": "26841978",
     "source": "dubizzle",
     "title": "Family Community Luxury 1 Bedroom Separate Kitchen Full Washroom In KCA",
@@ -3067,12 +3115,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": "2026-02-20T11:34:19.142Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe6c",
+    "_id": "699f5694d5971a4f7c1f57af",
     "listing_id": "26842349",
     "source": "dubizzle",
     "title": "Family Compound 1Bhk Separate Kitchen Big Rooms Size Well Finishing On Prime Location In KCA",
@@ -3115,12 +3163,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:49.352Z",
+    "crawled_at": "2026-02-25T20:07:48.432Z",
     "first_seen_at": "2026-02-20T11:34:20.545Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe6d",
+    "_id": "699f5694d5971a4f7c1f57b0",
     "listing_id": "26984152",
     "source": "dubizzle",
     "title": "Modern 1BHK | Free ADDC No Commission Hot Deal!",
@@ -3163,12 +3211,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": "2026-02-25T08:56:29.657Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe6e",
+    "_id": "699f5694d5971a4f7c1f57b1",
     "listing_id": "26987297",
     "source": "dubizzle",
     "title": "Luxurious Living | Modern style | Prime location",
@@ -3211,12 +3259,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": "2026-02-25T13:09:24.673Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe6f",
+    "_id": "699f5694d5971a4f7c1f57b2",
     "listing_id": "55350595",
     "source": "pf",
     "title": "Brand New 1 Bedroom Apartment For 65K In MBZ City",
@@ -3259,12 +3307,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Zayed City",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": "2026-02-21T14:03:46.183Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe70",
+    "_id": "699f5694d5971a4f7c1f57b3",
     "listing_id": "52020562",
     "source": "pf",
     "title": "Limited Offer: Modern 1-Bd Hot Deal",
@@ -3307,12 +3355,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:27.108Z",
+    "crawled_at": "2026-02-25T20:06:26.265Z",
     "first_seen_at": "2026-02-23T13:57:53.492Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe71",
+    "_id": "699f5694d5971a4f7c1f57b4",
     "listing_id": "15907040",
     "source": "pf",
     "title": "Amazing One Bed Room 4800  Mohamed Bin zayed City",
@@ -3355,12 +3403,12 @@
       "staleness": -3
     },
     "neighborhood_matched": "Zayed City",
-    "crawled_at": "2026-02-25T18:07:12.065Z",
+    "crawled_at": "2026-02-25T20:07:12.052Z",
     "first_seen_at": "2026-02-23T13:58:38.637Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe72",
+    "_id": "699f5694d5971a4f7c1f57b5",
     "listing_id": "56540843",
     "source": "pf",
     "title": "including all bills\\ Tawtheeq Avi\\No Commission",
@@ -3403,12 +3451,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": "2026-02-24T10:06:53.875Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe73",
+    "_id": "699f5694d5971a4f7c1f57b6",
     "listing_id": "56572254",
     "source": "pf",
     "title": "Hot Offer / Fully Furnished / Sea View / Occupy It",
@@ -3451,12 +3499,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:57.114Z",
+    "crawled_at": "2026-02-25T20:06:57.098Z",
     "first_seen_at": "2026-02-25T08:55:49.476Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe74",
+    "_id": "699f5694d5971a4f7c1f57b7",
     "listing_id": "10213861",
     "source": "bayut",
     "title": "BRAND NEW SPACIOUS APARTMENT AVAILABLE IN MBZ",
@@ -3501,10 +3549,10 @@
     "neighborhood_matched": "Zayed City",
     "crawled_at": "2026-02-25T13:27:37.455Z",
     "first_seen_at": "2026-02-19T10:52:50.097Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe75",
+    "_id": "699f5694d5971a4f7c1f57b8",
     "listing_id": "10479837",
     "source": "bayut",
     "title": "New 01 Bedroom Hall Apartment for Family | Al Rahba",
@@ -3549,10 +3597,10 @@
     "neighborhood_matched": "Al Rahbah",
     "crawled_at": "2026-02-25T13:31:28.281Z",
     "first_seen_at": "2026-02-19T10:52:57.304Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe76",
+    "_id": "699f5694d5971a4f7c1f57b9",
     "listing_id": "10963115",
     "source": "bayut",
     "title": "Modern BR Unit | Canal View | Premium Location",
@@ -3597,10 +3645,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:49.193Z",
     "first_seen_at": "2026-02-25T13:24:49.193Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe77",
+    "_id": "699f5694d5971a4f7c1f57ba",
     "listing_id": "26934230",
     "source": "dubizzle",
     "title": "BRAND NEW FULLY FURNISHED 1BHK WITH BALCONY IN KCA",
@@ -3643,12 +3691,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe78",
+    "_id": "699f5694d5971a4f7c1f57bb",
     "listing_id": "16309656",
     "source": "pf",
     "title": "Furnished Studio Apartment in Al Reem / 7.5k M",
@@ -3691,12 +3739,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:12.065Z",
+    "crawled_at": "2026-02-25T20:07:12.052Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe79",
+    "_id": "699f5694d5971a4f7c1f57bc",
     "listing_id": "56143572",
     "source": "pf",
     "title": "Good Price | Versatile & Functional Unit | Vacant!",
@@ -3739,12 +3787,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:27.108Z",
+    "crawled_at": "2026-02-25T20:06:26.265Z",
     "first_seen_at": "2026-02-23T13:57:53.492Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe7a",
+    "_id": "699f5694d5971a4f7c1f57bd",
     "listing_id": "56529750",
     "source": "pf",
     "title": "Ready to move in 1BHK in Marina Bay Reem Island",
@@ -3787,12 +3835,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:57.114Z",
+    "crawled_at": "2026-02-25T20:06:57.098Z",
     "first_seen_at": "2026-02-24T08:06:35.105Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe7b",
+    "_id": "699f5694d5971a4f7c1f57be",
     "listing_id": "16148999",
     "source": "pf",
     "title": "Fully Furnished | Mangrove View | High Floor",
@@ -3835,12 +3883,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:04.990Z",
+    "crawled_at": "2026-02-25T20:06:03.900Z",
     "first_seen_at": "2026-02-23T13:57:46.172Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe7c",
+    "_id": "699f5694d5971a4f7c1f57bf",
     "listing_id": "16283550",
     "source": "pf",
     "title": "High Floor | Huge Furnished & Unfurnished",
@@ -3883,12 +3931,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:04.690Z",
+    "crawled_at": "2026-02-25T20:07:04.950Z",
     "first_seen_at": "2026-02-23T13:58:46.564Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe7d",
+    "_id": "699f5694d5971a4f7c1f57c0",
     "listing_id": "10919146",
     "source": "bayut",
     "title": "American Style Very Big 1Bedroom+ Kitchen+ separate Washroom",
@@ -3933,10 +3981,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe7e",
+    "_id": "699f5694d5971a4f7c1f57c1",
     "listing_id": "9675586",
     "source": "bayut",
     "title": "Excellent Sunny 1 Bedroom Hall With Separate Kitchen Big Windows Spacious Bath Tub In KCA",
@@ -3981,10 +4029,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": "2026-02-19T10:53:32.120Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe7f",
+    "_id": "699f5694d5971a4f7c1f57c2",
     "listing_id": "26887707",
     "source": "dubizzle",
     "title": "Fully Furnished | Mangrove View | High Floor",
@@ -4027,12 +4075,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:40.683Z",
+    "crawled_at": "2026-02-25T20:07:40.525Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe80",
+    "_id": "699f5694d5971a4f7c1f57c3",
     "listing_id": "26940989",
     "source": "dubizzle",
     "title": "Brand new-Modern spacious 1/BHK | Sep.kitchen | Modern bath | Parking",
@@ -4075,12 +4123,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe81",
+    "_id": "699f5694d5971a4f7c1f57c4",
     "listing_id": "26967245",
     "source": "dubizzle",
     "title": "Elegant Living | Amazing View | Unfurnished",
@@ -4123,12 +4171,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe82",
+    "_id": "699f5694d5971a4f7c1f57c5",
     "listing_id": "26767738",
     "source": "dubizzle",
     "title": "Balcony | Ready to Move | Prime Location",
@@ -4171,12 +4219,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe83",
+    "_id": "699f5694d5971a4f7c1f57c6",
     "listing_id": "26868101",
     "source": "dubizzle",
     "title": "Precious 1BR with Balcony | Type D | Available Soon",
@@ -4219,12 +4267,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reef",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe84",
+    "_id": "699f5694d5971a4f7c1f57c7",
     "listing_id": "26954109",
     "source": "dubizzle",
     "title": "Vacant / Ready to move / Balcony",
@@ -4267,12 +4315,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe85",
+    "_id": "699f5694d5971a4f7c1f57c8",
     "listing_id": "26867906",
     "source": "dubizzle",
     "title": "LUXURIOUS 1 BEDROOM APARTMENT IN MBZ CITY",
@@ -4315,12 +4363,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Zayed City",
-    "crawled_at": "2026-02-25T18:07:49.352Z",
+    "crawled_at": "2026-02-25T20:07:48.432Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe86",
+    "_id": "699f5694d5971a4f7c1f57c9",
     "listing_id": "16237001",
     "source": "pf",
     "title": "No Commission Elegant 1BHK Spacious & Affordable",
@@ -4363,12 +4411,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe87",
+    "_id": "699f5694d5971a4f7c1f57ca",
     "listing_id": "54006201",
     "source": "pf",
     "title": "Hot Deal 1BR Prime Layout in Wifaq Tower!",
@@ -4411,12 +4459,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": "2026-02-19T12:36:10.991Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe88",
+    "_id": "699f5694d5971a4f7c1f57cb",
     "listing_id": "54445004",
     "source": "pf",
     "title": "1BHK/Owner property/Wardrobe/Central AC/ Shabiya 9",
@@ -4459,12 +4507,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Musaffah",
-    "crawled_at": "2026-02-25T18:07:12.065Z",
+    "crawled_at": "2026-02-25T20:07:12.052Z",
     "first_seen_at": "2026-02-21T14:03:46.183Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe89",
+    "_id": "699f5694d5971a4f7c1f57cc",
     "listing_id": "15831958",
     "source": "pf",
     "title": "Balcony | Ready to Move | Prime Location",
@@ -4507,12 +4555,12 @@
       "staleness": -3
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:11.646Z",
+    "crawled_at": "2026-02-25T20:06:11.941Z",
     "first_seen_at": "2026-02-23T13:57:53.492Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe8a",
+    "_id": "699f5694d5971a4f7c1f57cd",
     "listing_id": "53577478",
     "source": "pf",
     "title": "BRAND NEW 1-BEDRM HALL MAJLIS WITH 2 BATH",
@@ -4555,12 +4603,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Zayed City",
-    "crawled_at": "2026-02-25T18:07:12.065Z",
+    "crawled_at": "2026-02-25T20:07:12.052Z",
     "first_seen_at": "2026-02-23T13:58:54.618Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe8b",
+    "_id": "699f5694d5971a4f7c1f57ce",
     "listing_id": "16326737",
     "source": "pf",
     "title": "Waterview-1BR Apt in Mangrove Place, Reem Island",
@@ -4603,12 +4651,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:12.065Z",
+    "crawled_at": "2026-02-25T20:07:12.052Z",
     "first_seen_at": "2026-02-24T10:07:09.453Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe8c",
+    "_id": "699f5694d5971a4f7c1f57cf",
     "listing_id": "56958215",
     "source": "pf",
     "title": "HOT DEAL! | Prime Location | 1 Parking",
@@ -4651,12 +4699,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:27.108Z",
+    "crawled_at": "2026-02-25T20:06:26.265Z",
     "first_seen_at": "2026-02-25T12:06:25.539Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe8d",
+    "_id": "699f5694d5971a4f7c1f57d0",
     "listing_id": "16248025",
     "source": "pf",
     "title": "Ramadan Offer| Very Big Size Home Fully Furnished",
@@ -4699,12 +4747,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:05:49.577Z",
+    "crawled_at": "2026-02-25T20:05:49.101Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe8e",
+    "_id": "699f5694d5971a4f7c1f57d1",
     "listing_id": "54393864",
     "source": "pf",
     "title": "Furnished Studio In Alreem Island / 7499 Monthly",
@@ -4747,12 +4795,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:19.950Z",
+    "crawled_at": "2026-02-25T20:07:18.808Z",
     "first_seen_at": "2026-02-23T13:59:01.958Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe8f",
+    "_id": "699f5694d5971a4f7c1f57d2",
     "listing_id": "10840882",
     "source": "bayut",
     "title": "Brand new-Modern spacious 1/BHK | Sep. kitchen | Modern bath | Parking",
@@ -4797,10 +4845,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe90",
+    "_id": "699f5694d5971a4f7c1f57d3",
     "listing_id": "10854869",
     "source": "bayut",
     "title": "Unfurnished 1 Bedroom Apartment With Parking & Water And Electricity Included",
@@ -4845,10 +4893,10 @@
     "neighborhood_matched": "Mushrif",
     "crawled_at": "2026-02-25T13:25:57.201Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe91",
+    "_id": "699f5694d5971a4f7c1f57d4",
     "listing_id": "10928927",
     "source": "bayut",
     "title": "1BHK Chiller-Free Flat for Rent in Shabiya 10 – AED 60K | 4 Payments",
@@ -4893,10 +4941,10 @@
     "neighborhood_matched": "Zayed City",
     "crawled_at": "2026-02-25T13:27:37.455Z",
     "first_seen_at": "2026-02-19T16:50:22.778Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe92",
+    "_id": "699f5694d5971a4f7c1f57d5",
     "listing_id": "10932748",
     "source": "bayut",
     "title": "Elegant & Spacious 1BHK for Rent in Al Rahba – Prime Location",
@@ -4941,10 +4989,10 @@
     "neighborhood_matched": "Al Rahbah",
     "crawled_at": "2026-02-25T13:31:28.281Z",
     "first_seen_at": "2026-02-20T11:37:34.127Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe93",
+    "_id": "699f5694d5971a4f7c1f57d6",
     "listing_id": "10605920",
     "source": "bayut",
     "title": "Family Community 1bhk Separate Kitchen Proper Washroom Near Market In KCA",
@@ -4989,10 +5037,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": "2026-02-23T09:50:27.477Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe94",
+    "_id": "699f5694d5971a4f7c1f57d7",
     "listing_id": "10537590",
     "source": "bayut",
     "title": "Family Community 1bhk Separate Kitchen Proper Washroom Near Safeer Mall In KCA",
@@ -5037,10 +5085,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": "2026-02-23T09:50:27.477Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe95",
+    "_id": "699f5694d5971a4f7c1f57d8",
     "listing_id": "26885277",
     "source": "dubizzle",
     "title": "LUXURY 1BHK !! SHARED POOL !! SEP KITCHEN !! PROPER WASHROOM !! KCA",
@@ -5083,12 +5131,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe96",
+    "_id": "699f5694d5971a4f7c1f57d9",
     "listing_id": "16309846",
     "source": "pf",
     "title": "PRIME LOCATION 1BHK APARTMENT WITH ALL FACILITIES",
@@ -5131,12 +5179,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:26.364Z",
+    "crawled_at": "2026-02-25T20:07:26.864Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe97",
+    "_id": "699f5694d5971a4f7c1f57da",
     "listing_id": "16076264",
     "source": "pf",
     "title": "UN-FURNISHED | READY TO MOVE",
@@ -5179,12 +5227,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:26.364Z",
+    "crawled_at": "2026-02-25T20:07:26.864Z",
     "first_seen_at": "2026-02-23T13:58:54.618Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe98",
+    "_id": "699f5694d5971a4f7c1f57db",
     "listing_id": "56950726",
     "source": "pf",
     "title": "Hot Deal I Many Payment IUpcomingI Prime  Location",
@@ -5227,12 +5275,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": "2026-02-25T12:06:40.347Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe99",
+    "_id": "699f5694d5971a4f7c1f57dc",
     "listing_id": "16313552",
     "source": "pf",
     "title": "Vacant|Modern Studio|High Floor|Mangrove+Sea View",
@@ -5275,12 +5323,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:49.128Z",
+    "crawled_at": "2026-02-25T20:06:49.835Z",
     "first_seen_at": "2026-02-23T13:58:30.634Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe9a",
+    "_id": "699f5694d5971a4f7c1f57dd",
     "listing_id": "56542012",
     "source": "pf",
     "title": "High Floor Studio | Flexible Payments | Al Reem",
@@ -5323,12 +5371,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:04.990Z",
+    "crawled_at": "2026-02-25T20:06:03.900Z",
     "first_seen_at": "2026-02-24T10:07:40.037Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe9b",
+    "_id": "699f5694d5971a4f7c1f57de",
     "listing_id": "10594231",
     "source": "bayut",
     "title": "Luxury Studio with Amazing View | Available | Flexible Payment",
@@ -5373,10 +5421,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:47.718Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe9c",
+    "_id": "699f5694d5971a4f7c1f57df",
     "listing_id": "54937888",
     "source": "pf",
     "title": "Duplex-1-BHK|Pvt Backyard|Share Pool|GYM|Huge Room",
@@ -5419,12 +5467,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Masdar City",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": "2026-02-21T14:03:46.183Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe9d",
+    "_id": "699f5694d5971a4f7c1f57e0",
     "listing_id": "56137240",
     "source": "pf",
     "title": "Al Mushrif Villas 1 BR Apartment",
@@ -5467,12 +5515,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": "2026-02-23T13:58:23.364Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe9e",
+    "_id": "699f5694d5971a4f7c1f57e1",
     "listing_id": "56949174",
     "source": "pf",
     "title": "Vacant Soon | High Floor | Book Now",
@@ -5515,12 +5563,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:27.108Z",
+    "crawled_at": "2026-02-25T20:06:26.265Z",
     "first_seen_at": "2026-02-25T12:06:25.539Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fe9f",
+    "_id": "699f5694d5971a4f7c1f57e2",
     "listing_id": "56952330",
     "source": "pf",
     "title": "Luxurious Living | Modern style | Prime location",
@@ -5563,12 +5611,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": "2026-02-25T12:06:40.347Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fea0",
+    "_id": "699f5694d5971a4f7c1f57e3",
     "listing_id": "56949397",
     "source": "pf",
     "title": "Mangrove View | Move-in Ready | Up to 2 Payments",
@@ -5611,12 +5659,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:57.114Z",
+    "crawled_at": "2026-02-25T20:06:57.098Z",
     "first_seen_at": "2026-02-25T12:06:55.323Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fea1",
+    "_id": "699f5694d5971a4f7c1f57e4",
     "listing_id": "56958115",
     "source": "pf",
     "title": "Best Deal  Al Reem Island | Bright & Spacious 1Br",
@@ -5659,12 +5707,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:12.065Z",
+    "crawled_at": "2026-02-25T20:07:12.052Z",
     "first_seen_at": "2026-02-25T12:06:55.323Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fea2",
+    "_id": "699f5694d5971a4f7c1f57e5",
     "listing_id": "16275619",
     "source": "pf",
     "title": "GET THE DEAL◆AMAZING LOCATION◆MOVE NOW◆HOT PRICE",
@@ -5707,12 +5755,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:19.950Z",
+    "crawled_at": "2026-02-25T20:07:18.808Z",
     "first_seen_at": "2026-02-23T13:58:46.564Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fea3",
+    "_id": "699f5694d5971a4f7c1f57e6",
     "listing_id": "10241619",
     "source": "bayut",
     "title": "Deluxe 1BHK | Free ADDC | NO COMMISSION | Just Listed",
@@ -5757,10 +5805,10 @@
     "neighborhood_matched": "Mushrif",
     "crawled_at": "2026-02-25T13:25:57.201Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fea4",
+    "_id": "699f5694d5971a4f7c1f57e7",
     "listing_id": "9604260",
     "source": "bayut",
     "title": "Spacious 1BHK With Separate Kitchen Sunlight Windows Excellent Rooms Size Proper Washroom Khalifa City a",
@@ -5805,10 +5853,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": "2026-02-19T10:52:50.097Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fea5",
+    "_id": "699f5694d5971a4f7c1f57e8",
     "listing_id": "10930145",
     "source": "bayut",
     "title": "Vacant / Ready to move / Spacious",
@@ -5853,10 +5901,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:24.774Z",
     "first_seen_at": "2026-02-20T11:35:54.673Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fea6",
+    "_id": "699f5694d5971a4f7c1f57e9",
     "listing_id": "10536589",
     "source": "bayut",
     "title": "Family Community Luxury 1 Bedroom Separate Kitchen Full Washroom In KCA",
@@ -5901,10 +5949,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": "2026-02-23T09:50:27.477Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fea7",
+    "_id": "699f5694d5971a4f7c1f57ea",
     "listing_id": "10537273",
     "source": "bayut",
     "title": "Family Compound 1Bhk Separate Kitchen Big Rooms Size Well Finishing On Prime Location In KCA",
@@ -5949,10 +5997,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": "2026-02-23T09:50:27.477Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fea8",
+    "_id": "699f5694d5971a4f7c1f57eb",
     "listing_id": "7569350",
     "source": "bayut",
     "title": "Modern 1BHK | Free ADDC No Commission Hot Deal!",
@@ -5997,10 +6045,10 @@
     "neighborhood_matched": "Mushrif",
     "crawled_at": "2026-02-25T13:25:57.201Z",
     "first_seen_at": "2026-02-25T13:25:57.201Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fea9",
+    "_id": "699f5694d5971a4f7c1f57ec",
     "listing_id": "26961900",
     "source": "dubizzle",
     "title": "VACANT | Urban View | Upto 4 Payments | High Floor",
@@ -6043,12 +6091,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:44.064Z",
+    "crawled_at": "2026-02-25T20:07:43.503Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feaa",
+    "_id": "699f5694d5971a4f7c1f57ed",
     "listing_id": "26948003",
     "source": "dubizzle",
     "title": "RTM II Prime Location II 0% Commission II Tawtheeq Available",
@@ -6091,12 +6139,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:07:49.352Z",
+    "crawled_at": "2026-02-25T20:07:48.432Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feab",
+    "_id": "699f5694d5971a4f7c1f57ee",
     "listing_id": "26895790",
     "source": "dubizzle",
     "title": "Spacious 1BHK Apartment for Rent | Water & Electricity Included | Al Khalidiyah ,Near International Community School",
@@ -6139,12 +6187,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Khalidiyah",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": "2026-02-19T10:49:55.481Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feac",
+    "_id": "699f5694d5971a4f7c1f57ef",
     "listing_id": "26962608",
     "source": "dubizzle",
     "title": "NO COMMISSION  SPACIOUS 1 BR  2 Bath in Al REEM ISLAND -SEA FACE TOWER",
@@ -6187,12 +6235,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": "2026-02-21T14:03:57.112Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fead",
+    "_id": "699f5694d5971a4f7c1f57f0",
     "listing_id": "55758559",
     "source": "pf",
     "title": "4Payments | Spacious 1BR | Gym N Pool | Balcony",
@@ -6235,12 +6283,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": "2026-02-22T20:05:43.014Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feae",
+    "_id": "699f5694d5971a4f7c1f57f1",
     "listing_id": "16320560",
     "source": "pf",
     "title": "Well Maintained | Move In Ready | Low Floor",
@@ -6283,12 +6331,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reef",
-    "crawled_at": "2026-02-25T18:06:11.646Z",
+    "crawled_at": "2026-02-25T20:06:11.941Z",
     "first_seen_at": "2026-02-23T13:57:53.492Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feaf",
+    "_id": "699f5694d5971a4f7c1f57f2",
     "listing_id": "56959602",
     "source": "pf",
     "title": "Studio | Spicious Layout | Sea view | Vacant",
@@ -6331,12 +6379,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:33.669Z",
+    "crawled_at": "2026-02-25T20:06:34.775Z",
     "first_seen_at": "2026-02-25T13:10:06.067Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feb0",
+    "_id": "699f5694d5971a4f7c1f57f3",
     "listing_id": "10680481",
     "source": "bayut",
     "title": "Hot Offer | 1 Bedroom Apt | Facilities | Parking",
@@ -6381,10 +6429,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:49.193Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feb1",
+    "_id": "699f5694d5971a4f7c1f57f4",
     "listing_id": "10963816",
     "source": "bayut",
     "title": "HOT DEAL! | Prime Location | 1 Parking",
@@ -6429,10 +6477,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:49.193Z",
     "first_seen_at": "2026-02-25T13:24:49.193Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feb2",
+    "_id": "699f5694d5971a4f7c1f57f5",
     "listing_id": "10971359",
     "source": "bayut",
     "title": "BRAND NEW 1 BEDROOM HALL APARTMENT 2 BATHROOM IN ZAYED CITY",
@@ -6477,10 +6525,10 @@
     "neighborhood_matched": "Zayed City",
     "crawled_at": "2026-02-25T13:30:23.123Z",
     "first_seen_at": "2026-02-25T13:30:23.123Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feb3",
+    "_id": "699f5694d5971a4f7c1f57f6",
     "listing_id": "26948998",
     "source": "dubizzle",
     "title": "Superb Fully Furnished Suite In Alreem, City View, / 5800 Monthly",
@@ -6523,12 +6571,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:45.670Z",
+    "crawled_at": "2026-02-25T20:07:44.699Z",
     "first_seen_at": "2026-02-19T10:49:55.146Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feb4",
+    "_id": "699f5694d5971a4f7c1f57f7",
     "listing_id": "55353592",
     "source": "pf",
     "title": "Spacious 1BHK Chiller Free with 2 Washrooms | 2BHK",
@@ -6571,12 +6619,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Musaffah",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": "2026-02-21T14:03:46.183Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feb5",
+    "_id": "699f5694d5971a4f7c1f57f8",
     "listing_id": "54942102",
     "source": "pf",
     "title": "High Floor|1BHK|Pvt Balcony|Share Pool|Unit Tawthe",
@@ -6619,12 +6667,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Masdar City",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": "2026-02-21T14:03:46.183Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feb6",
+    "_id": "699f5694d5971a4f7c1f57f9",
     "listing_id": "16323008",
     "source": "pf",
     "title": "Canal & City View- 1Br- Multiple payments Options",
@@ -6667,12 +6715,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:12.065Z",
+    "crawled_at": "2026-02-25T20:07:12.052Z",
     "first_seen_at": "2026-02-23T13:58:54.618Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feb7",
+    "_id": "699f5694d5971a4f7c1f57fa",
     "listing_id": "15951193",
     "source": "pf",
     "title": "Nice 1BHK Apt With Basement Parking 2 Bathroom",
@@ -6715,12 +6763,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Musaffah",
-    "crawled_at": "2026-02-25T18:06:11.646Z",
+    "crawled_at": "2026-02-25T20:06:11.941Z",
     "first_seen_at": "2026-02-23T13:58:54.618Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feb8",
+    "_id": "699f5694d5971a4f7c1f57fb",
     "listing_id": "10369060",
     "source": "bayut",
     "title": "Elegant And Spacious 1BHK With Separate Kitchen, Nice Washroom And Big Window In Khalifa City A",
@@ -6765,10 +6813,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feb9",
+    "_id": "699f5694d5971a4f7c1f57fc",
     "listing_id": "10534028",
     "source": "bayut",
     "title": "Deluxe 1BHK W/Balcony | Free ADDC | 0% Commission",
@@ -6813,10 +6861,10 @@
     "neighborhood_matched": "Al Bateen",
     "crawled_at": "2026-02-25T13:33:38.703Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feba",
+    "_id": "699f5694d5971a4f7c1f57fd",
     "listing_id": "10758016",
     "source": "bayut",
     "title": "Newly Renovated One Bedroom | No Commission | Free ADDC",
@@ -6861,10 +6909,10 @@
     "neighborhood_matched": "Mushrif",
     "crawled_at": "2026-02-25T13:25:57.201Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1febb",
+    "_id": "699f5694d5971a4f7c1f57fe",
     "listing_id": "10889453",
     "source": "bayut",
     "title": "Spacious 1BR | Balcony | Up to 4 Payments | Hot Deal",
@@ -6909,10 +6957,10 @@
     "neighborhood_matched": "Musaffah",
     "crawled_at": "2026-02-25T13:34:11.797Z",
     "first_seen_at": "2026-02-19T10:53:04.049Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1febc",
+    "_id": "699f5694d5971a4f7c1f57ff",
     "listing_id": "26936779",
     "source": "dubizzle",
     "title": "GET THE DEAL◆AMAZING LOCATION◆MOVE NOW◆HOT PRICE",
@@ -6955,12 +7003,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:44.064Z",
+    "crawled_at": "2026-02-25T20:07:43.503Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1febd",
+    "_id": "699f5694d5971a4f7c1f5800",
     "listing_id": "26928413",
     "source": "dubizzle",
     "title": "Vibrant | Furnished Studio | Sea View | Vacant",
@@ -7003,12 +7051,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:42.626Z",
+    "crawled_at": "2026-02-25T20:07:42.004Z",
     "first_seen_at": "2026-02-19T11:20:18.158Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1febe",
+    "_id": "699f5694d5971a4f7c1f5801",
     "listing_id": "26841237",
     "source": "dubizzle",
     "title": "Deluxe 1BHK W/Balcony | Free ADDC | 0% Commission",
@@ -7051,12 +7099,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Bateen",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1febf",
+    "_id": "699f5694d5971a4f7c1f5802",
     "listing_id": "26882735",
     "source": "dubizzle",
     "title": "PRIVATE ENTRANCE! Fully Furnished 1-Bedroom With Water & Electricity Included",
@@ -7099,12 +7147,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fec0",
+    "_id": "699f5694d5971a4f7c1f5803",
     "listing_id": "26912643",
     "source": "dubizzle",
     "title": "Newly Renovated One Bedroom | No Commission | Free ADDC",
@@ -7147,12 +7195,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fec1",
+    "_id": "699f5694d5971a4f7c1f5804",
     "listing_id": "26954019",
     "source": "dubizzle",
     "title": "Vacant / Mangrove view / Great Facilities",
@@ -7195,12 +7243,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:49.352Z",
+    "crawled_at": "2026-02-25T20:07:48.432Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fec2",
+    "_id": "699f5694d5971a4f7c1f5805",
     "listing_id": "54385965",
     "source": "pf",
     "title": "Hot Deal | Ready to Move In | With Balcony",
@@ -7243,12 +7291,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reef",
-    "crawled_at": "2026-02-25T18:06:11.646Z",
+    "crawled_at": "2026-02-25T20:06:11.941Z",
     "first_seen_at": "2026-02-19T10:50:19.651Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fec3",
+    "_id": "699f5694d5971a4f7c1f5806",
     "listing_id": "54404129",
     "source": "pf",
     "title": "HOT DEAL!! Stylish 1BR | Available from MAR 12",
@@ -7291,12 +7339,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:11.646Z",
+    "crawled_at": "2026-02-25T20:06:11.941Z",
     "first_seen_at": "2026-02-21T14:03:46.183Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fec4",
+    "_id": "699f5694d5971a4f7c1f5807",
     "listing_id": "16288073",
     "source": "pf",
     "title": "Low Price! | Elegant Finish | Prime Area | Vacant!",
@@ -7339,12 +7387,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:27.108Z",
+    "crawled_at": "2026-02-25T20:06:26.265Z",
     "first_seen_at": "2026-02-23T13:58:08.134Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fec5",
+    "_id": "699f5694d5971a4f7c1f5808",
     "listing_id": "55754460",
     "source": "pf",
     "title": "SPACIOUS 1 BED | 4 PAYMNTS | GYM POOL | NO PARKING",
@@ -7387,12 +7435,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:06:57.114Z",
+    "crawled_at": "2026-02-25T20:06:57.098Z",
     "first_seen_at": "2026-02-23T13:58:38.637Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fec6",
+    "_id": "699f5694d5971a4f7c1f5809",
     "listing_id": "16221948",
     "source": "pf",
     "title": "A Premium Residence | Full Facilities | Book Now!",
@@ -7435,12 +7483,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:57.114Z",
+    "crawled_at": "2026-02-25T20:06:57.098Z",
     "first_seen_at": "2026-02-23T13:58:38.637Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fec7",
+    "_id": "699f5694d5971a4f7c1f580a",
     "listing_id": "56540825",
     "source": "pf",
     "title": "Prime Location\\ bills included \\ pets allowed",
@@ -7483,12 +7531,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Rabdan",
-    "crawled_at": "2026-02-25T18:07:04.690Z",
+    "crawled_at": "2026-02-25T20:07:04.950Z",
     "first_seen_at": "2026-02-24T10:07:01.308Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fec8",
+    "_id": "699f5694d5971a4f7c1f580b",
     "listing_id": "10671989",
     "source": "bayut",
     "title": "LUXURY 1BHK !! SHARED POOL !! SEP KITCHEN !! PROPER WASHROOM !! KCA",
@@ -7533,10 +7581,10 @@
     "neighborhood_matched": "Khalifa City",
     "crawled_at": "2026-02-25T13:26:29.947Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fec9",
+    "_id": "699f5694d5971a4f7c1f580c",
     "listing_id": "10913782",
     "source": "bayut",
     "title": "UPCOMING!! 1 BHK | GYM & POOL | JACUZZI | SAUNA | STEAM ROOM | TOP NOTCH FACILITIES | CALL US NOW!",
@@ -7581,10 +7629,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:49.193Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feca",
+    "_id": "699f5694d5971a4f7c1f580d",
     "listing_id": "10214620",
     "source": "bayut",
     "title": "Specious 1 Bedroom Apartment for Families Near to Mushrif Mall",
@@ -7629,10 +7677,10 @@
     "neighborhood_matched": "Mushrif",
     "crawled_at": "2026-02-25T13:25:57.201Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fecb",
+    "_id": "699f5694d5971a4f7c1f580e",
     "listing_id": "26860180",
     "source": "dubizzle",
     "title": "Ready To Move | Fully Furnished | Huge & Bright",
@@ -7675,12 +7723,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:44.064Z",
+    "crawled_at": "2026-02-25T20:07:43.503Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fecc",
+    "_id": "699f5694d5971a4f7c1f580f",
     "listing_id": "26945996",
     "source": "dubizzle",
     "title": "Unfurnished 1 Bedroom Apartment With Parking & Water And Electricity Included",
@@ -7723,12 +7771,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fecd",
+    "_id": "699f5694d5971a4f7c1f5810",
     "listing_id": "26952454",
     "source": "dubizzle",
     "title": "Well Maintained | Move In Ready | Low Floor",
@@ -7771,12 +7819,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reef",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fece",
+    "_id": "699f5694d5971a4f7c1f5811",
     "listing_id": "26958202",
     "source": "dubizzle",
     "title": "Spacious 1BR | Balcony | Up to 4 Payments | Hot Deal",
@@ -7819,12 +7867,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Musaffah",
-    "crawled_at": "2026-02-25T18:07:49.352Z",
+    "crawled_at": "2026-02-25T20:07:48.432Z",
     "first_seen_at": "2026-02-19T10:49:59.176Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fecf",
+    "_id": "699f5694d5971a4f7c1f5812",
     "listing_id": "16309934",
     "source": "pf",
     "title": "Available Soon I From Owner I Prime Location",
@@ -7867,12 +7915,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:06:11.646Z",
+    "crawled_at": "2026-02-25T20:06:11.941Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fed0",
+    "_id": "699f5694d5971a4f7c1f5813",
     "listing_id": "10854620",
     "source": "bayut",
     "title": "RTM II Prime Location II 0% Commission II Tawtheeq Available",
@@ -7917,10 +7965,10 @@
     "neighborhood_matched": "Mushrif",
     "crawled_at": "2026-02-25T13:25:57.201Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fed1",
+    "_id": "699f5694d5971a4f7c1f5814",
     "listing_id": "26959047",
     "source": "dubizzle",
     "title": "Super Clean Furnished Studio with Separate entrance",
@@ -7963,12 +8011,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:07:40.683Z",
+    "crawled_at": "2026-02-25T20:07:40.525Z",
     "first_seen_at": "2026-02-19T10:49:53.498Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fed2",
+    "_id": "699f5694d5971a4f7c1f5815",
     "listing_id": "26973832",
     "source": "dubizzle",
     "title": "Fully Furnished New Studio Apartment with Parking Al Bateen (Monthly : 4500)",
@@ -8011,12 +8059,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Bateen",
-    "crawled_at": "2026-02-25T18:07:42.626Z",
+    "crawled_at": "2026-02-25T20:07:42.004Z",
     "first_seen_at": "2026-02-21T14:03:53.142Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fed3",
+    "_id": "699f5694d5971a4f7c1f5816",
     "listing_id": "26819729",
     "source": "dubizzle",
     "title": "Brand New 1Bhk Apt With 2 Bathroom Big Kitchen",
@@ -8059,12 +8107,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Zayed City",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fed4",
+    "_id": "699f5694d5971a4f7c1f5817",
     "listing_id": "26960124",
     "source": "dubizzle",
     "title": "Loft 1BR Layout | Balcony | Ready to move in soon",
@@ -8107,12 +8155,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Masdar City",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fed5",
+    "_id": "699f5694d5971a4f7c1f5818",
     "listing_id": "26982397",
     "source": "dubizzle",
     "title": "HOT DEAL! | Prime Location | 1 Parking",
@@ -8155,12 +8203,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": "2026-02-24T10:07:50.921Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fed6",
+    "_id": "699f5694d5971a4f7c1f5819",
     "listing_id": "16275765",
     "source": "pf",
     "title": "⇛ Prime Area ⇛ Spacious Unit ⇛ Ready To Move ⇚",
@@ -8203,12 +8251,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:12.065Z",
+    "crawled_at": "2026-02-25T20:07:12.052Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fed7",
+    "_id": "699f5694d5971a4f7c1f581a",
     "listing_id": "56553567",
     "source": "pf",
     "title": "Al Mushrif Bright 1 BR Apartment",
@@ -8251,12 +8299,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": "2026-02-25T08:54:49.748Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fed8",
+    "_id": "699f5694d5971a4f7c1f581b",
     "listing_id": "53604415",
     "source": "pf",
     "title": "Fully Furnished | Studio | Ready to move in",
@@ -8299,12 +8347,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:19.950Z",
+    "crawled_at": "2026-02-25T20:07:18.808Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fed9",
+    "_id": "699f5694d5971a4f7c1f581c",
     "listing_id": "16096594",
     "source": "pf",
     "title": "FULLY FURNISHED | SEA VIEW | READY TO MOVE",
@@ -8347,12 +8395,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:04.990Z",
+    "crawled_at": "2026-02-25T20:06:03.900Z",
     "first_seen_at": "2026-02-23T13:57:46.172Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feda",
+    "_id": "699f5694d5971a4f7c1f581d",
     "listing_id": "16184125",
     "source": "pf",
     "title": "Up Coming | City and Mangrove View | Great Deal",
@@ -8395,12 +8443,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:19.943Z",
+    "crawled_at": "2026-02-25T20:06:20.128Z",
     "first_seen_at": "2026-02-23T13:58:00.596Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fedb",
+    "_id": "699f5694d5971a4f7c1f581e",
     "listing_id": "16201615",
     "source": "pf",
     "title": "Studio Ready to move Bawabat Al Sharq",
@@ -8443,12 +8491,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Baniyas",
-    "crawled_at": "2026-02-25T18:07:04.690Z",
+    "crawled_at": "2026-02-25T20:07:04.950Z",
     "first_seen_at": "2026-02-23T13:58:30.634Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fedc",
+    "_id": "699f5694d5971a4f7c1f581f",
     "listing_id": "16272677",
     "source": "pf",
     "title": "Furnished Studio Al Khalidiyah / 6k Monthly",
@@ -8491,12 +8539,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Khalidiyah",
-    "crawled_at": "2026-02-25T18:07:19.950Z",
+    "crawled_at": "2026-02-25T20:07:18.808Z",
     "first_seen_at": "2026-02-23T13:59:01.958Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fedd",
+    "_id": "699f5694d5971a4f7c1f5820",
     "listing_id": "10460113",
     "source": "bayut",
     "title": "Brand New 1Bhk Apt With 2 Bathroom Big Kitchen",
@@ -8541,10 +8589,10 @@
     "neighborhood_matched": "Zayed City",
     "crawled_at": "2026-02-25T13:27:37.455Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fede",
+    "_id": "699f5694d5971a4f7c1f5821",
     "listing_id": "10680513",
     "source": "bayut",
     "title": "Limited offer | 1 Bedroom Apt | Facilities | Parking",
@@ -8589,10 +8637,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:49.193Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fedf",
+    "_id": "699f5694d5971a4f7c1f5822",
     "listing_id": "10928120",
     "source": "bayut",
     "title": "Spacious 1 Bedroom Apartment for Rent in Musaffah Shabiya 10 With Balcony",
@@ -8637,10 +8685,10 @@
     "neighborhood_matched": "Zayed City",
     "crawled_at": "2026-02-25T13:27:37.455Z",
     "first_seen_at": "2026-02-19T13:14:29.100Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fee0",
+    "_id": "699f5694d5971a4f7c1f5823",
     "listing_id": "26816681",
     "source": "dubizzle",
     "title": "Hot Deal! 1BR Apartment for RENT just 75K.",
@@ -8683,12 +8731,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reef",
-    "crawled_at": "2026-02-25T18:07:49.352Z",
+    "crawled_at": "2026-02-25T20:07:48.432Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fee1",
+    "_id": "699f5694d5971a4f7c1f5824",
     "listing_id": "56540908",
     "source": "pf",
     "title": "LOVELY 1 BEDROOM DIRECT OWNER ADDC FEE",
@@ -8731,12 +8779,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Muntazah",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": "2026-02-24T10:06:38.803Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fee2",
+    "_id": "699f5694d5971a4f7c1f5825",
     "listing_id": "54937381",
     "source": "pf",
     "title": "Fully Furnished Studio | Mangrove View |High Floor",
@@ -8779,12 +8827,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:19.943Z",
+    "crawled_at": "2026-02-25T20:06:20.128Z",
     "first_seen_at": "2026-02-21T14:03:39.585Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fee3",
+    "_id": "699f5694d5971a4f7c1f5826",
     "listing_id": "15883236",
     "source": "pf",
     "title": "Mangrove View | High Floor | Flexible Payments",
@@ -8827,12 +8875,12 @@
       "staleness": -3
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:33.669Z",
+    "crawled_at": "2026-02-25T20:06:34.775Z",
     "first_seen_at": "2026-02-23T13:58:00.596Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fee4",
+    "_id": "699f5694d5971a4f7c1f5827",
     "listing_id": "10920338",
     "source": "bayut",
     "title": "SPACIOUS! 1-BEDROOM HALL WITH HUGE BALCONY AVAILABLE IN MBZ CITY",
@@ -8877,10 +8925,10 @@
     "neighborhood_matched": "Zayed City",
     "crawled_at": "2026-02-25T13:27:37.455Z",
     "first_seen_at": "2026-02-19T10:53:11.923Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fee5",
+    "_id": "699f5694d5971a4f7c1f5828",
     "listing_id": "26869030",
     "source": "dubizzle",
     "title": "PRIVATE ENTRANCE! Fully Furnished Studio Apartment With Water & Electricity Included",
@@ -8923,12 +8971,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Bateen",
-    "crawled_at": "2026-02-25T18:07:40.683Z",
+    "crawled_at": "2026-02-25T20:07:40.525Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fee6",
+    "_id": "699f5694d5971a4f7c1f5829",
     "listing_id": "26816883",
     "source": "dubizzle",
     "title": "European Society, Apartment Furnished Studio Sep Kitchen| 4500-Monthly Near Mall KCA",
@@ -8971,12 +9019,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Khalifa City",
-    "crawled_at": "2026-02-25T18:07:40.683Z",
+    "crawled_at": "2026-02-25T20:07:40.525Z",
     "first_seen_at": "2026-02-22T15:58:22.718Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fee7",
+    "_id": "699f5694d5971a4f7c1f582a",
     "listing_id": "26985013",
     "source": "dubizzle",
     "title": "Hot Price on This Charming Bright Unit",
@@ -9019,12 +9067,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:42.626Z",
+    "crawled_at": "2026-02-25T20:07:42.004Z",
     "first_seen_at": "2026-02-25T08:56:26.935Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fee8",
+    "_id": "699f5694d5971a4f7c1f582b",
     "listing_id": "26971211",
     "source": "dubizzle",
     "title": "Spacious 1 Bedroom Apartment for Rent in Musaffah Shabiya 10 With Balcony",
@@ -9067,12 +9115,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Zayed City",
-    "crawled_at": "2026-02-25T18:07:45.725Z",
+    "crawled_at": "2026-02-25T20:07:44.748Z",
     "first_seen_at": "2026-02-19T13:12:00.495Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fee9",
+    "_id": "699f5694d5971a4f7c1f582c",
     "listing_id": "56532177",
     "source": "pf",
     "title": "Spacious 1BR | Upcoming Unit | Prime Location",
@@ -9115,12 +9163,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reef",
-    "crawled_at": "2026-02-25T18:06:41.269Z",
+    "crawled_at": "2026-02-25T20:06:42.198Z",
     "first_seen_at": "2026-02-24T10:06:38.803Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feea",
+    "_id": "699f5694d5971a4f7c1f582d",
     "listing_id": "16214756",
     "source": "pf",
     "title": "Cozy Fully Furnished | Vacant | Great Amenities",
@@ -9163,12 +9211,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:05:49.577Z",
+    "crawled_at": "2026-02-25T20:05:49.101Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feeb",
+    "_id": "699f5694d5971a4f7c1f582e",
     "listing_id": "16198448",
     "source": "pf",
     "title": "Ready to Move | Fully Furnished | Flexible Payment",
@@ -9211,12 +9259,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:05:49.577Z",
+    "crawled_at": "2026-02-25T20:05:49.101Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feec",
+    "_id": "699f5694d5971a4f7c1f582f",
     "listing_id": "16230956",
     "source": "pf",
     "title": "Urgent Rental | Furnished | Modern Studio",
@@ -9259,12 +9307,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:35.138Z",
+    "crawled_at": "2026-02-25T20:07:34.199Z",
     "first_seen_at": "2026-02-23T13:59:01.958Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feed",
+    "_id": "699f5694d5971a4f7c1f5830",
     "listing_id": "10680302",
     "source": "bayut",
     "title": "Fully Furnished | Mangrove View | High Floor",
@@ -9309,10 +9357,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:39.403Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feee",
+    "_id": "699f5694d5971a4f7c1f5831",
     "listing_id": "10867127",
     "source": "bayut",
     "title": "Vacant|Modern Studio|High Floor|Mangrove+Sea View",
@@ -9357,10 +9405,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:32.090Z",
     "first_seen_at": "2026-02-23T09:49:00.303Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feef",
+    "_id": "699f5694d5971a4f7c1f5832",
     "listing_id": "10978547",
     "source": "bayut",
     "title": "Studio | Spicious Layout | Sea view | Vacant",
@@ -9405,10 +9453,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:24.774Z",
     "first_seen_at": "2026-02-25T13:24:24.774Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fef0",
+    "_id": "699f5694d5971a4f7c1f5833",
     "listing_id": "26940839",
     "source": "dubizzle",
     "title": "⇛ Prime Area ⇛ Spacious Unit ⇛ Ready To Move ⇚",
@@ -9451,12 +9499,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:49.352Z",
+    "crawled_at": "2026-02-25T20:07:48.432Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fef1",
+    "_id": "699f5694d5971a4f7c1f5834",
     "listing_id": "54928527",
     "source": "pf",
     "title": "Ready Loft 1BR+Terrace | Vacant | Very Good Price",
@@ -9499,12 +9547,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Masdar City",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": "2026-02-20T11:34:24.677Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fef2",
+    "_id": "699f5694d5971a4f7c1f5835",
     "listing_id": "15825608",
     "source": "pf",
     "title": "Well Maintained 1BR | City View | Balcony access",
@@ -9547,12 +9595,12 @@
       "staleness": -3
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:06:27.108Z",
+    "crawled_at": "2026-02-25T20:06:26.265Z",
     "first_seen_at": "2026-02-23T13:58:08.134Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fef3",
+    "_id": "699f5694d5971a4f7c1f5836",
     "listing_id": "15859984",
     "source": "pf",
     "title": "Elegant Studio | Amazing Layout | Enquire Now!",
@@ -9595,12 +9643,12 @@
       "staleness": -3
     },
     "neighborhood_matched": "Yas Island",
-    "crawled_at": "2026-02-25T18:07:04.690Z",
+    "crawled_at": "2026-02-25T20:07:04.950Z",
     "first_seen_at": "2026-02-23T13:58:30.634Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fef4",
+    "_id": "699f5694d5971a4f7c1f5837",
     "listing_id": "15970372",
     "source": "pf",
     "title": "Spacious Studio | Gate Tower 1 | Water View",
@@ -9643,12 +9691,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Al Reem",
-    "crawled_at": "2026-02-25T18:07:19.950Z",
+    "crawled_at": "2026-02-25T20:07:18.808Z",
     "first_seen_at": "2026-02-23T13:59:01.958Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fef5",
+    "_id": "699f5694d5971a4f7c1f5838",
     "listing_id": "10901096",
     "source": "bayut",
     "title": "VACANT | Urban View | Upto 4 Payments | High Floor",
@@ -9693,10 +9741,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:32.090Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fef6",
+    "_id": "699f5694d5971a4f7c1f5839",
     "listing_id": "10403514",
     "source": "bayut",
     "title": "Spacious Studio | Mangrove View | Ready to Move",
@@ -9741,10 +9789,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:47.718Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fef7",
+    "_id": "699f5694d5971a4f7c1f583a",
     "listing_id": "10935310",
     "source": "bayut",
     "title": "Vacant Now @ Duplex 1-Bedroom Apartment With Pvt Balcony | Shared Pool + GYM | Kitchen+ Washroom in Masdar City",
@@ -9789,10 +9837,10 @@
     "neighborhood_matched": "Masdar City",
     "crawled_at": "2026-02-25T13:24:52.713Z",
     "first_seen_at": "2026-02-23T09:49:19.529Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fef8",
+    "_id": "699f5694d5971a4f7c1f583b",
     "listing_id": "10977901",
     "source": "bayut",
     "title": "Mangrove View | Move-in Ready | Up to 2 Payments",
@@ -9837,10 +9885,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:49.193Z",
     "first_seen_at": "2026-02-25T13:24:49.193Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fef9",
+    "_id": "699f5694d5971a4f7c1f583c",
     "listing_id": "10975993",
     "source": "bayut",
     "title": "Vacant Soon | High Floor | Book Now",
@@ -9885,10 +9933,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:49.193Z",
     "first_seen_at": "2026-02-25T13:24:49.193Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fefa",
+    "_id": "699f5694d5971a4f7c1f583d",
     "listing_id": "10978931",
     "source": "bayut",
     "title": "Luxurious Living | Modern style | Prime location",
@@ -9933,10 +9981,10 @@
     "neighborhood_matched": "Al Reem",
     "crawled_at": "2026-02-25T13:24:49.193Z",
     "first_seen_at": "2026-02-25T13:24:49.193Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fefb",
+    "_id": "699f5694d5971a4f7c1f583e",
     "listing_id": "26902918",
     "source": "dubizzle",
     "title": "Studio Ready to move Bawabat Al Sharq",
@@ -9979,12 +10027,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Baniyas",
-    "crawled_at": "2026-02-25T18:07:42.626Z",
+    "crawled_at": "2026-02-25T20:07:42.004Z",
     "first_seen_at": "2026-02-19T10:49:53.498Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fefc",
+    "_id": "699f5694d5971a4f7c1f583f",
     "listing_id": "26954934",
     "source": "dubizzle",
     "title": "Up-Coming | Prime Location | 0%commission | Tawtheeq Available",
@@ -10027,12 +10075,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Muntazah",
-    "crawled_at": "2026-02-25T18:07:44.064Z",
+    "crawled_at": "2026-02-25T20:07:43.503Z",
     "first_seen_at": "2026-02-19T10:49:55.146Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fefd",
+    "_id": "699f5694d5971a4f7c1f5840",
     "listing_id": "26955216",
     "source": "dubizzle",
     "title": "Available Soon I From Owner I Prime Location",
@@ -10075,12 +10123,12 @@
       "staleness": -2
     },
     "neighborhood_matched": "Mushrif",
-    "crawled_at": "2026-02-25T18:07:49.352Z",
+    "crawled_at": "2026-02-25T20:07:48.432Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1fefe",
+    "_id": "699f5694d5971a4f7c1f5841",
     "listing_id": "26973487",
     "source": "dubizzle",
     "title": "Vacant Now @ Duplex 1-Bedroom Apartment With Pvt Balcony | Shared Pool + GYM | Kitchen+ Washroom in Masdar City",
@@ -10123,12 +10171,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Masdar City",
-    "crawled_at": "2026-02-25T18:07:47.747Z",
+    "crawled_at": "2026-02-25T20:07:46.417Z",
     "first_seen_at": "2026-02-20T11:34:20.545Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1feff",
+    "_id": "699f5694d5971a4f7c1f5842",
     "listing_id": "54386100",
     "source": "pf",
     "title": "Fully Furnished 1 Bedroom / Al Falah 7500 Monthly",
@@ -10171,12 +10219,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Al Falah",
-    "crawled_at": "2026-02-25T18:05:57.209Z",
+    "crawled_at": "2026-02-25T20:05:57.215Z",
     "first_seen_at": null,
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1ff00",
+    "_id": "699f5694d5971a4f7c1f5843",
     "listing_id": "54000305",
     "source": "pf",
     "title": "G Floor l Ready To Move In l Near Swimming Pool",
@@ -10219,12 +10267,12 @@
       "staleness": 0
     },
     "neighborhood_matched": "Masdar City",
-    "crawled_at": "2026-02-25T18:06:11.646Z",
+    "crawled_at": "2026-02-25T20:06:11.941Z",
     "first_seen_at": "2026-02-23T13:57:53.492Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   },
   {
-    "_id": "699f3a75a79ed60dcba1ff01",
+    "_id": "699f5694d5971a4f7c1f5844",
     "listing_id": "16286272",
     "source": "pf",
     "title": "Superior Furnished | Exceptional | Ready To Move",
@@ -10267,56 +10315,8 @@
       "staleness": 0
     },
     "neighborhood_matched": "Masdar City",
-    "crawled_at": "2026-02-25T18:06:11.646Z",
+    "crawled_at": "2026-02-25T20:06:11.941Z",
     "first_seen_at": "2026-02-23T13:57:53.492Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
-  },
-  {
-    "_id": "699f3a75a79ed60dcba1ff02",
-    "listing_id": "16090527",
-    "source": "pf",
-    "title": "1 BR APT | Type D | Available Soon",
-    "title_zh": "1 BR APT | Type D | Available Soon",
-    "price": 77000,
-    "size_sqm": 77,
-    "size_sqft": 827,
-    "bedrooms": "1",
-    "furnished": "NO",
-    "location": "Tower 27, Al Reef Downtown, Al Reef, Abu Dhabi",
-    "location_zh": "里夫",
-    "neighborhood_en": "Al Reef",
-    "neighborhood_zh": "里夫",
-    "url": "https://www.propertyfinder.ae/en/plp/rent/apartment-for-rent-abu-dhabi-al-reef-al-reef-downtown-tower-27-16090527.html",
-    "commute_min": 31,
-    "commute_km": 30,
-    "monthly_rent": 6417,
-    "monthly_time_cost": 1818,
-    "monthly_fuel_cost": 358,
-    "monthly_commute_cost": 2175,
-    "effective_monthly_cost": 7792,
-    "burden_index": 26,
-    "has_parking": true,
-    "has_utilities": false,
-    "has_chiller_free": false,
-    "has_no_commission": false,
-    "has_oven": false,
-    "monthly_parking_saving": 800,
-    "monthly_utility_saving": 0,
-    "monthly_commission_saving": 0,
-    "interest": null,
-    "score": 58,
-    "score_breakdown": {
-      "effective_cost": 48,
-      "verified": 0,
-      "size_bonus": 8,
-      "payment": 0,
-      "oven": 0,
-      "amenities": 4,
-      "staleness": -2
-    },
-    "neighborhood_matched": "Al Reef",
-    "crawled_at": "2026-02-25T18:06:57.114Z",
-    "first_seen_at": "2026-02-23T13:58:23.364Z",
-    "scored_at": "2026-02-25T18:07:49.726Z"
+    "scored_at": "2026-02-25T20:07:48.787Z"
   }
 ]
