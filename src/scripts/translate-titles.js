@@ -598,6 +598,22 @@ const TRANSLATIONS = {
   "Spacious studio | Large layout | Amazing view": "宽敞开间 | 大户型 | 绝佳景观",
   "Studio  Apartment /  Balcony Pool & Gym": "开间公寓 | 阳台 泳池与健身房",
   "UPCOMING MARCH ! 1 BHK | COMMUNITY VIEW | POOL VIEW | TOP NOTCH FACILITIES | CALL US NOW!!": "3月即将空出! 1室1厅 | 社区景观 | 泳池景观 | 顶级设施 | 欢迎致电!!",
+  "1 BHK | Move-In Ready| 4 Payments": "一室一厅 | 拎包入住 | 可分四期付款",
+  "4,200/-M -Brand New Furnished Studio With Shared Terrace Sep/Kitchen & Luxury Washroom On a Prime Location In KCA": "4200/月 - KCA黄金地段全新精装单身公寓 | 共享露台 | 独立厨房 | 豪华卫浴",
+  "BEAUTIFUL ONE BEDROOM HALL APARTMENT AVAILABLE AT AL BATEEN READY TO MOVE": "Al Bateen 精美一室一厅公寓 | 拎包入住",
+  "BEST DEAL! MANGROVE VIEW | HIGH FLOOR": "超值特惠！红树林景观 | 高楼层",
+  "Brand New one bedroom Sep/kitchen Proper Washroom On prime location In KCA": "KCA黄金地段全新一居室 | 独立厨房 | 标准卫浴",
+  "Brand new-Modern spacious 1/BHK | Elevator | Sep.kitchen | Modern bath | Parking": "全新现代宽敞一室一厅 | 电梯 | 独立厨房 | 现代卫浴 | 车位",
+  "Cozy 1BR | Three Payments | With Balcony": "温馨一居室 | 可分三期付款 | 带阳台",
+  "European Luxury 1Bedroom+Free WIFI+Kitchen 4800-M": "欧式豪华一居室+免费WIFI+厨房 | 4800/月",
+  "HOT DEAL!! Stylish 1 BR | Available from MARCH 12": "热门房源！！时尚一居室 | 3月12日起租",
+  "HOT PRICE!! Two Cheques | Higher Floor | Call Now": "特价！！两张支票付款 | 高楼层 | 立即致电",
+  "Hot Price | Bright & Spacious 1Br| Ready to Move": "特价 | 宽敞明亮一居室 | 拎包入住",
+  "Luxury Brand New1BHK with Sep Kitchen And Bath ...": "豪华全新一室一厅 | 独立厨房与卫浴 ...",
+  "Outstanding Huge One Bed Room in Mohamed Bin zayed": "Mohamed Bin Zayed 超大优质一居室",
+  "Prime Location - Ready To Move  in- No Commission": "黄金地段 - 拎包入住 - 免佣金",
+  "Pvt.balcony-Brand new modern 1/BHK | Sep.kitchen | Modern bath | parking": "私人阳台 - 全新现代一室一厅 | 独立厨房 | 现代卫浴 | 车位",
+  "VACANT|PRIME LOCATION|BIGGER LAYOUT": "空房 | 黄金地段 | 超大户型",
 };
 
 // ─── Source Title Paths ─────────────────────────────────────
