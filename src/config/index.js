@@ -17,6 +17,8 @@ module.exports = {
     apiBase: 'https://www.propertyfinder.ae/search/_next/data/{BUILD_ID}/en/search.json',
   },
   dubizzle: {
+    algoliaAppId: process.env.DUBIZZLE_ALGOLIA_APP_ID || '',
+    algoliaApiKey: process.env.DUBIZZLE_ALGOLIA_API_KEY || '',
     pageDelayMs: parseInt(process.env.DUBIZZLE_PAGE_DELAY_MS, 10) || 1000,
     circuitBreakThreshold: parseInt(process.env.DUBIZZLE_CIRCUIT_BREAK_THRESHOLD, 10) || 50,
     mode: process.env.DUBIZZLE_MODE || 'incremental',

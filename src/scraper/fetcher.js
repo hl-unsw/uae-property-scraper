@@ -5,6 +5,7 @@ const { acquire } = require('../lib/rate-limiter');
 
 // Global mutable Build ID — refreshed on 404
 let currentBuildId = null;
+let buildIdRefreshPromise = null; // singleton to prevent concurrent refreshes
 
 /**
  * Build the full API URL for a given set of query params.
@@ -68,7 +69,13 @@ async function fetchPage(httpClient, params, page, retries = config.scraper.maxR
     // it's an invalid combo — return null instead of looping forever.
     if (status === 404 && retries > 0) {
       const oldBuildId = currentBuildId;
-      const freshBuildId = await fetchBuildId(httpClient);
+      // Singleton refresh: if another worker is already refreshing, wait for it
+      if (!buildIdRefreshPromise) {
+        buildIdRefreshPromise = fetchBuildId(httpClient).finally(() => {
+          buildIdRefreshPromise = null;
+        });
+      }
+      const freshBuildId = await buildIdRefreshPromise;
 
       if (freshBuildId !== oldBuildId) {
         // Build ID actually changed — retry with the new one

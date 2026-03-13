@@ -28,7 +28,7 @@ function buildSearchUrl(combo, page) {
  * @param {number} page - Page number (1-indexed)
  * @returns {{ hits: object[], nbHits: number, nbPages: number } | null}
  */
-async function fetchBayutPage(session, combo, page) {
+async function fetchBayutPage(session, combo, page, captchaRetries = 2) {
   const searchUrl = buildSearchUrl(combo, page);
   logger.debug({ url: searchUrl, page }, 'Navigating to Bayut search page');
 
@@ -37,11 +37,15 @@ async function fetchBayutPage(session, combo, page) {
 
     // Check if redirected to captcha challenge
     if (session.page.url().includes('/captchaChallenge')) {
-      logger.warn('Session expired — captcha challenge detected during fetch');
+      if (captchaRetries <= 0) {
+        logger.error({ page }, 'Captcha retry limit exceeded — aborting page');
+        return null;
+      }
+      logger.warn({ captchaRetries }, 'Session expired — captcha challenge detected during fetch');
       const passed = await session.ensureSession();
       if (!passed) return null;
       // Retry this page after re-challenge
-      return fetchBayutPage(session, combo, page);
+      return fetchBayutPage(session, combo, page, captchaRetries - 1);
     }
 
     // Wait for window.state to be populated by SSR script

@@ -194,14 +194,17 @@ function hasPositiveIntent(text, pattern) {
   const match = text.match(pattern);
   if (!match) return false;
 
-  // Extract context before the match (approx 3 words or 20 chars)
-  const startIndex = Math.max(0, match.index - 25);
-  const contextBefore = text.substring(startIndex, match.index).toLowerCase();
+  // Extract the clause containing the match (split on sentence/clause boundaries)
+  const clauseStart = Math.max(0, text.lastIndexOf('.', match.index) + 1,
+    text.lastIndexOf(',', match.index) + 1,
+    text.lastIndexOf(';', match.index) + 1,
+    text.lastIndexOf('|', match.index) + 1);
+  const contextBefore = text.substring(clauseStart, match.index).toLowerCase();
 
   // Negative markers that flip the meaning
-  const negations = ['not', 'no', "don't", 'other than', 'instead of', 'excluding', 'but'];
+  const negations = ['not', 'no', "don't", "doesn't", "does not", 'other than', 'instead of', 'excluding', 'without', 'lack'];
   const hasNegation = negations.some((neg) => {
-    const regex = new RegExp(`\\b${neg.replace('.', '\\.')}\\b\\s*$`, 'i');
+    const regex = new RegExp(`\\b${neg.replace(/[.']/g, '\\$&')}\\b`, 'i');
     return regex.test(contextBefore);
   });
 
@@ -420,6 +423,7 @@ function calcStalenessPenalty(source, doc) {
 
 async function main() {
   const client = new MongoClient(config.mongo.uri, { maxPoolSize: 5 });
+  try {
   await client.connect();
   const db = client.db(config.mongo.dbName);
   logger.info('Connected to MongoDB');
@@ -439,10 +443,10 @@ async function main() {
 
   for (const [source, cfg] of Object.entries(SOURCES)) {
     const col = db.collection(cfg.collection);
-    const docs = await col.find(cfg.query).toArray();
-    logger.info({ source, count: docs.length }, 'Queried source');
-
-    for (const doc of docs) {
+    let sourceCount = 0;
+    const cursor = col.find(cfg.query);
+    for await (const doc of cursor) {
+      sourceCount++;
       const hood = matchNeighborhood(source, doc);
       if (!hood) continue; // double-check neighborhood match
 
@@ -541,6 +545,7 @@ async function main() {
         staleness_penalty: calcStalenessPenalty(source, doc),
       });
     }
+    logger.info({ source, count: sourceCount }, 'Queried source');
   }
 
   logger.info({ total: allListings.length }, 'Total listings after neighborhood filter');
@@ -610,7 +615,9 @@ async function main() {
     if (item.interest) interestMap[item.listing_id] = item.interest;
   });
 
-  await targetCol.deleteMany({}); // clear previous results
+  // Use a temp collection + rename for atomic swap (prevents data loss on crash)
+  const tmpCol = db.collection('targeted_results_tmp');
+  await tmpCol.drop().catch(() => {}); // ignore if doesn't exist
 
   const docs = top.map((l) => ({
     listing_id: l.listing_id,
@@ -666,10 +673,16 @@ async function main() {
   }));
 
   if (docs.length > 0) {
-    await targetCol.insertMany(docs);
-    await targetCol.createIndex({ score: -1 }, { name: 'idx_score_desc' });
-    await targetCol.createIndex({ effective_monthly_cost: 1 }, { name: 'idx_effective_cost' });
-    await targetCol.createIndex({ neighborhood_en: 1 }, { name: 'idx_neighborhood' });
+    await tmpCol.insertMany(docs);
+    await tmpCol.createIndex({ score: -1 }, { name: 'idx_score_desc' });
+    await tmpCol.createIndex({ effective_monthly_cost: 1 }, { name: 'idx_effective_cost' });
+    await tmpCol.createIndex({ neighborhood_en: 1 }, { name: 'idx_neighborhood' });
+    // Atomic swap: drop old, rename tmp → targeted_results
+    await targetCol.drop().catch(() => {});
+    await db.admin().command({
+      renameCollection: `${config.mongo.dbName}.targeted_results_tmp`,
+      to: `${config.mongo.dbName}.targeted_results`,
+    });
   }
 
   logger.info({ inserted: docs.length }, 'Saved to targeted_results');
@@ -684,8 +697,10 @@ async function main() {
   logger.info({ bySource: bySrc }, 'Results by platform');
   logger.info({ byNeighborhood: hoodCounts }, 'Results by neighborhood');
 
-  await client.close();
   logger.info('Done');
+  } finally {
+    await client.close();
+  }
 }
 
 // Only run main() when executed directly (not when required for testing)

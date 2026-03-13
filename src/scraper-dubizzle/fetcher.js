@@ -1,8 +1,9 @@
 const axios = require('axios');
+const config = require('../config');
 const logger = require('../lib/logger');
 
-const ALGOLIA_APP_ID = 'REDACTED_ALGOLIA_APP_ID';
-const ALGOLIA_API_KEY = 'REDACTED_ALGOLIA_API_KEY';
+const ALGOLIA_APP_ID = config.dubizzle.algoliaAppId;
+const ALGOLIA_API_KEY = config.dubizzle.algoliaApiKey;
 const ALGOLIA_URL = `https://${ALGOLIA_APP_ID.toLowerCase()}-dsn.algolia.net/1/indexes/*/queries`;
 const DEFAULT_INDEX = 'by_verification_feature_asc_property-for-rent-residential.com';
 
