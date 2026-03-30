@@ -236,12 +236,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
 
-    listingsContainer.addEventListener('animationend', (e) => {
-      if (e.animationName === 'border-trace') {
-        const card = e.target.closest('.listing-card');
-        if (card) card.classList.remove('is-new', 'in-view');
-      }
-    });
+    // border-trace animation now loops infinitely for new listings
   }
 
   // Mobile Filter Toggle
