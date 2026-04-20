@@ -66,12 +66,23 @@ async function fetchBuildIdWithBrowser(url) {
     // Script tags are hidden, so use 'attached' instead of default 'visible'
     await page.waitForSelector('#__NEXT_DATA__', { state: 'attached', timeout: 120_000 });
 
-    const buildId = await page.evaluate(() => {
-      const el = document.getElementById('__NEXT_DATA__');
-      if (!el) return null;
-      const data = JSON.parse(el.textContent);
-      return data.buildId || null;
-    });
+    // Poll until __NEXT_DATA__ parses and exposes a buildId. WAF challenge
+    // pages can ship a partial/stub __NEXT_DATA__ before the real search
+    // bundle swaps in, which otherwise causes truncated-JSON parse errors.
+    const buildId = await page.waitForFunction(
+      () => {
+        const el = document.getElementById('__NEXT_DATA__');
+        if (!el || !el.textContent) return null;
+        try {
+          const data = JSON.parse(el.textContent);
+          return data.buildId || null;
+        } catch {
+          return null;
+        }
+      },
+      null,
+      { timeout: 120_000, polling: 500 }
+    ).then((handle) => handle.jsonValue());
 
     if (!buildId) {
       throw new Error('buildId not found in __NEXT_DATA__ JSON (Playwright)');
