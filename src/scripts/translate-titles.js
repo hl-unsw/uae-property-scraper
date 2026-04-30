@@ -1105,6 +1105,220 @@ const TRANSLATIONS = {
   "private entrance studio || Direct owner || Tawtheeq available ||": "私人入口开间 | 业主直租 | 已备案",
   "| Good Deal |  Ready to Move | Prime Location |": "| 超值 | 即可入住 | 黄金地段 |",
   "√ Move-in Ready | Fully Furnished | Mangrove View√": "√ 即可入住 | 家具齐全 | 红树林景观 √",
+  "!!MONTHLY RENT 4500!!NEW SPACIOUS (PROPER OUT HOUSE)1BHK OUT HOUSE AVAILABLE IN ZONE 8 VERY CLOSE ALAIN UNIVERSITY CLOSE TO SHABIYA 09":
+    "!!月租 4500!! 全新宽敞 (独立外屋) 1居室外屋 现可入住 位于 Zone 8 邻近 Al Ain 大学 靠近 Shabiya 09",
+  "1 BEDROOM/FREE ADDC//TAWTHEEQ AVAILABLE": "1居室 / 免 ADDC / 提供 Tawtheeq",
+  "1 BHK Apartment | Balcony | Parking": "1居室公寓 | 阳台 | 停车位",
+  "1 BR in Marina Bay by DAMAC (Not Furnished)": "1居室 位于 DAMAC 开发的 Marina Bay (不带家具)",
+  "1 BR | Elegant Living | Prime Location": "1居室 | 优雅生活 | 黄金地段",
+  "1 BR | Spacious | Luxurious | Brand new | Al Khalidiyah | Best amenities":
+    "1居室 | 宽敞 | 豪华 | 全新 | Al Khalidiyah | 顶级配套",
+  "1B Marina Blue Al Reem Island": "1居室 Marina Blue Al Reem Island",
+  "1BHK Apartment in Shabiya with basement parking": "1居室公寓 位于 Shabiya 带地下停车位",
+  "1BHK in Gate Tower | Good Price | Vacant": "1居室 位于 Gate Tower | 价格优惠 | 空置",
+  "1BR Apartment | Balcony | Water View | Meera": "1居室公寓 | 阳台 | 水景 | Meera",
+  "1BR w/ Balcony | Sea View | Reserved Parking": "1居室 带阳台 | 海景 | 专属停车位",
+  "1BR | Ready to Move In | Spacious Layout": "1居室 | 即可入住 | 宽敞户型",
+  "1Bedroom | Semi Furnished | Available For Rent": "1居室 | 半家具 | 现可出租",
+  "Al Mushrif Villas 1 BR Apt": "Al Mushrif Villas 1居室公寓",
+  "Alluring 1BHK With Basement Parking & All Amenities – Al Reem Island":
+    "迷人 1居室 带地下停车位 & 全套配套 – Al Reem Island",
+  "Amaing Sewa View | Marvelous Designed 1 BR": "迷人海景 | 设计精美 1居室",
+  "Amazing Unit | Best Layout | Prime Location": "出色单元 | 最佳户型 | 黄金地段",
+  "Amazing | Brand new | Modern spacious 1/BHK+ bath | Sep. kitchen | Modern bath | Parking":
+    "出色 | 全新 | 现代宽敞 1居室+卫生间 | 独立厨房 | 现代浴室 | 停车位",
+  "Amazing | Brand new | Modern spacious 1/BHK+ bath | Sep.kitchen | Modern bath | Parking":
+    "出色 | 全新 | 现代宽敞 1居室+卫生间 | 独立厨房 | 现代浴室 | 停车位",
+  "Available Soon | Spacious Studio | Community View": "即将上市 | 宽敞开间 | 社区景观",
+  "Available Soon | Spacious Studio | Community View | Affordable Living":
+    "即将上市 | 宽敞开间 | 社区景观 | 实惠生活",
+  "BEST BUILDING | WITH BALCONY | NICE VIEW": "最佳楼栋 | 带阳台 | 怡人景观",
+  "BEST PRICE!! CANAL VIEW • READY TO MOVE IN": "最优价格！！运河景 • 即可入住",
+  "BIG LAYOUT TYPE C 1BR APT VACANT PARKING VIEW": "大户型 C型 1居室公寓 空置 停车位 景观",
+  "BRAND NEW SPACIOUS APARTMENT 1BHK AVAILABLE IN MBZ": "全新宽敞公寓 1居室 现可入住 位于 MBZ",
+  "Balcony | Ready To Move | 4 Payments": "阳台 | 即可入住 | 4期付款",
+  "Balcony | Ready To Move | Book Now": "阳台 | 即可入住 | 立即预订",
+  "Be the First Tenant! Brand New! Premium! Prime Location": "首位租客！全新！高端！黄金地段",
+  "Be the First Tenat! Upcoming Deluxe! Direct Owner! 0% Commission! Book Today":
+    "首位租客！即将推出豪华房！业主直租！0佣金！今日预订",
+  "Best Deal! | Modern 1BHK | High Floor | Available": "超值优惠！| 现代 1居室 | 高层 | 现可入住",
+  "Best Layout ⇛Well Maintained ⇛Prime Location": "最佳户型 ⇛ 维护良好 ⇛ 黄金地段",
+  "Best Offer | Elegant Apartment !Flexible Payments |": "最佳报价 | 优雅公寓！灵活付款 |",
+  "Best Offer | Incredible Layout | Store | Panoramic Views | Full Amenities":
+    "最佳报价 | 极佳户型 | 储物间 | 全景视野 | 全套配套",
+  "Bigger Layout | Peaceful Community | 1 Payment": "大户型 | 宁静社区 | 1期付款",
+  "Brand New 01 Bedroom Hall Apartment For Rent | Al Rahba": "全新 1居室带客厅公寓出租 | Al Rahba",
+  "Brand New 1 Bedroom Hall Apartment For Rent Available Parking Location MBZ City (Monthly : 4800)":
+    "全新 1居室带客厅公寓出租 提供停车位 位于 MBZ City (月租：4800)",
+  "Brand new | Modern 1BHK |Pool|Elevator|Separate kitchen and bathroom":
+    "全新 | 现代 1居室 | 泳池 | 电梯 | 独立厨房与浴室",
+  "Bright & Modern 1BR |Sea View |Great Value Rental": "明亮 & 现代 1居室 | 海景 | 超值租金",
+  "Bright & Spacious 1 BHK Available Now": "明亮 & 宽敞 1居室 现可入住",
+  "Bright 1BR Apartment | Practical Lifestyle": "明亮 1居室公寓 | 实用生活方式",
+  "Canal View 1BR | Flexible Payment | Waters Edge": "运河景 1居室 | 灵活付款 | Waters Edge",
+  "Charming Studio | Great Location | Ready to move": "迷人开间 | 绝佳地段 | 即可入住",
+  "Community View | Vacant Studio| Affordable Living": "社区景观 | 空置开间 | 实惠生活",
+  "Community View | Vacant Studio| Affordable Living | Prime Location":
+    "社区景观 | 空置开间 | 实惠生活 | 黄金地段",
+  "Cozy Studio Unit | Prestigious Tower | Book Now": "温馨开间 | 知名楼栋 | 立即预订",
+  "EUROPEAN STYLE 1BHK WITH HUGE KITCHEN AND TWO BATHROOM": "欧式 1居室 配大厨房及双卫",
+  "Elegant 1 Bed Tawtheeq Available 0 Bills 0 Commission":
+    "优雅 1居室 提供 Tawtheeq 0账单 0佣金",
+  "Exclusive|Brand new|1BHK||Built in wardrobe|Kitchen and bathroom":
+    "独家 | 全新 | 1居室 | 内嵌衣柜 | 厨房与浴室",
+  "FULLY FURNISHED • HIGHFLOOR • LARGE UNIT": "家具齐全 • 高层 • 大户型",
+  "Flexible Payments | Prime Location | Vacant": "灵活付款 | 黄金地段 | 空置",
+  "Fully Furnished Studio Julphar Residence Al Reem":
+    "家具齐全开间 Julphar Residence Al Reem",
+  "Fully Furnished Suite Alreem Island": "家具齐全套房 Al Reem Island",
+  "Fully Furnished | Amazing View | Vacant": "家具齐全 | 迷人景观 | 空置",
+  "Furnished 1 Bedroom Apt | Balcony | Facilities | Parking":
+    "带家具 1居室公寓 | 阳台 | 配套设施 | 停车位",
+  "Furnished Studio with View": "带家具开间 带景观",
+  "Furnished suite room Al Reem Island": "带家具套房 Al Reem Island",
+  "GATE TOWER AMAZING 1BHK WITH FACILITIES": "Gate Tower 出色 1居室 配套齐全",
+  "Great Deal | Vacant | Prime Locatrion | Rent Now!!": "超值优惠 | 空置 | 黄金地段 | 立即出租！！",
+  "Great deal | Prime Location | Ready To Move |": "超值优惠 | 黄金地段 | 即可入住",
+  "HOT DEAL 1 BHK with STUDTY-ROOM | LAUNDRY-ROOM | 4 PYAMENTS | CALL US TODAY!":
+    "特惠房源 1居室 带书房 | 洗衣房 | 4期付款 | 立即致电！",
+  "HOT DEAL | FULLY FURNISHED 1BR | PRIME AL RAHA BEACH | READY TO MOVE 🔥":
+    "特惠房源 | 家具齐全 1居室 | 黄金地段 Al Raha Beach | 即可入住 🔥",
+  "HOT DEAL | Ready To Move In | High Floor | 2 Payments":
+    "特惠房源 | 即可入住 | 高层 | 2期付款",
+  "HOT DEAL | STUDIO in GATE TOWER w/ LUXURY FACILITY":
+    "特惠房源 | 开间 位于 Gate Tower 配豪华设施",
+  "HOT DEAL | UNFURNISHED STUDIO | ARC TOWER for RENT":
+    "特惠房源 | 不带家具开间 | ARC Tower 出租",
+  "HOT Deal | Partial Sea View | Cozy Balcony Area !":
+    "特惠房源 | 侧面海景 | 温馨阳台区！",
+  "HOT OFFER 1 BHK w/ CABINET, POOL, GYM & PARKING":
+    "特惠房源 1居室 带橱柜、泳池、健身房 & 停车位",
+  "HOT PRICE!! Cosy 1 BR | Splendid View": "热门价格！！温馨 1居室 | 绝美景观",
+  "HOT- Huge Size -Kitchen Appliances-Parking": "特惠 - 大户型 - 厨房电器 - 停车位",
+  "HOTTEST DEAL | 1 BHK FO RONLY AED 78K | FITTED KITCHEN | CLAL US TODAY FOR MORE INFOMARTION!":
+    "超级特惠 | 1居室 仅 AED 78K | 整体厨房 | 立即致电了解更多！",
+  "HOTTEST DEAL | AFFORDABLE 1 BHK in WHOLE AL REEM ISLAND | 4 PAYMENTS | TOP CLASS FACILITIES | CALL US TODAY!":
+    "超级特惠 | 全 Al Reem Island 最实惠 1居室 | 4期付款 | 顶级配套 | 立即致电！",
+  "High Floor | Partial Sea & Pool View | Exclusive": "高层 | 侧面海景 & 泳池景 | 独家",
+  "High floor| Balcony| Sea View| Beautiful|": "高层 | 阳台 | 海景 | 美景 |",
+  "Hot Deal / Best Amenities /Sea View / Occupy it": "特惠房源 / 顶级配套 / 海景 / 即可入住",
+  "Hot Deal Offer | Vacant Now | Prime Location": "特惠优惠 | 现已空置 | 黄金地段",
+  "Hot Deal | 1 Month Rent Free | Etihad Plaza Area":
+    "特惠房源 | 免1个月租金 | Etihad Plaza 区域",
+  "Hot Deal | Big Size | Luxury Living | Book Now": "特惠房源 | 大户型 | 奢华生活 | 立即预订",
+  "Hot Deal | Prime Location | Special Discount Price": "特惠房源 | 黄金地段 | 特别折扣价",
+  "Hot Deal! Bright & Cozy |W/Balcony | 80k/3cheq":
+    "特惠房源！明亮 & 温馨 | 带阳台 | 80k/3张支票",
+  "Hot Deal! Sea View 1BR | Ready to Move | Closed Kitchen l sea view.":
+    "特惠房源！海景 1居室 | 即可入住 | 封闭式厨房 | 海景。",
+  "Hot Offer | Spacious 1BHK | Prime Location": "特惠房源 | 宽敞 1居室 | 黄金地段",
+  "Hot Price | Epic Studio | Partial Sea View": "热门价格 | 极佳开间 | 侧面海景",
+  "Hot Price | flexible payment plan | call now to avail it":
+    "热门价格 | 灵活付款方案 | 立即致电抢订",
+  "Huge Studio| Ready to Move in| Mid Floor|": "超大开间 | 即可入住 | 中层 |",
+  "Hydra Avenue Towers Studio Apt": "Hydra Avenue Towers 开间公寓",
+  "JUST IN | ATTRACTIVE 1 BHK with BALCONY | TOP TIER FACILITIES & AMENITIES | CALL US TODAY!":
+    "新房源 | 出色 1居室 带阳台 | 顶级配套 & 设施 | 立即致电！",
+  "Limited Offer of Large 1BR Prime Living!": "限时优惠 大户型 1居室 优质生活！",
+  "Limited Offer! 0% Commission! Huge Layouts! Book Today":
+    "限时优惠！0佣金！超大户型！今日预订",
+  "Low Floor-1BR Apt in The Gate Towers, Reem Island":
+    "低层 1居室公寓 位于 The Gate Towers, Reem Island",
+  "Luxury 1BR Marina Bay | Stunning Waterfront Living":
+    "豪华 1居室 Marina Bay | 迷人滨水生活",
+  "Luxury 1Bedroom Hall Apartment Available for rent": "豪华 1居室带客厅公寓 现可出租",
+  "MODERN N CHIC| BALCONY| GREAT LOCATION| ENQUIRE NOW":
+    "现代时尚 | 阳台 | 绝佳地段 | 立即咨询",
+  "Magnificent | Ready to Move| | Great Location": "壮观 | 即可入住 | 绝佳地段",
+  "Mangrove View | Move-in Ready | Prime Location": "红树林景观 | 即可入住 | 黄金地段",
+  "Mangrove View | Ready To Move In | Flexible Payment": "红树林景观 | 即可入住 | 灵活付款",
+  "Mid Floor| Massive| Wall to Wall Windows|": "中层 | 超大 | 落地窗 |",
+  "Modern 1BR Apartment with Store Room | 2 Bathrooms | Prime Ministry Complex Location":
+    "现代 1居室公寓 带储物间 | 2卫 | Prime Ministry Complex 黄金地段",
+  "Modern Luxury 1 BHK | Brand New | Parking": "现代豪华 1居室 | 全新 | 停车位",
+  "NEW SPACIOUS APARTMENT FOR RENT IN SHABIYA 9 WITH TAWTEEQ AND PARKING (ASIANS ONLY)":
+    "全新宽敞公寓出租 位于 Shabiya 9 提供 Tawtheeq 及停车位 (仅限亚洲人)",
+  "Neat And Clean 1BHK Apt 2 Bathroom Owner Building":
+    "整洁干净 1居室公寓 双卫 业主自有楼栋",
+  "Negotiable/ Bigger Layout / Sea View / Occupy it": "价格可议 / 大户型 / 海景 / 即可入住",
+  "New Building | Lavish & Bright | Stunning Views": "新楼栋 | 奢华 & 明亮 | 迷人景观",
+  "Partial Canal View | VACANT | Up to 3 Payments": "侧面运河景 | 空置 | 最多3期付款",
+  "Partial Sea View | 1BHK | Move In Ready": "侧面海景 | 1居室 | 即可入住",
+  "Premium 1BHK W/ 0% Commission | Bills Included": "高端 1居室 0佣金 | 含账单",
+  "RARE Availability! VACANT | Facing the Community": "稀缺房源！空置 | 朝向社区",
+  "Ready To Move In | Big Layout | Spacious Balcony": "即可入住 | 大户型 | 宽敞阳台",
+  "Ready To Move | Prime Location | Book Now": "即可入住 | 黄金地段 | 立即预订",
+  "Ready to Move-in | Elegant 1BR | Full Facilities": "即可入住 | 优雅 1居室 | 设施齐全",
+  "Ready to Move|High Floor 1BR+Balcony |Canal Views":
+    "即可入住 | 高层 1居室+阳台 | 运河景",
+  "Ready to Move|High Floor 1BR+Balcony|Mangrove View":
+    "即可入住 | 高层 1居室+阳台 | 红树林景观",
+  "SEA VIEW VACANT 1BR APT HOT DEAL READY TO MOVE":
+    "海景 空置 1居室公寓 特惠 即可入住",
+  "SEA VIEW | WITH BALCONY | 80K/6CHEQ": "海景 | 带阳台 | 80K/6张支票",
+  "SPACIOUS 1BR APARTMENT | PRIME LOCATION | READY TO MOVE":
+    "宽敞 1居室公寓 | 黄金地段 | 即可入住",
+  "SPECIOUS 1BHK APARTMENT AVAILABLE": "宽敞 1居室公寓 现可入住",
+  "Sea View Fully Furnished in Al Reem": "海景 家具齐全 位于 Al Reem",
+  "Sea View | High Floor | VACANT | Up to 4 Payments": "海景 | 高层 | 空置 | 最多4期付款",
+  "Semi-Furnished | Studio | Ready for Move-In": "半家具 | 开间 | 即可入住",
+  "Separate Entrance Studio Tawtheeq Available 0 Commission Free Bills":
+    "独立入口开间 提供 Tawtheeq 0佣金 免账单",
+  "Spacious 1 Bed Type A | Available Now | Affordable":
+    "宽敞 1居室 A 户型 | 现可入住 | 实惠",
+  "Spacious 1 Bed Type A | Vacant Now | Best Price!!!":
+    "宽敞 1居室 A 户型 | 现已空置 | 最优价格！！！",
+  "Spacious 1 Bedroom Hall Apartment in Al Rahba": "宽敞 1居室带客厅公寓 位于 Al Rahba",
+  "Spacious 1 Bedroom | Direct From Owner | Upscale Finish":
+    "宽敞 1居室 | 业主直租 | 高档装修",
+  "Spacious 1BHK with 2 Washrooms | Chiller Free": "宽敞 1居室 带双卫 | 免空调费",
+  "Spacious 1BR | Balcony with Sea View I Ready to move":
+    "宽敞 1居室 | 带海景阳台 | 即可入住",
+  "Spacious Apartment| Spacious| Ideal Community": "宽敞公寓 | 宽敞 | 理想社区",
+  "Spacious Studio with Big Kitchen and Mangrove View": "宽敞开间 带大厨房及红树林景观",
+  "Spacious Studio | Vacant | Flexible Terms": "宽敞开间 | 空置 | 灵活条款",
+  "Spacious | Prime location | Ready to move": "宽敞 | 黄金地段 | 即可入住",
+  "Specious 1 Bedrooms + Living Room Apartment + Basement Parking Near Dalma Mall":
+    "宽敞 1居室+客厅公寓+地下停车位 靠近 Dalma Mall",
+  "Specious 1BR ! Balcony ! Pool Gym ! 4Payments":
+    "宽敞 1居室！阳台！泳池 健身房！4期付款",
+  "Step into luxury living Big Fully Furnished 1 BHK apartment - Perfect for Families or Professionals looking for comfort and style.Near Market":
+    "步入奢华生活 大户型 家具齐全 1居室公寓 - 适合追求舒适与品味的家庭或专业人士。靠近市场",
+  "Studio for Rent | Hydra Avenue C5 | Al Reem Island":
+    "开间出租 | Hydra Avenue C5 | Al Reem Island",
+  "Studio | Vacant Unit | Prime Location": "开间 | 空置单元 | 黄金地段",
+  "Stunning 1 Bedroom Apartment With Balcony And Pool": "迷人 1居室公寓 带阳台及泳池",
+  "Stunning 1BR Apartment with Panoramic Waterfront Views | Ready to Move-in | All Amenities |":
+    "迷人 1居室公寓 带全景滨水视野 | 即可入住 | 全套配套 |",
+  "Stunning View | Cozy Layout | Ready to move": "迷人景观 | 温馨户型 | 即可入住",
+  "Top Notch 1BR | All Amenities | Best Market Price": "顶级 1居室 | 全套配套 | 市场最优价",
+  "UPCOMING STUDIO//NO COMMISSION//FREE BILLS": "即将上市开间 // 免佣金 // 免账单",
+  "Unbelievable |Furnished |Big Size|Todys Offer 27/4":
+    "难以置信 | 带家具 | 大户型 | 今日特惠 27/4",
+  "Unfurnished | Hot Offer | Limited Time": "不带家具 | 特惠 | 限时",
+  "Upoming! Brand New! Hot Deal! Direct Owner! 0% Commission":
+    "即将推出！全新！特惠！业主直租！0佣金",
+  "VACANT  | SEA VIEW| BIG BALCONY": "空置 | 海景 | 大阳台",
+  "VACANT /MANGROVEAND CITY VIEW/UP TO 12 CHEQUES": "空置 / 红树林及城市景观 / 最多12张支票",
+  "VACANT HOT DEAL 1BR APT | CITY VIEW | HIGH FLOOR": "空置特惠 1居室公寓 | 城市景观 | 高层",
+  "VACANT HOT DEAL 1BR APT | CITY VIEW | HIGH FLOOR | READY TO MOVE":
+    "空置特惠 1居室公寓 | 城市景观 | 高层 | 即可入住",
+  "Vacant / Balcony / Hot Deal": "空置 / 阳台 / 特惠",
+  "Vacant Now | Luxury View Living | Prime Location": "现已空置 | 奢华景观生活 | 黄金地段",
+  "Vacant Unit |Close to Retail Area |Well Maintained": "空置单元 | 邻近商业区 | 维护良好",
+  "Vacant | 1 Bedroom | Ready to Move": "空置 | 1居室 | 即可入住",
+  "Vacant | Book Now | Hot Deal | Balcony | 1BHK": "空置 | 立即预订 | 特惠 | 阳台 | 1居室",
+  "Vacant | Community View | Balcony | 2 payments": "空置 | 社区景观 | 阳台 | 2期付款",
+  "Vacant | Cozy Layout | Prime Community | Enquire !": "空置 | 温馨户型 | 优质社区 | 立即咨询！",
+  "Vacant! |  Vibrant & Cozy Unit | Up to 12 Cheques!": "空置！| 活力 & 温馨单元 | 最多12张支票！",
+  "Vacant|Amazing 1BR|Modern Layout|Canal+Pool Views": "空置 | 出色 1居室 | 现代户型 | 运河+泳池景",
+  "Vacant|Cozy Layout|Flexible Payment|Mangrove View": "空置 | 温馨户型 | 灵活付款 | 红树林景观",
+  "Waterfront View | High Floor | Ready to Move in": "滨水景观 | 高层 | 即可入住",
+  "Well Maintained | Ready to Move In | Layout 14": "维护良好 | 即可入住 | 14户型",
+  "one bed room for rent in Avilla": "1居室出租 位于 Avilla",
+  "√ Waterfront Views | High Level and  Vacant Unit √": "√ 滨水景观 | 高层且空置单元 √",
+  "√ Waterfront Views | High Level and Vacant Unit √": "√ 滨水景观 | 高层且空置单元 √",
+  "√FURNISHED - Studio with Balcony | Corner Unit√": "√ 带家具 - 开间带阳台 | 角落单元 √",
 };
 
 // ─── Source Title Paths ─────────────────────────────────────
