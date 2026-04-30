@@ -14,6 +14,12 @@ const logger = require('./logger');
  *
  * Falls back to Playwright if the HTTP request hits an AWS WAF challenge.
  */
+// User-Agent used by Playwright when solving the WAF challenge. Pinned so
+// that the cookies harvested from the browser session continue to validate
+// when re-used by the axios HTTP client.
+const PLAYWRIGHT_USER_AGENT =
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
+
 async function fetchBuildId(httpClient) {
   const url = config.scraper.searchPageUrl;
   logger.info({ url }, 'Fetching Build ID from search page');
@@ -37,10 +43,10 @@ async function fetchBuildId(httpClient) {
 
   // HTTP response was a WAF challenge page — use Playwright
   logger.warn('HTTP fetch got WAF challenge, falling back to Playwright');
-  return fetchBuildIdWithBrowser(url);
+  return fetchBuildIdWithBrowser(url, httpClient);
 }
 
-async function fetchBuildIdWithBrowser(url) {
+async function fetchBuildIdWithBrowser(url, httpClient) {
   const browser = await chromium.launch({
     headless: false,
     args: ['--disable-blink-features=AutomationControlled', '--no-sandbox'],
@@ -51,8 +57,7 @@ async function fetchBuildIdWithBrowser(url) {
       viewport: { width: 1366, height: 768 },
       locale: 'en-US',
       timezoneId: 'Asia/Dubai',
-      userAgent:
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+      userAgent: PLAYWRIGHT_USER_AGENT,
     });
 
     const page = await context.newPage();
@@ -88,11 +93,46 @@ async function fetchBuildIdWithBrowser(url) {
       throw new Error('buildId not found in __NEXT_DATA__ JSON (Playwright)');
     }
 
+    // Without the WAF cookies harvested here (aws-waf-token, _abck, etc.),
+    // axios hits stub responses with no pageProps for every API call.
+    if (httpClient) {
+      await syncBrowserCookiesToClient(context, httpClient);
+      httpClient.defaults.headers['user-agent'] = PLAYWRIGHT_USER_AGENT;
+    }
+
     logger.info({ buildId }, 'Build ID acquired via Playwright');
     return buildId;
   } finally {
     await browser.close();
   }
+}
+
+async function syncBrowserCookiesToClient(context, httpClient) {
+  const jar = httpClient.defaults?.jar;
+  if (!jar) {
+    logger.warn('HTTP client has no cookie jar; skipping cookie sync');
+    return;
+  }
+  const cookies = await context.cookies();
+  let injected = 0;
+  for (const c of cookies) {
+    if (!c.domain.includes('propertyfinder')) continue;
+    const cleanDomain = c.domain.replace(/^\./, '');
+    const parts = [`${c.name}=${c.value}`, `Domain=${cleanDomain}`, `Path=${c.path || '/'}`];
+    if (c.expires && c.expires > 0) {
+      parts.push(`Expires=${new Date(c.expires * 1000).toUTCString()}`);
+    }
+    if (c.httpOnly) parts.push('HttpOnly');
+    if (c.secure) parts.push('Secure');
+    if (c.sameSite && c.sameSite !== 'None') parts.push(`SameSite=${c.sameSite}`);
+    try {
+      await jar.setCookie(parts.join('; '), `https://${cleanDomain}`);
+      injected += 1;
+    } catch (err) {
+      logger.warn({ err: err.message, cookie: c.name }, 'Failed to inject Playwright cookie');
+    }
+  }
+  logger.info({ injected, total: cookies.length }, 'Synced Playwright cookies to HTTP client jar');
 }
 
 module.exports = { fetchBuildId };
